@@ -4,6 +4,8 @@ import '../Profile/Profile.dart';
 import '../Presentation/Presentation.dart';
 
 class HomePage extends StatefulWidget {
+  const HomePage({super.key});
+
   @override
   _HomePageState createState() => _HomePageState();
 }
@@ -56,6 +58,8 @@ class _HomePageState extends State<HomePage> {
 }
 
 class HomeScreen extends StatelessWidget {
+  const HomeScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -76,8 +80,8 @@ class HomeScreen extends StatelessWidget {
               elevation: 5,
               child: Column(
                 children: [
-                  Image.network(
-                    'https://via.placeholder.com/150', // Replace with your food image URL
+                  Image.asset(
+                    'images/2.jpg', // Replace with your food image URL
                     fit: BoxFit.cover,
                     height: 150,
                     width: double.infinity,
