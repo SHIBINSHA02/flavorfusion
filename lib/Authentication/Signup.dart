@@ -1,26 +1,56 @@
 // ignore_for_file: unused_local_variable
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flavorfusion/Authentication/Login.dart'; // Import the Login page
 
 class SignUpPage extends StatefulWidget {
-  SignUpPage({Key? key}) : super(key: key);
+  const SignUpPage({Key? key}) : super(key: key);
 
   @override
-  State<SignUpPage> createState() => _SignUpPageState();
+  _SignUpPageState createState() => _SignUpPageState();
 }
 
 class _SignUpPageState extends State<SignUpPage> {
-  final email = TextEditingController();
-  final password = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _confirmPasswordController =
+      TextEditingController();
 
-  void signup() {
-    // Placeholder for sign-up logic
-    // Implement your custom sign-up logic here
-    print("Sign up logic goes here");
+  Future<void> signup() async {
+    if (_passwordController.text != _confirmPasswordController.text) {
+      showErrorDialog('Error', 'Passwords do not match.');
+      return;
+    }
 
-    // For demonstration, we will just pop the context
-    Navigator.pop(context);
+    try {
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: _emailController.text,
+        password: _passwordController.text,
+      );
+      // Navigate to the HomePage after successful signup
+      Navigator.pushReplacementNamed(context,
+          '/home'); // Use pushReplacementNamed to replace the current page
+    } on FirebaseAuthException catch (e) {
+      showErrorDialog('Error', e.message ?? 'An unexpected error occurred.');
+    }
+  }
+
+  void showErrorDialog(String title, String message) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(title),
+        content: Text(message),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text("OK"),
+          ),
+        ],
+      ),
+    );
   }
 
   @override
@@ -41,7 +71,7 @@ class _SignUpPageState extends State<SignUpPage> {
               ),
               const SizedBox(height: 20),
               TextField(
-                controller: email,
+                controller: _emailController,
                 decoration: InputDecoration(
                   labelText: 'Email',
                   border: OutlineInputBorder(),
@@ -50,7 +80,7 @@ class _SignUpPageState extends State<SignUpPage> {
               ),
               const SizedBox(height: 10),
               TextField(
-                controller: password,
+                controller: _passwordController,
                 decoration: InputDecoration(
                   labelText: 'Password',
                   border: OutlineInputBorder(),
@@ -58,14 +88,42 @@ class _SignUpPageState extends State<SignUpPage> {
                 ),
                 obscureText: true,
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 10),
+              TextField(
+                controller: _confirmPasswordController,
+                decoration: InputDecoration(
+                  labelText: 'Confirm Password',
+                  border: OutlineInputBorder(),
+                ),
+                obscureText: true,
+              ),
+              const SizedBox(height: 2),
+              // Have an Account? Login Button aligned to the right
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end, // Align to the right
+                children: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => LoginPage()),
+                      );
+                    },
+                    child: const Text(
+                      'Have an Account? Login',
+                      style: TextStyle(
+                        fontSize: 16,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 2), // Space between buttons
               // Sign Up button
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
-                  onPressed: () {
-                    signup();
-                  },
+                  onPressed: signup,
                   child: const Text('Sign Up'),
                 ),
               ),
@@ -92,5 +150,13 @@ class _SignUpPageState extends State<SignUpPage> {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    _confirmPasswordController.dispose();
+    super.dispose();
   }
 }
