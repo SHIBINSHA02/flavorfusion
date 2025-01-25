@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class ProfilePage extends StatelessWidget {
@@ -45,8 +46,8 @@ class ProfilePage extends StatelessWidget {
             ListTile(
               leading: Icon(Icons.logout),
               title: Text('Logout'),
-              onTap: () {
-                Navigator.pushReplacementNamed(context, '/');
+              onTap: () async {
+                await FirebaseAuth.instance.signOut();
               },
             ),
           ],
