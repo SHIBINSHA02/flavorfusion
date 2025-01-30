@@ -117,14 +117,27 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ],
               ),
-              const SizedBox(height: 20),
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  onPressed: signUserIn,
-                  child: const Text('Sign In'),
+              Container(
+                child: TextButton(onPressed: signUserIn,
+                    child: Text('Sign In',style: TextStyle(fontWeight: FontWeight.bold,
+                      fontSize: 15,
+                    ),
+                    )
                 ),
-              ),
+                height: 50,
+                width: 300,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(50),
+                    color: Colors.white.withOpacity(0.93),
+                  boxShadow:[ BoxShadow(
+                    color: Colors.black26.withOpacity(0.35),
+                    blurRadius: 6,
+                    offset: Offset(0, 9),
+                    spreadRadius: -3
+                  )
+                ]
+                ),
+              )
             ],
           ),
         ),
