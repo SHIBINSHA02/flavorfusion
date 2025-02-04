@@ -1,9 +1,9 @@
 import 'package:flavorfusion/Authentication/auth.dart';
+import 'package:flavorfusion/Home/Homepage.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 import 'Authentication/Login.dart';
-import 'Home/Homepage.dart';
 import 'Authentication/Signup.dart';
 import 'Home/navbar.dart';
 
@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (context) => AuthPage(), // Ensure this matches the class name
         '/login': (context) => LoginPage(),
-        '/home': (context) => HomePage(),
+        '/home': (context) => HomeScreen(),
         '/signup': (context) => SignUpPage(),
         '/navbar': (context) => NavigationPage(),
       },
