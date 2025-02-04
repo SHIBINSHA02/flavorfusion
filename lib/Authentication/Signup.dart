@@ -57,7 +57,7 @@ class _SignUpPageState extends State<SignUpPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Sign Up'),
+        backgroundColor: Colors.orange,
       ),
       body: Center(
         child: Padding(
@@ -70,32 +70,82 @@ class _SignUpPageState extends State<SignUpPage> {
                 style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 20),
-              TextField(
-                controller: _emailController,
-                decoration: InputDecoration(
-                  labelText: 'Email',
-                  border: OutlineInputBorder(),
-                  prefixIcon: Icon(Icons.person),
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 15),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(50),
+                  color: Colors.white,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black26.withOpacity(0.2),
+                      blurRadius: 6,
+                      offset: Offset(0, 4),
+                    ),
+                  ],
+                ),
+                child: TextField(
+                  controller: _emailController,
+                  decoration: InputDecoration(
+                    labelText: 'Email',
+                    labelStyle: TextStyle(color: Colors.black),
+                    prefixIcon: Icon(Icons.person),
+                    border: InputBorder.none,
+                    focusedBorder: InputBorder.none,
+                    enabledBorder: InputBorder.none,
+                  ),
                 ),
               ),
               const SizedBox(height: 10),
-              TextField(
-                controller: _passwordController,
-                decoration: InputDecoration(
-                  labelText: 'Password',
-                  border: OutlineInputBorder(),
-                  prefixIcon: Icon(Icons.lock),
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 15),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(50),
+                  color: Colors.white,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black26.withOpacity(0.2),
+                      blurRadius: 6,
+                      offset: Offset(0, 4),
+                    ),
+                  ],
                 ),
-                obscureText: true,
+                child: TextField(
+                  controller: _passwordController,
+                  decoration: InputDecoration(
+                    labelText: 'Password',
+                    labelStyle: TextStyle(color: Colors.black),
+                    prefixIcon: Icon(Icons.lock),
+                    border: InputBorder.none,
+                    focusedBorder: InputBorder.none,
+                    enabledBorder: InputBorder.none,
+                  ),
+                ),
               ),
               const SizedBox(height: 10),
-              TextField(
-                controller: _confirmPasswordController,
-                decoration: InputDecoration(
-                  labelText: 'Confirm Password',
-                  border: OutlineInputBorder(),
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 15),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(50),
+                  color: Colors.white,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black26.withOpacity(0.2),
+                      blurRadius: 6,
+                      offset: Offset(0, 4),
+                    ),
+                  ],
                 ),
-                obscureText: true,
+                child: TextField(
+                  controller:  _confirmPasswordController,
+                  decoration: InputDecoration(
+                    labelText: 'Confirm Password',
+                    labelStyle: TextStyle(color: Colors.black),
+                    prefixIcon: Icon(Icons.lock),
+                    border: InputBorder.none,
+                    focusedBorder: InputBorder.none,
+                    enabledBorder: InputBorder.none,
+                  ),
+                ),
               ),
               const SizedBox(height: 2),
               // Have an Account? Login Button aligned to the right
@@ -113,6 +163,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       'Have an Account? Login',
                       style: TextStyle(
                         fontSize: 16,
+                        color: Colors.black87
                       ),
                     ),
                   ),
@@ -120,13 +171,33 @@ class _SignUpPageState extends State<SignUpPage> {
               ),
               const SizedBox(height: 2), // Space between buttons
               // Sign Up button
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  onPressed: signup,
-                  child: const Text('Sign Up'),
+              GestureDetector(
+                child:Container(
+                  height: 50,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(50),
+                    color: Colors.white.withOpacity(0.93),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black26.withOpacity(0.35),
+                        blurRadius: 6,
+                        offset: Offset(0, 6),
+                      ),
+                    ],
+                  ),
+                  alignment: Alignment.center,
+                  child: Text(
+                    'Sign Up',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                    ),
+                  ),
                 ),
+                onTap: signup,
               ),
+
+
               const SizedBox(height: 20),
               // Google Sign-Up button
               ElevatedButton(
@@ -149,6 +220,7 @@ class _SignUpPageState extends State<SignUpPage> {
           ),
         ),
       ),
+      backgroundColor: Colors.orange,
     );
   }
 
