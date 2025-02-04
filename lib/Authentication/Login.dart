@@ -71,7 +71,7 @@ class _LoginPageState extends State<LoginPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Lottie.asset(
-                  'assets/animations/Animation - 1738404998429.json',
+                  'assets/animations/cooking.json',
                   height: screenHeight * 0.4,
                   fit: BoxFit.contain,
                 ),
@@ -149,13 +149,17 @@ class _LoginPageState extends State<LoginPage> {
                       onPressed: () {
                         // Implement forgot password functionality
                       },
-                      child: const Text('Forgot Password?'),
+                      child: Text('Forgot Password?',
+                      style: TextStyle(color: Colors.black87),
+                      ),
                     ),
                     TextButton(
                       onPressed: () {
                         Navigator.pushNamed(context, '/signup');
                       },
-                      child: const Text('New User? Sign Up'),
+                      child: const Text('New User? Sign Up',
+                      style: TextStyle(color: Colors.black87),
+                      ),
                     ),
                   ],
                 ),
