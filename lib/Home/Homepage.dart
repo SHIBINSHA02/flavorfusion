@@ -36,15 +36,13 @@ class _HomePageState extends State<HomePage> {
         },
         items: [
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-            backgroundColor: Colors.black
-          ),
+              icon: Icon(Icons.home),
+              label: 'Home',
+              backgroundColor: Colors.black),
           BottomNavigationBarItem(
-            icon: Icon(Icons.shopping_cart),
-            label: 'Shopping',
-            backgroundColor: Colors.black
-          ),
+              icon: Icon(Icons.shopping_cart),
+              label: 'Shopping',
+              backgroundColor: Colors.black),
           BottomNavigationBarItem(
             icon: Icon(Icons.favorite),
             label: 'Favorites',
