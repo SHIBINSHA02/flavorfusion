@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (context) => AuthPage(), // Ensure this matches the class name
         '/login': (context) => LoginPage(),
-        '/home': (context) => HomeScreen(),
+        '/home': (context) => HomePage(),
         '/signup': (context) => SignUpPage(),
         '/navbar': (context) => NavigationPage(),
       },
