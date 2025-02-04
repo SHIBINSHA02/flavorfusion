@@ -54,8 +54,8 @@ class _NavigationPageState extends State<NavigationPage> {
     );
   }
 
-  Widget _getPage(int _page) {
-    switch (_page) {
+  Widget _getPage(int page) {
+    switch (page) {
       case 0:
         return const HomePage();
       case 1:
