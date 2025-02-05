@@ -68,7 +68,7 @@ flutter:
   assets:
      - images/placeholder.jpg
      - images/2.jpg
-     - assets/animations/Animation - 1738404998429.json
+     - assets/animations/cooking.json
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
