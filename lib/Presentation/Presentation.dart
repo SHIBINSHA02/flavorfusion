@@ -1,21 +1,35 @@
 import 'package:flutter/material.dart';
 
 class PresentationPage extends StatelessWidget {
+  const PresentationPage({super.key});
+
   @override
   Widget build(BuildContext context) {
+    final double screenHeight = MediaQuery.of(context).size.height;
+    
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Presentation Page'),
-      ),
-      body: Center(
-        child: Text(
-          'You have reached the Presentation Page!',
-          style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
+      body: CustomScrollView(
+        slivers: [
+          SliverAppBar(
+            backgroundColor: Colors.teal, 
+            expandedHeight: screenHeight/3,
+            pinned: true,
+            title: Text("Chicken Biriyani",
+              style: TextStyle(
+                fontWeight: FontWeight.bold
+              ),
+            ),
           ),
-          textAlign: TextAlign.center,
-        ),
+          SliverList(
+            delegate: SliverChildListDelegate(
+            [SizedBox(height: 200),
+              Container(height: 400, color: Colors.red),
+              Container(height: 400, color: Colors.green),
+              Container(height: 400, color: Colors.blue),
+        ],
+      ),
+    ),
+        ],
       ),
     );
   }
