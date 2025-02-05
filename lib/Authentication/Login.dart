@@ -174,7 +174,7 @@ class _LoginPageState extends State<LoginPage> {
                     height: 50,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(50),
-                      color: Colors.white.withOpacity(0.93),
+                      color: Color.fromARGB(255,50,255,224),
                       boxShadow: [
                         BoxShadow(
                           color: Colors.black26.withOpacity(0.35),

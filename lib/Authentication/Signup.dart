@@ -176,7 +176,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   height: 50,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(50),
-                    color: Colors.white.withOpacity(0.93),
+                    color: Color.fromARGB(255,50,255,224),
                     boxShadow: [
                       BoxShadow(
                         color: Colors.black26.withOpacity(0.35),
@@ -200,21 +200,41 @@ class _SignUpPageState extends State<SignUpPage> {
 
               const SizedBox(height: 20),
               // Google Sign-Up button
-              ElevatedButton(
-                onPressed: () async {
-                  // Google sign-up functionality removed
-                },
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SvgPicture.asset(
-                      'assets/google.svg', // Ensure this path is correct
-                      height: 24, // Adjust height as needed
-                    ),
-                    const SizedBox(width: 8),
-                    const Text('Sign up with Google'),
-                  ],
+              GestureDetector(
+                child:Container(
+                  height: 50,
+                  padding: EdgeInsets.symmetric(horizontal: 110),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(50),
+                    color: Color.fromARGB(255,50,255,224),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black26.withOpacity(0.35),
+                        blurRadius: 6,
+                        offset: Offset(0, 6),
+                      ),
+                    ],
+                  ),
+                  alignment: Alignment.center,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Sign up with Google',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                        ),
+                      ),
+                      Image.asset(
+                      'images/google.png',
+                        height: 27,
+                        width: 27,
+                      )
+                    ],
+                  )
                 ),
+                onTap: () async{},
               ),
             ],
           ),
