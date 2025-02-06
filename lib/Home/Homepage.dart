@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:math';
+import '../models/recipe.dart'; // Import the Recipe model
+import '../widgets/recipe_card.dart'; // Import the RecipeCard widget
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -10,69 +12,62 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   // Static variables to persist across rebuilds
-  static Map<String, dynamic>? _currentRecipe;
+  static Recipe? _currentRecipe; // Change to Recipe type
   static DateTime? _lastUpdated;
   static String? _selectedImage;
 
-  final List<Map<String, dynamic>> _recipes = [
-    {
-      'title': 'Creamy Garlic Pasta',
-      'description':
+  final List<Recipe> _recipes = [
+    // Change to List<Recipe>
+    Recipe(
+      title: 'Creamy Garlic Pasta',
+      description:
           'A delicious pasta dish with creamy garlic sauce, perfect for dinner.',
-      'cookingTime': '25 min',
-      'difficulty': 'Easy',
-      'images': [
-        '', // TODO: Add multiple image URLs for Creamy Garlic Pasta
-        '',
-        '',
-      ],
-    },
-    {
-      'title': 'Spicy Thai Curry',
-      'description':
+      cookingTime: '25 min',
+      difficulty: 'Easy',
+      images: ['', '', ''],
+    ),
+    Recipe(
+      title: 'Spicy Thai Curry',
+      description:
           'Authentic Thai curry with coconut milk and fresh vegetables.',
-      'cookingTime': '35 min',
-      'difficulty': 'Medium',
-      'images': [
-        '', // TODO: Add multiple image URLs for Spicy Thai Curry
-        '',
-        '',
-      ],
-    },
-    {
-      'title': 'Classic Margherita Pizza',
-      'description':
+      cookingTime: '35 min',
+      difficulty: 'Medium',
+      images: ['', '', ''],
+    ),
+    Recipe(
+      title: 'Classic Margherita Pizza',
+      description:
           'Traditional Italian pizza with fresh basil, mozzarella, and tomatoes.',
-      'cookingTime': '40 min',
-      'difficulty': 'Medium',
-      'images': [
+      cookingTime: '40 min',
+      difficulty: 'Medium',
+      images: [
         '', // TODO: Add multiple image URLs for Margherita Pizza
         '',
         '',
       ],
-    },
-    {
-      'title': 'Grilled Salmon',
-      'description': 'Fresh salmon fillet with lemon herb butter sauce.',
-      'cookingTime': '20 min',
-      'difficulty': 'Easy',
-      'images': [
+    ),
+    Recipe(
+      title: 'Grilled Salmon',
+      description: 'Fresh salmon fillet with lemon herb butter sauce.',
+      cookingTime: '20 min',
+      difficulty: 'Easy',
+      images: [
         '', // TODO: Add multiple image URLs for Grilled Salmon
         '',
         '',
       ],
-    },
-    {
-      'title': 'Chocolate Lava Cake',
-      'description': 'Decadent chocolate dessert with a gooey center.',
-      'cookingTime': '15 min',
-      'difficulty': 'Medium',
-      'images': [
+    ),
+    Recipe(
+      title: 'Chocolate Lava Cake',
+      description: 'Decadent chocolate dessert with a gooey center.',
+      cookingTime: '15 min',
+      difficulty: 'Medium',
+      images: [
         '', // TODO: Add multiple image URLs for Chocolate Lava Cake
         '',
         '',
       ],
-    },
+    ),
   ];
 
   @override
@@ -95,7 +90,7 @@ class _HomePageState extends State<HomePage> {
       _currentRecipe = _recipes[random.nextInt(_recipes.length)];
 
       // Select a random image from the recipe's images
-      final images = _currentRecipe!['images'] as List<String>;
+      final images = _currentRecipe!.images;
       _selectedImage = images[random.nextInt(images.length)];
 
       _lastUpdated = now;
@@ -194,13 +189,13 @@ class _HomePageState extends State<HomePage> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                _currentRecipe?['title'] ?? 'Loading...',
+                                _currentRecipe?.title ?? 'Loading...',
                                 style:
                                     Theme.of(context).textTheme.headlineSmall,
                               ),
                               const SizedBox(height: 8),
                               Text(
-                                _currentRecipe?['description'] ??
+                                _currentRecipe?.description ??
                                     'Loading recipe details...',
                                 style: Theme.of(context).textTheme.bodyLarge,
                               ),
@@ -209,12 +204,11 @@ class _HomePageState extends State<HomePage> {
                                 children: [
                                   const Icon(Icons.timer),
                                   const SizedBox(width: 8),
-                                  Text(_currentRecipe?['cookingTime'] ??
-                                      '-- min'),
+                                  Text(_currentRecipe?.cookingTime ?? '-- min'),
                                   const SizedBox(width: 24),
                                   const Icon(Icons.restaurant),
                                   const SizedBox(width: 8),
-                                  Text(_currentRecipe?['difficulty'] ?? '---'),
+                                  Text(_currentRecipe?.difficulty ?? '---'),
                                 ],
                               ),
                             ],
@@ -245,59 +239,8 @@ class _HomePageState extends State<HomePage> {
                       return Container(
                         width: MediaQuery.of(context).size.width * 0.7,
                         margin: const EdgeInsets.only(right: 16),
-                        child: Card(
-                          elevation: 4,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              // Recipe Image
-                              Container(
-                                height: 120,
-                                decoration: BoxDecoration(
-                                  borderRadius: const BorderRadius.only(
-                                    topLeft: Radius.circular(4),
-                                    topRight: Radius.circular(4),
-                                  ),
-                                  image: DecorationImage(
-                                    fit: BoxFit.cover,
-                                    image: const AssetImage(
-                                        'assets/placeholder.jpg'),
-                                  ),
-                                ),
-                              ),
-                              // Recipe Details
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      recipe['title'],
-                                      style: const TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                    const SizedBox(height: 4),
-                                    Row(
-                                      children: [
-                                        const Icon(Icons.timer, size: 16),
-                                        const SizedBox(width: 4),
-                                        Text(recipe['cookingTime']),
-                                        const SizedBox(width: 16),
-                                        const Icon(Icons.restaurant, size: 16),
-                                        const SizedBox(width: 4),
-                                        Text(recipe['difficulty']),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
+                        child:
+                            RecipeCard(recipe: recipe), // Use RecipeCard widget
                       );
                     },
                   ),
