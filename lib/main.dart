@@ -1,4 +1,5 @@
 import 'package:flavorfusion/Authentication/auth.dart';
+import 'package:flavorfusion/Search/Searchpage.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
@@ -29,6 +30,7 @@ class MyApp extends StatelessWidget {
         '/login': (context) => LoginPage(),
         '/home': (context) => HomePage(),
         '/signup': (context) => SignUpPage(),
+        '/searchpage':(context) => SearchAPIExample(),
       },
     );
   }
