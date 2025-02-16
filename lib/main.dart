@@ -1,5 +1,6 @@
 import 'package:flavorfusion/Authentication/auth.dart';
 import 'package:flavorfusion/Search/Searchpage.dart';
+import 'package:flavorfusion/Shopping/Shopping.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
@@ -20,6 +21,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Authentication',
       theme: ThemeData(
         primarySwatch: Colors.blue,
@@ -31,6 +33,7 @@ class MyApp extends StatelessWidget {
         '/home': (context) => HomePage(),
         '/signup': (context) => SignUpPage(),
         '/searchpage':(context) => SearchAPIExample(),
+        '/shopping':(context) => ShoppingPage(),
       },
     );
   }
