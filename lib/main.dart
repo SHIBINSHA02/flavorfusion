@@ -1,11 +1,10 @@
 import 'package:flavorfusion/Authentication/auth.dart';
-import 'package:flavorfusion/Home/Homepage.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 import 'Authentication/Login.dart';
+import 'Home/Homepage.dart';
 import 'Authentication/Signup.dart';
-import 'Home/navbar.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -17,12 +16,9 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
       title: 'Flutter Authentication',
       theme: ThemeData(
         primarySwatch: Colors.blue,
@@ -33,7 +29,6 @@ class MyApp extends StatelessWidget {
         '/login': (context) => LoginPage(),
         '/home': (context) => HomePage(),
         '/signup': (context) => SignUpPage(),
-        '/navbar': (context) => NavigationPage(),
       },
     );
   }

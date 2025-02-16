@@ -1,57 +1,55 @@
 import 'package:flutter/material.dart';
 
 class ShoppingPage extends StatelessWidget {
-  const ShoppingPage({super.key});
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Shopping'),
-      ),
-      body: ListView.builder(
-        padding: const EdgeInsets.all(16.0),
-        itemCount: 10, // Replace with the number of shopping items you want
-        itemBuilder: (context, index) {
-          return Card(
-            margin: const EdgeInsets.symmetric(vertical: 8.0),
-            elevation: 5,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: ListTile(
-              leading: Icon(
-                Icons.shopping_bag,
-                size: 40,
-                color: Colors.blue,
+      backgroundColor: Colors.orange,
+      body: SafeArea( // Ensures content starts below the status bar
+        child: ListView.builder(
+          padding: const EdgeInsets.all(16.0),
+          itemCount: 20, // Replace with the number of shopping items you want
+          itemBuilder: (context, index) {
+            return Card(
+              margin: const EdgeInsets.symmetric(vertical: 8.0),
+              elevation: 5,
+              color: Colors.white,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
               ),
-              title: Text(
-                'Item ${index + 1}',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
+              child: ListTile(
+                leading: Icon(
+                  Icons.shopping_bag,
+                  size: 40,
+                  color: Colors.teal,
                 ),
-              ),
-              subtitle: Text('Description of Item ${index + 1}'),
-              trailing: Text(
-                '\$${(index + 1) * 10}', // Example price calculation
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.green,
-                ),
-              ),
-              onTap: () {
-                // Add functionality to navigate to item details or cart
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text('Item ${index + 1} selected'),
+                title: Text(
+                  'Item ${index + 1}',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
                   ),
-                );
-              },
-            ),
-          );
-        },
+                ),
+                subtitle: Text('Description of Item ${index + 1}'),
+                trailing: Text(
+                  '\$${(index + 1) * 10}', // Example price calculation
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.teal,
+                  ),
+                ),
+                onTap: () {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text('Item ${index + 1} selected'),
+                    ),
+                  );
+                },
+              ),
+            );
+          },
+        ),
       ),
     );
   }
