@@ -61,7 +61,7 @@ class _LoginPageState extends State<LoginPage> {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.orange,
+        backgroundColor: Colors.orange.shade300,
       ),
       body: Center(
         child: Padding(
@@ -174,7 +174,7 @@ class _LoginPageState extends State<LoginPage> {
                     height: 50,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(50),
-                      color: Color.fromARGB(255,50,255,224),
+                      color: Color.fromARGB(230, 28, 253, 178),
                       boxShadow: [
                         BoxShadow(
                           color: Colors.black26.withOpacity(0.35),
@@ -198,7 +198,7 @@ class _LoginPageState extends State<LoginPage> {
           ),
         ),
       ),
-      backgroundColor: Colors.orange,
+      backgroundColor: Colors.orange.shade300,
     );
   }
 
