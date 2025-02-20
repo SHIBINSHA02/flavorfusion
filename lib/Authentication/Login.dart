@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:lottie/lottie.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -23,25 +23,16 @@ class _LoginPageState extends State<LoginPage> {
           email: _emailController.text, password: _passwordController.text);
       Navigator.of(context).pop();
     } on FirebaseAuthException catch (e) {
+      Navigator.of(context).pop();
       if (e.code == 'user-not-found') {
-        Navigator.of(context).pop();
         showErrorDialog('Error', 'User not found. Please sign up.');
       } else if (e.code == 'wrong-password') {
-        Navigator.of(context).pop();
         showErrorDialog('Error', 'Wrong password. Please try again.');
       } else {
-        Navigator.of(context).pop();
-        showErrorDialog('Error', 'An unexpected error occurred. Please try again.');
+        showErrorDialog(
+            'Error', 'An unexpected error occurred. Please try again.');
       }
     }
-  }
-
-  void showLoadingDialog() {
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (context) => const Center(child: CircularProgressIndicator()),
-    );
   }
 
   void showErrorDialog(String title, String message) {
@@ -60,75 +51,154 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  void showEmptyFieldsDialog() {
-    showErrorDialog('Empty Fields', 'Please enter both username and password.');
-  }
-
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
+    double padding = screenWidth * 0.05;
+    double buttonWidth = screenWidth * 0.8;
+    double textFieldWidth = screenWidth * 0.85;
+
     return Scaffold(
       appBar: AppBar(
-        title: Text('Login Page'),
+        backgroundColor: Colors.orange.shade300,
       ),
       body: Center(
         child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              const Text(
-                'Welcome Back!',
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 20),
-              TextField(
-                controller: _emailController,
-                decoration: const InputDecoration(
-                  labelText: 'Email',
-                  border: OutlineInputBorder(),
-                  prefixIcon: Icon(Icons.person),
+          padding: EdgeInsets.all(padding),
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Lottie.asset(
+                  'assets/animations/cooking.json',
+                  height: screenHeight * 0.4,
+                  fit: BoxFit.contain,
                 ),
-              ),
-              const SizedBox(height: 10),
-              TextField(
-                controller: _passwordController,
-                decoration: const InputDecoration(
-                  labelText: 'Password',
-                  border: OutlineInputBorder(),
-                  prefixIcon: Icon(Icons.lock),
+                const Text(
+                  'Welcome Back!',
+                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                 ),
-                obscureText: true,
-              ),
-              const SizedBox(height: 20),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  TextButton(
-                    onPressed: () {
-                      // Implement forgot password functionality
-                    },
-                    child: const Text('Forgot Password?'),
+                SizedBox(height: screenHeight * 0.02),
+
+                // Email Input Field (Without Underline)
+                Container(
+                  width: textFieldWidth,
+                  padding: EdgeInsets.symmetric(horizontal: 15),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(50),
+                    color: Colors.white,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black26.withOpacity(0.2),
+                        blurRadius: 6,
+                        offset: Offset(0, 4),
+                      ),
+                    ],
                   ),
-                  TextButton(
-                    onPressed: () {
-                      Navigator.pushNamed(context, '/signup');
-                    },
-                    child: const Text('New User? Sign Up'),
+                  child: TextField(
+                    controller: _emailController,
+                    decoration: const InputDecoration(
+                      labelText: 'Email',
+                      labelStyle: TextStyle(color: Colors.black),
+                      prefixIcon: Icon(Icons.person),
+                      border: InputBorder.none,
+                      focusedBorder: InputBorder.none,
+                      enabledBorder: InputBorder.none,
+                    ),
                   ),
-                ],
-              ),
-              const SizedBox(height: 20),
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  onPressed: signUserIn,
-                  child: const Text('Sign In'),
                 ),
-              ),
-            ],
+
+                SizedBox(height: screenHeight * 0.02),
+
+                // Password Input Field (Without Underline)
+                Container(
+                  width: textFieldWidth,
+                  padding: EdgeInsets.symmetric(horizontal: 15),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(50),
+                    color: Colors.white,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black26.withOpacity(0.2),
+                        blurRadius: 6,
+                        offset: Offset(0, 4),
+                      ),
+                    ],
+                  ),
+                  child: TextField(
+                    controller: _passwordController,
+                    obscureText: true,
+                    decoration: InputDecoration(
+                      labelText: 'Password',
+                      labelStyle: TextStyle(color: Colors.black),
+                      prefixIcon: Icon(Icons.lock),
+                      border: InputBorder.none,
+                      focusedBorder: InputBorder.none,
+                      enabledBorder: InputBorder.none,
+                    ),
+                  ),
+                ),
+
+                const SizedBox(height: 20),
+
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    TextButton(
+                      onPressed: () {
+                        // Implement forgot password functionality
+                      },
+                      child: Text('Forgot Password?',
+                      style: TextStyle(color: Colors.black87),
+                      ),
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        Navigator.pushNamed(context, '/signup');
+                      },
+                      child: const Text('New User? Sign Up',
+                      style: TextStyle(color: Colors.black87),
+                      ),
+                    ),
+                  ],
+                ),
+
+                SizedBox(height: 20),
+
+                // Sign In Button
+                GestureDetector(
+                  onTap: signUserIn,
+                  child: Container(
+                    width: buttonWidth,
+                    height: 50,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(50),
+                      color: Color.fromARGB(230, 28, 253, 178),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black26.withOpacity(0.35),
+                          blurRadius: 6,
+                          offset: Offset(0, 6),
+                        ),
+                      ],
+                    ),
+                    alignment: Alignment.center,
+                    child: const Text(
+                      'Sign In',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
+      backgroundColor: Colors.orange.shade300,
     );
   }
 
