@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:math';
+import 'recipe_day.dart';
+import 'horizontal_recipe_list.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -21,6 +23,7 @@ class _HomePageState extends State<HomePage> {
           'A delicious pasta dish with creamy garlic sauce, perfect for dinner.',
       'cookingTime': '25 min',
       'difficulty': 'Easy',
+      'rating': 4,
       'images': [
         '', // TODO: Add multiple image URLs for Creamy Garlic Pasta
         '',
@@ -151,78 +154,15 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
           ),
-          // Existing content
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const SizedBox(height: 20),
-                const Text(
-                  'Recipe of the Day',
-                  style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  ),
-                ),
-                const SizedBox(height: 16),
-                Card(
-                  elevation: 4,
-                  child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          width: 80,
-                          height: 80,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            image: DecorationImage(
-                              fit: BoxFit.cover,
-                              image: _selectedImage?.isNotEmpty == true
-                                  ? NetworkImage(_selectedImage!)
-                                  : const AssetImage('images/placeholder.jpg')
-                                      as ImageProvider,
-                            ),
-                          ),
-                        ),
-                        const SizedBox(width: 16),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                _currentRecipe?['title'] ?? 'Loading...',
-                                style:
-                                    Theme.of(context).textTheme.headlineSmall,
-                              ),
-                              const SizedBox(height: 8),
-                              Text(
-                                _currentRecipe?['description'] ??
-                                    'Loading recipe details...',
-                                style: Theme.of(context).textTheme.bodyLarge,
-                              ),
-                              const SizedBox(height: 16),
-                              Row(
-                                children: [
-                                  const Icon(Icons.timer),
-                                  const SizedBox(width: 8),
-                                  Text(_currentRecipe?['cookingTime'] ??
-                                      '-- min'),
-                                  const SizedBox(width: 24),
-                                  const Icon(Icons.restaurant),
-                                  const SizedBox(width: 8),
-                                  Text(_currentRecipe?['difficulty'] ?? '---'),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
+                RecipeDay(
+                  currentRecipe: _currentRecipe,
+                  selectedImage: _selectedImage,
                 ),
                 const SizedBox(height: 60),
                 // Popular Recipes Section
@@ -234,73 +174,8 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
                 const SizedBox(height: 16),
-                // Horizontal Scrollable Recipe List
-                SizedBox(
-                  height: 200, // Fixed height for recipe rectangles
-                  child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: _recipes.length,
-                    itemBuilder: (context, index) {
-                      final recipe = _recipes[index];
-                      return Container(
-                        width: MediaQuery.of(context).size.width * 0.7,
-                        margin: const EdgeInsets.only(right: 16),
-                        child: Card(
-                          elevation: 4,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              // Recipe Image
-                              Container(
-                                height: 120,
-                                decoration: BoxDecoration(
-                                  borderRadius: const BorderRadius.only(
-                                    topLeft: Radius.circular(4),
-                                    topRight: Radius.circular(4),
-                                  ),
-                                  image: DecorationImage(
-                                    fit: BoxFit.cover,
-                                    image: const AssetImage(
-                                        'assets/placeholder.jpg'),
-                                  ),
-                                ),
-                              ),
-                              // Recipe Details
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      recipe['title'],
-                                      style: const TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                    const SizedBox(height: 4),
-                                    Row(
-                                      children: [
-                                        const Icon(Icons.timer, size: 16),
-                                        const SizedBox(width: 4),
-                                        Text(recipe['cookingTime']),
-                                        const SizedBox(width: 16),
-                                        const Icon(Icons.restaurant, size: 16),
-                                        const SizedBox(width: 4),
-                                        Text(recipe['difficulty']),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      );
-                    },
-                  ),
+                HorizontalRecipeList(
+                  recipes: _recipes,
                 ),
               ],
             ),
