@@ -1,5 +1,6 @@
 import 'package:flavorfusion/Home/Homepage.dart';
 import 'package:flavorfusion/Profile/Profile.dart';
+import 'package:flavorfusion/Search/Search.dart';
 import 'package:flavorfusion/Shopping/Shopping.dart';
 import 'package:flutter/material.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
@@ -61,7 +62,7 @@ class _NavigationPageState extends State<NavigationPage> {
       case 1:
         return const ShoppingPage();
       case 2:
-      //return const SearchPage();
+        return SearchPage();
       case 3:
       //return const FavoritesPage();
       case 4:
