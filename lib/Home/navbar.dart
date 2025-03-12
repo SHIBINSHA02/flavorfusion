@@ -1,5 +1,5 @@
 import 'package:flavorfusion/Home/Homepage.dart';
-import 'package:flavorfusion/Profile/Profile.dart';
+import 'package:flavorfusion/Profile/profile.dart';
 import 'package:flavorfusion/Search/Search.dart';
 import 'package:flavorfusion/Shopping/Shopping.dart';
 import 'package:flutter/material.dart';

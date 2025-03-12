@@ -1,10 +1,11 @@
 import 'package:flavorfusion/Presentation/Presentation.dart';
 import 'package:flutter/material.dart';
+import 'recipe_service.dart'; // Import the RecipeService
+import 'dart:convert'; // Import the json library
 
 class SearchPage extends StatelessWidget {
   SearchPage({super.key});
 
-  // Define the TextEditingController
   final TextEditingController searchController = TextEditingController();
 
   @override
@@ -22,25 +23,38 @@ class SearchPage extends StatelessWidget {
                 Expanded(
                   child: TextField(
                     controller: searchController,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       border: OutlineInputBorder(),
                       labelText: 'Search',
-                      hintText: 'Enter search term',
+                      hintText: 'Enter food name',
                     ),
                   ),
                 ),
                 IconButton(
                   icon: const Icon(Icons.search),
-                  onPressed: () {
-                    print(
-                        'Search query: ${searchController.text}'); // Print query in terminal
-                    // Navigate to PresentationPage
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) =>
-                              PresentationPage()), // Redirect to PresentationPage
-                    );
+                  onPressed: () async {
+                    try {
+                      // Fetch the recipe
+                      final recipe = await RecipeService.generateRecipe(
+                          searchController.text);
+
+                      // Print entire JSON response in JSON format
+                      print('Generated Recipe: ${json.encode(recipe)}');
+
+                      // Ensure the widget is still mounted before navigating
+                      if (context.mounted) {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                PresentationPage(), // Pass the recipe data
+                          ),
+                        );
+                      }
+                    } catch (e) {
+                      // Print error message
+                      print('Error generating recipe: $e');
+                    }
                   },
                 ),
               ],

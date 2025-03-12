@@ -1,0 +1,16 @@
+[
+    {
+      "name": "Dish 1",
+      "ingredients": [
+        {"name": "Ingredient 1", "checked": false, "quantity": 2},
+        {"name": "Ingredient 2", "checked": false, "quantity": 1}
+      ]
+    },
+    {
+      "name": "Dish 2",
+      "ingredients": [
+        {"name": "Ingredient 3", "checked": false, "quantity": 3},
+        {"name": "Ingredient 4", "checked": false, "quantity": 1}
+      ]
+    }
+  ]
