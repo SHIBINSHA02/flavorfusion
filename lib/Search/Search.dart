@@ -1,7 +1,8 @@
+// search_page.dart
 import 'package:flavorfusion/Presentation/Presentation.dart';
 import 'package:flutter/material.dart';
-import 'recipe_service.dart'; // Import the RecipeService
-import 'dart:convert'; // Import the json library
+import 'recipe_service.dart';
+import 'dart:convert';
 
 class SearchPage extends StatelessWidget {
   SearchPage({super.key});
@@ -34,26 +35,27 @@ class SearchPage extends StatelessWidget {
                   icon: const Icon(Icons.search),
                   onPressed: () async {
                     try {
-                      // Fetch the recipe
                       final recipe = await RecipeService.generateRecipe(
                           searchController.text);
 
-                      // Print entire JSON response in JSON format
-                      print('Generated Recipe: ${json.encode(recipe)}');
+                      final encoder = JsonEncoder.withIndent('  ');
+                      final prettyJson = encoder.convert(recipe);
+                      print('Generated Recipe:\n$prettyJson');
 
-                      // Ensure the widget is still mounted before navigating
                       if (context.mounted) {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
                             builder: (context) =>
-                                PresentationPage(), // Pass the recipe data
+                                PresentationPage(recipe: recipe),
                           ),
                         );
                       }
                     } catch (e) {
-                      // Print error message
                       print('Error generating recipe: $e');
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text('Error: $e')),
+                      );
                     }
                   },
                 ),

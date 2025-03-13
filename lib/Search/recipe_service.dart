@@ -1,15 +1,11 @@
+// recipe_service.dart
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-// For environment variables
 
 class RecipeService {
   static Future<Map<String, dynamic>> generateRecipe(String foodName) async {
-    final String? apiKey =
-        "AIzaSyCYAg-vWQEJUT3bzUQzwhsBTWaLxAfvobA"; // Load API Key
-
-    if (apiKey == null) {
-      throw Exception("API Key not found. Make sure to add it in .env file.");
-    }
+    final String apiKey =
+        "AIzaSyCYAg-vWQEJUT3bzUQzwhsBTWaLxAfvobA"; // Replace with your actual API key.
 
     const String apiUrl =
         "https://generativelanguage.googleapis.com/v1/models/gemini-2.0-flash:generateContent";

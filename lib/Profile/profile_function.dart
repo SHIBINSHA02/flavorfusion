@@ -15,19 +15,28 @@ class ProfileFunctions {
   static String imageUrl = ''; // Initialize as empty
 
   static Future<void> fetchUserData(Function setState) async {
-    String userId = FirebaseAuth.instance.currentUser!.uid;
-    DocumentSnapshot userDoc =
-        await FirebaseFirestore.instance.collection('users').doc(userId).get();
+    try {
+      String userId = FirebaseAuth.instance.currentUser!.uid;
+      DocumentSnapshot userDoc = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(userId)
+          .get();
 
-    if (userDoc.exists) {
-      name = userDoc['name'] ?? '';
-      email = userDoc['email'] ?? '';
-      experience = userDoc['experience'] ?? '';
-      birthday = userDoc['birthday'] ?? '';
-      cookingLevel = userDoc['cookingLevel'] ?? 'Beginner';
-      cookingPreference = userDoc['cookingPreference'] ?? 'Cooking';
-      imageUrl = userDoc['imageUrl'] ?? ''; // Get imageUrl from Firestore
-      setState(() {});
+      if (userDoc.exists) {
+        print("User Data: ${userDoc.data()}"); // Debugging statement
+        name = userDoc['name'] ?? '';
+        email = userDoc['email'] ?? '';
+        experience = userDoc['experience'] ?? '';
+        birthday = userDoc['birthday'] ?? '';
+        cookingLevel = userDoc['cookingLevel'] ?? 'Beginner';
+        cookingPreference = userDoc['cookingPreference'] ?? 'Cooking';
+        imageUrl = userDoc['imageUrl'] ?? ''; // Get imageUrl from Firestore
+        setState(() {});
+      } else {
+        print("User document does not exist.");
+      }
+    } catch (e) {
+      print("Error fetching user data: $e"); // Print any errors during fetching
     }
   }
 
@@ -42,16 +51,20 @@ class ProfileFunctions {
           .ref()
           .child('user_images/$userId.jpg');
 
-      await ref.putFile(imageFile);
-      String downloadUrl = await ref.getDownloadURL();
+      try {
+        await ref.putFile(imageFile);
+        String downloadUrl = await ref.getDownloadURL();
 
-      await FirebaseFirestore.instance
-          .collection('users')
-          .doc(userId)
-          .update({'imageUrl': downloadUrl});
+        await FirebaseFirestore.instance
+            .collection('users')
+            .doc(userId)
+            .update({'imageUrl': downloadUrl});
 
-      imageUrl = downloadUrl;
-      setState(() {});
+        imageUrl = downloadUrl;
+        setState(() {});
+      } catch (e) {
+        print("Error uploading image: $e"); // Print any errors during upload
+      }
     }
   }
 
@@ -67,6 +80,9 @@ class ProfileFunctions {
     emailController.text = email;
     experienceController.text = experience;
     birthdayController.text = birthday;
+
+    // Create a new TextEditingController for the image URL
+    TextEditingController imageUrlController = TextEditingController(text: imageUrl);
 
     showDialog(
       context: context,
@@ -87,13 +103,17 @@ class ProfileFunctions {
                 ),
                 TextField(
                   controller: experienceController,
-                  decoration:
-                      const InputDecoration(labelText: 'Previous Work Experience'),
+                  decoration: const InputDecoration(
+                      labelText: 'Previous Work Experience'),
                 ),
                 TextField(
                   controller: birthdayController,
                   decoration:
                       const InputDecoration(labelText: 'Birthday (YYYY-MM-DD)'),
+                ),
+                TextField(
+                  controller: imageUrlController, // New field for image URL
+                  decoration: const InputDecoration(labelText: 'Profile Image URL'),
                 ),
                 DropdownButton<String>(
                   value: cookingLevel,
@@ -146,7 +166,7 @@ class ProfileFunctions {
                   'birthday': birthdayController.text,
                   'cookingLevel': cookingLevel,
                   'cookingPreference': cookingPreference,
-                  'imageUrl': imageUrl,
+                  'imageUrl': imageUrlController.text, // Use the URL from the new field
                 });
                 Navigator.of(context).pop();
                 fetchUserData(setState);
