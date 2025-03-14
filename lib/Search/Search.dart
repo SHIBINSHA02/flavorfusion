@@ -1,4 +1,3 @@
-// search_page.dart
 import 'package:flavorfusion/Presentation/Presentation.dart';
 import 'package:flutter/material.dart';
 import 'recipe_service.dart';
@@ -35,8 +34,9 @@ class SearchPage extends StatelessWidget {
                   icon: const Icon(Icons.search),
                   onPressed: () async {
                     try {
-                      final recipe = await RecipeService.generateRecipe(
-                          searchController.text);
+                      final recipe =
+                          await RecipeService.generateRecipeWithImages(
+                              searchController.text);
 
                       final encoder = JsonEncoder.withIndent('  ');
                       final prettyJson = encoder.convert(recipe);

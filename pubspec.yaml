@@ -50,6 +50,7 @@ dependencies:
   flutter_bloc: ^9.1.0
   dio: ^5.0.0
   cloud_firestore:
+  dotenv:
 
 dev_dependencies:
   flutter_test:
