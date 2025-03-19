@@ -92,7 +92,7 @@ Return: A well-structured JSON response.
 
   static Future<Map<String, dynamic>> generateRecipeWithImages(String foodName) async {
     final recipe = await generateRecipe(foodName);
-    final String serpApiKey = "c200a86a2bac5ff29ddc17453cc3fc8d45155b97e2455a330cba3a9b7b7b5591"; // Your SerpAPI key
+    final String serpApiKey = "82892f0739587533874a8b4cbfdfbf3936107e2edf22ac11c6fd68c432c25ec9"; // Your SerpAPI key
 
     try {
       final recipeName = recipe['recipe_name'];
