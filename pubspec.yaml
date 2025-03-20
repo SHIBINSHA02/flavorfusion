@@ -51,6 +51,7 @@ dependencies:
   dio: ^5.0.0
   cloud_firestore:
   dotenv:
+  text_to_speech: ^0.2.3
 
 dev_dependencies:
   flutter_test:

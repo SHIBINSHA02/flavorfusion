@@ -47,7 +47,7 @@ class SearchPage extends StatelessWidget {
                           context,
                           MaterialPageRoute(
                             builder: (context) =>
-                                PresentationPage(recipe: recipe),
+                                PresentationPage(recipeData: recipe),
                           ),
                         );
                       }

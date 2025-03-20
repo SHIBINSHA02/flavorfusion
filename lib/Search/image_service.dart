@@ -43,14 +43,14 @@ class ImageService {
         retryCount++;
         print('Image request timed out. Retry $retryCount...');
         if (retryCount >= maxRetries) {
-          return "https://www.pngmart.com/files/16/Google-Logo-PNG-Image.png";
+          return "https://th.bing.com/th/id/OIP.oYPGHQorMluB7LhtQUmzTgHaEK?rs=1&pid=ImgDetMain";
         }
         await Future.delayed(Duration(seconds: 1)); // Delay before retry
       } catch (e) {
         retryCount++;
         print("Failed to fetch: $e. Retry $retryCount...");
         if (retryCount >= maxRetries) {
-          return "https://www.pngmart.com/files/16/Google-Logo-PNG-Image.png";
+          return "https://th.bing.com/th/id/OIP.oYPGHQorMluB7LhtQUmzTgHaEK?rs=1&pid=ImgDetMain";
         }
         await Future.delayed(Duration(seconds: 1)); // Delay before retry
       }
