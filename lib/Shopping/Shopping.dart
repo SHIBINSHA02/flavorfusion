@@ -21,17 +21,18 @@ class _ShoppingPageState extends State<ShoppingPage> {
   }
 
   Future<void> loadDishes() async {
-  try {
-    final String response = await rootBundle.loadString('lib/Shopping/dishes.json');
-    final data = await json.decode(response);
-    print("Loaded JSON: $data"); // Print the loaded data
-    setState(() {
-      dishes = data;
-    });
-  } catch (e) {
-    print("Error loading dishes: $e");
+    try {
+      final String response =
+          await rootBundle.loadString('lib/Shopping/dishes.json');
+      final data = await json.decode(response);
+      print("Loaded JSON: $data"); // Print the loaded data
+      setState(() {
+        dishes = data;
+      });
+    } catch (e) {
+      print("Error loading dishes: $e");
+    }
   }
-}
 
   void deleteDish(int index) {
     setState(() {

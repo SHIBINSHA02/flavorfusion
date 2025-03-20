@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 
 class PresentationPage extends StatelessWidget {
+  const PresentationPage({Key? key, required this.recipe}) : super(key: key);
   final Map<String, dynamic> recipe;
-
-  PresentationPage({required this.recipe});
 
   @override
   Widget build(BuildContext context) {

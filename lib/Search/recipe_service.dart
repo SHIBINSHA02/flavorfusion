@@ -7,8 +7,10 @@ import 'package:flutter/foundation.dart'; // For debugPrint
 
 class RecipeService {
   static Future<Map<String, dynamic>> generateRecipe(String foodName) async {
-    final String apiKey = "AIzaSyCYAg-vWQEJUT3bzUQzwhsBTWaLxAfvobA"; // Replace with actual API key
-    const String apiUrl = "https://generativelanguage.googleapis.com/v1/models/gemini-2.0-flash:generateContent";
+    final String apiKey =
+        "AIzaSyCYAg-vWQEJUT3bzUQzwhsBTWaLxAfvobA"; // Replace with actual API key
+    const String apiUrl =
+        "https://generativelanguage.googleapis.com/v1/models/gemini-2.0-flash:generateContent";
 
     final Map<String, dynamic> requestBody = {
       "contents": [
@@ -37,7 +39,8 @@ class RecipeService {
 
         // Ensure valid response structure
         if (data.containsKey("candidates") && data["candidates"].isNotEmpty) {
-          final String rawResponse = data["candidates"][0]["content"]["parts"][0]["text"];
+          final String rawResponse =
+              data["candidates"][0]["content"]["parts"][0]["text"];
 
           // Clean up JSON response
           final String jsonString = _sanitizeJson(rawResponse);
@@ -50,7 +53,8 @@ class RecipeService {
             throw Exception("JSON Decoding Error: $e \nRaw JSON: $jsonString");
           }
         } else {
-          throw Exception("Unexpected API Response Structure: ${response.body}");
+          throw Exception(
+              "Unexpected API Response Structure: ${response.body}");
         }
       } else {
         throw Exception("API Error: ${response.statusCode} - ${response.body}");
@@ -61,11 +65,13 @@ class RecipeService {
   }
 
   static String _sanitizeJson(String rawResponse) {
-    String jsonString = rawResponse.replaceAll(RegExp(r'```json|```'), '').trim();
-    
+    String jsonString =
+        rawResponse.replaceAll(RegExp(r'```json|```'), '').trim();
+
     // Ensure it ends properly
     if (!jsonString.endsWith("}")) {
-      throw Exception("Incomplete JSON response detected. Raw data: $jsonString");
+      throw Exception(
+          "Incomplete JSON response detected. Raw data: $jsonString");
     }
 
     return jsonString;
@@ -90,31 +96,37 @@ Return: A well-structured JSON response.
 """;
   }
 
-  static Future<Map<String, dynamic>> generateRecipeWithImages(String foodName) async {
+  static Future<Map<String, dynamic>> generateRecipeWithImages(
+      String foodName) async {
     final recipe = await generateRecipe(foodName);
-    final String serpApiKey = "82892f0739587533874a8b4cbfdfbf3936107e2edf22ac11c6fd68c432c25ec9"; // Your SerpAPI key
+    final String serpApiKey =
+        "82892f0739587533874a8b4cbfdfbf3936107e2edf22ac11c6fd68c432c25ec9"; // Your SerpAPI key
 
     try {
       final recipeName = recipe['recipe_name'];
-      final imageUrl = await ImageService.getSingleImageUrl(serpApiKey, recipeName);
+      final imageUrl =
+          await ImageService.getSingleImageUrl(serpApiKey, recipeName);
       recipe['image_url'] = imageUrl;
       debugPrint("Recipe Image URL: $imageUrl");
 
-      final List<dynamic> ingredients = recipe['ingredients'] as List<dynamic>; // Explicit type
+      final List<dynamic> ingredients =
+          recipe['ingredients'] as List<dynamic>; // Explicit type
       for (var ingredient in ingredients) {
         await Future.delayed(Duration(seconds: 1)); // Avoid rate limits
         final ingredientName = ingredient['name'];
-        final ingredientImageUrl = await ImageService.getSingleImageUrl(serpApiKey, ingredientName);
+        final ingredientImageUrl =
+            await ImageService.getSingleImageUrl(serpApiKey, ingredientName);
         ingredient['image_url'] = ingredientImageUrl;
-        debugPrint("Ingredient Image URL ($ingredientName): $ingredientImageUrl");
+        debugPrint(
+            "Ingredient Image URL ($ingredientName): $ingredientImageUrl");
       }
       await Future.delayed(Duration(seconds: 1));
 
       // Store the recipe in Firestore
-      String dishId = await DishService.addDish(recipe['recipe_name'], "Generated");
+      String dishId = await DishService.addDish(recipe['recipe_name']);
       if (dishId.isNotEmpty) {
         await DishService.addRecipe(dishId, recipe);
-        await DishService.addDishProperties(dishId, 0.0, "Initial recipe");
+        // await DishService.addDishProperties(dishId, 0.0, "Initial recipe");
       }
 
       return recipe;

@@ -6,7 +6,7 @@ class DishService {
   static final FirebaseAuth _auth = FirebaseAuth.instance;
 
   // Function to add a dish inside the user's 'dishes' subcollection
-  static Future<String> addDish(String dishName, String category) async {
+  static Future<String> addDish(String dishName) async {
     try {
       String? userId = _auth.currentUser?.uid; // Get the current user's ID
       if (userId == null) throw Exception("User not authenticated");
@@ -17,7 +17,6 @@ class DishService {
           .collection('dishes')
           .add({
         'dishName': dishName,
-        'category': category,
         'timestamp': FieldValue.serverTimestamp(),
       });
 
@@ -29,27 +28,27 @@ class DishService {
   }
 
   // Function to add properties to a dish inside the user's 'dishes' subcollection
-  static Future<void> addDishProperties(
-      String dishId, double rating, String notes) async {
-    try {
-      String? userId = _auth.currentUser?.uid;
-      if (userId == null) throw Exception("User not authenticated");
+  // static Future<void> addDishProperties(
+  //     String dishId, double rating, String notes) async {
+  //   try {
+  //     String? userId = _auth.currentUser?.uid;
+  //     if (userId == null) throw Exception("User not authenticated");
 
-      await _firestore
-          .collection('users')
-          .doc(userId)
-          .collection('dishes')
-          .doc(dishId)
-          .collection('dishProperties')
-          .add({
-        'rating': rating,
-        'timestamp': FieldValue.serverTimestamp(),
-        'notes': notes,
-      });
-    } catch (e) {
-      print('Error adding dish properties: $e');
-    }
-  }
+  //     await _firestore
+  //         .collection('users')
+  //         .doc(userId)
+  //         .collection('dishes')
+  //         .doc(dishId)
+  //         .collection('dishProperties')
+  //         .add({
+  //       'rating': rating,
+  //       'timestamp': FieldValue.serverTimestamp(),
+  //       'notes': notes,
+  //     });
+  //   } catch (e) {
+  //     print('Error adding dish properties: $e');
+  //   }
+  // }
 
   // Function to add a recipe to a dish inside the user's 'dishes' subcollection
   static Future<void> addRecipe(
