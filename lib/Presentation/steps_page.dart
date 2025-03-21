@@ -46,14 +46,15 @@ class _StepsPageState extends State<StepsPage> {
     }
   }
 
-  Widget _getFlameWidget(String? flame) {
+  Widget? _getFlameWidget(String? flame) {
+    if (flame == null || flame.toLowerCase() == 'null' || flame.toLowerCase() == 'unknown') {
+      return null;
+    }
+
     Widget icon;
     String label;
 
-    if (flame == null || flame.toLowerCase() == 'null') {
-      icon = Icon(Icons.question_mark, color: Colors.grey);
-      label = 'Unknown';
-    } else if (flame.toLowerCase() == 'low') {
+    if (flame.toLowerCase() == 'low') {
       icon = Icon(Icons.whatshot, color: Colors.green);
       label = 'Low';
     } else if (flame.toLowerCase() == 'medium') {
@@ -63,15 +64,17 @@ class _StepsPageState extends State<StepsPage> {
       icon = Icon(Icons.whatshot, color: Colors.red);
       label = 'High';
     } else {
-      icon = Icon(Icons.question_mark, color: Colors.grey);
-      label = 'Unknown';
+      return null;
     }
 
     return Row(
+      mainAxisSize: MainAxisSize.min, // Use min size to prevent unnecessary expansion
       children: [
         icon,
         SizedBox(width: 5),
-        Text('Flame: $label', style: GoogleFonts.quicksand(fontSize: 16)),
+        Flexible( // Use Flexible to allow text to wrap if necessary
+          child: Text('Flame: $label', style: GoogleFonts.quicksand(fontSize: 16)),
+        ),
       ],
     );
   }
@@ -127,6 +130,7 @@ class _StepsPageState extends State<StepsPage> {
                   final step = widget.steps![index];
                   final stepName = step['step_name']?.toString() ?? 'Step ${index + 1}';
                   final description = step['description']?.toString() ?? 'No description';
+                  final flameWidget = _getFlameWidget(step['flame']);
 
                   return Padding(
                     padding: const EdgeInsets.all(24.0),
@@ -150,8 +154,8 @@ class _StepsPageState extends State<StepsPage> {
                                 textAlign: TextAlign.center,
                               ),
                               SizedBox(height: 20),
-                              Expanded( // Use Expanded to allow scrolling description
-                                child: SingleChildScrollView( // Wrap description in SingleChildScrollView
+                              Expanded(
+                                child: SingleChildScrollView(
                                   child: Text(
                                     description,
                                     style: GoogleFonts.quicksand(fontSize: 18),
@@ -162,20 +166,25 @@ class _StepsPageState extends State<StepsPage> {
                               SizedBox(height: 20),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
+                                mainAxisSize: MainAxisSize.min, // Use min size
                                 children: [
-                                  Text(
-                                    'Time: ${step['time'] ?? 'N/A'}',
-                                    style: GoogleFonts.quicksand(
-                                      fontSize: 16,
-                                      fontStyle: FontStyle.italic,
+                                  Flexible( // Use Flexible to allow text to wrap
+                                    child: Text(
+                                      'Time: ${step['time'] ?? 'N/A'}',
+                                      style: GoogleFonts.quicksand(
+                                        fontSize: 16,
+                                        fontStyle: FontStyle.italic,
+                                      ),
                                     ),
                                   ),
-                                  SizedBox(width: 20),
-                                  _getFlameWidget(step['flame']),
+                                  if (flameWidget != null) ...[
+                                    SizedBox(width: 20),
+                                    flameWidget,
+                                  ],
                                 ],
                               ),
                               SizedBox(height: 20),
-                              TimerWidget(), // Add the TimerWidget here
+                              TimerWidget(),
                             ],
                           ),
                         ),

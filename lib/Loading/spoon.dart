@@ -13,23 +13,12 @@ class LoadingScreen extends StatelessWidget {
         decoration: const BoxDecoration(
           color: Colors.white,
         ),
-        child: Stack(
-          children: [
-            Align(
-              alignment: Alignment.topCenter,
-              child: Container(
-                height: MediaQuery.of(context).size.height * 0.5,
-                color: Colors.orange,
-              ),
-            ),
-            Center(
-              child: Lottie.asset(
-                'assets/animations/loading.json', // Path to your Lottie file
-                width: 350,
-                height: 350,
-              ),
-            ),
-          ],
+        child: Center(
+          child: Lottie.asset(
+            'assets/animations/loading.json', // Path to your Lottie file
+            width: 350,
+            height: 350,
+          ),
         ),
       ),
     );
