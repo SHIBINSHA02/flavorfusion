@@ -37,7 +37,7 @@ class ImageService {
         } else {
           print("Error: ${response.statusCode}");
           print(response.body);
-          return null;
+          return "https://th.bing.com/th/id/OIP.oYPGHQorMluB7LhtQUmzTgHaEK?rs=1&pid=ImgDetMain";
         }
       } on TimeoutException catch (_) {
         retryCount++;
@@ -56,6 +56,6 @@ class ImageService {
       }
     }
 
-    return "https://www.pngmart.com/files/16/Google-Logo-PNG-Image.png"; // Return default after max retries
+          return "https://th.bing.com/th/id/OIP.oYPGHQorMluB7LhtQUmzTgHaEK?rs=1&pid=ImgDetMain";
   }
 }

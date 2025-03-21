@@ -25,7 +25,7 @@ plugins {
 
 android {
     namespace = "com.example.flavorfusion"
-    compileSdkVersion 34 // Ensure this is set to the correct version
+    compileSdkVersion 35 // Ensure this is set to the correct version
     ndkVersion = "25.1.8517264"
 
     compileOptions {
@@ -40,9 +40,10 @@ android {
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
         applicationId = "com.example.flavorfusion"
+        namespace="com.example.flavorfusion"
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
-        minSdkVersion = 23
+        minSdkVersion = 25
         targetSdkVersion = 34 // Ensure this is set to the correct version
         versionCode = 1
         versionName = "1.0"

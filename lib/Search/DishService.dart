@@ -52,20 +52,20 @@ class DishService {
 
   // Function to add a recipe to a dish inside the user's 'dishes' subcollection
   static Future<void> addRecipe(
-      String dishId, Map<String, dynamic> recipeData) async {
-    try {
-      String? userId = _auth.currentUser?.uid;
-      if (userId == null) throw Exception("User not authenticated");
+    String dishId, Map<String, dynamic> recipeData) async {
+  try {
+    String? userId = _auth.currentUser?.uid;
+    if (userId == null) throw Exception("User not authenticated");
 
-      await _firestore
-          .collection('users')
-          .doc(userId)
-          .collection('dishes')
-          .doc(dishId)
-          .collection('recipe')
-          .add(recipeData);
-    } catch (e) {
-      print('Error adding recipe: $e');
-    }
+    await _firestore
+        .collection('users')
+        .doc(userId)
+        .collection('dishes')
+        .doc(dishId)
+        .set({'recipe': recipeData}, SetOptions(merge: true));
+  } catch (e) {
+    print('Error adding recipe: $e');
   }
+}
+
 }

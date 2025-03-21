@@ -51,7 +51,8 @@ dependencies:
   dio: ^5.0.0
   cloud_firestore:
   dotenv:
-  text_to_speech: ^0.2.3
+  google_fonts: ^6.2.1
+  just_audio: ^0.9.46
 
 dev_dependencies:
   flutter_test:
@@ -84,6 +85,8 @@ flutter:
      - images/2.jpg
      - assets/animations/cooking.json
      - lib/Shopping/dishes.json
+     - assets/Presentation/sound.wav
+     - assets/animations/loading.json
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
