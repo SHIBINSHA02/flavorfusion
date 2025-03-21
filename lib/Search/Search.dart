@@ -5,7 +5,7 @@ import 'dart:convert';
 import './../Loading/spoon.dart'; // Import the loading screen
 
 class SearchPage extends StatefulWidget {
-  const SearchPage({super.key}); 
+  const SearchPage({super.key});
 
   @override
   _SearchPageState createState() => _SearchPageState();
@@ -14,6 +14,7 @@ class SearchPage extends StatefulWidget {
 class _SearchPageState extends State<SearchPage> {
   final TextEditingController searchController = TextEditingController();
   bool isLoading = false;
+  String _searchType = 'Search Recipe'; // Default search type
 
   Future<void> _searchRecipe(BuildContext context) async {
     setState(() {
@@ -21,7 +22,9 @@ class _SearchPageState extends State<SearchPage> {
     });
 
     try {
-      final recipe = await RecipeService.generateRecipeWithImages(searchController.text);
+      final recipe = await RecipeService.generateRecipeWithImages(
+          searchController.text,
+          searchType: _searchType); // Pass search type
 
       final encoder = JsonEncoder.withIndent('  ');
       final prettyJson = encoder.convert(recipe);
@@ -57,13 +60,39 @@ class _SearchPageState extends State<SearchPage> {
         ? const LoadingScreen() // Show loading screen
         : Scaffold(
             appBar: AppBar(
-              title: const Text('Search Page'),
+              title: const Text('Search Recipes'),
             ),
-            body: Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Row(
+            body: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  // Dropdown for search type
+                  DropdownButtonFormField<String>(
+                    value: _searchType,
+                    items: <String>[
+                      'Search Recipe',
+                      'Create from Ingredients'
+                    ].map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList(),
+                    onChanged: (String? newValue) {
+                      setState(() {
+                        _searchType = newValue!;
+                      });
+                    },
+                    decoration: const InputDecoration(
+                      labelText: 'Search Type',
+                      border: OutlineInputBorder(),
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+
+                  // Search Bar
+                  Row(
                     children: [
                       Expanded(
                         child: TextField(
@@ -71,18 +100,23 @@ class _SearchPageState extends State<SearchPage> {
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(),
                             labelText: 'Search',
-                            hintText: 'Enter food name',
+                            hintText: 'Enter food name or ingredients',
                           ),
                         ),
                       ),
-                      IconButton(
-                        icon: const Icon(Icons.search),
+                      const SizedBox(width: 10),
+                      ElevatedButton(
                         onPressed: () => _searchRecipe(context),
+                        style: ElevatedButton.styleFrom(
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 15, horizontal: 20),
+                        ),
+                        child: const Icon(Icons.search),
                       ),
                     ],
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           );
   }

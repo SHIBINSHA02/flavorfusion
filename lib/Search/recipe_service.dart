@@ -97,8 +97,18 @@ Return: A well-structured JSON response.
   }
 
   static Future<Map<String, dynamic>> generateRecipeWithImages(
-      String foodName) async {
-    final recipe = await generateRecipe(foodName);
+      String query,
+      {String searchType = 'dish recipe search'}) async {
+    Map<String, dynamic> recipe;
+    if (searchType == 'dish recipe search') {
+      recipe = await generateRecipe(query);
+    } else if (searchType == 'create dish with available ingredients') {
+      // Modify the prompt to use available ingredients
+      recipe = await generateRecipeFromIngredients(query);
+    } else {
+      throw Exception("Invalid search type: $searchType");
+    }
+
     final String serpApiKey =
         "82892f0739587533874a8b4cbfdfbf3936107e2edf22ac11c6fd68c432c25ec9"; // Your SerpAPI key
 
@@ -134,5 +144,83 @@ Return: A well-structured JSON response.
       debugPrint('Error adding images or saving to Firestore: $e');
       return recipe;
     }
+  }
+
+  static Future<Map<String, dynamic>> generateRecipeFromIngredients(
+      String ingredients) async {
+    final String apiKey =
+        "AIzaSyCYAg-vWQEJUT3bzUQzwhsBTWaLxAfvobA"; // Replace with actual API key
+    const String apiUrl =
+        "https://generativelanguage.googleapis.com/v1/models/gemini-2.0-flash:generateContent";
+
+    final Map<String, dynamic> requestBody = {
+      "contents": [
+        {
+          "role": "user",
+          "parts": [
+            {"text": _getIngredientsPrompt(ingredients)}
+          ]
+        }
+      ]
+    };
+
+    try {
+      final response = await http
+          .post(
+            Uri.parse("$apiUrl?key=$apiKey"),
+            headers: {"Content-Type": "application/json"},
+            body: json.encode(requestBody),
+          )
+          .timeout(Duration(seconds: 30));
+
+      debugPrint("Raw API Response (Ingredients): ${response.body}");
+
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> data = json.decode(response.body);
+
+        if (data.containsKey("candidates") && data["candidates"].isNotEmpty) {
+          final String rawResponse =
+              data["candidates"][0]["content"]["parts"][0]["text"];
+
+          final String jsonString = _sanitizeJson(rawResponse);
+          debugPrint('Processed JSON Response (Ingredients): $jsonString');
+
+          try {
+            final Map<String, dynamic> jsonResponse = json.decode(jsonString);
+            return jsonResponse;
+          } catch (e) {
+            throw Exception(
+                "JSON Decoding Error (Ingredients): $e \nRaw JSON: $jsonString");
+          }
+        } else {
+          throw Exception(
+              "Unexpected API Response Structure (Ingredients): ${response.body}");
+        }
+      } else {
+        throw Exception(
+            "API Error (Ingredients): ${response.statusCode} - ${response.body}");
+      }
+    } catch (e) {
+      throw Exception("Error generating recipe from ingredients: $e");
+    }
+  }
+
+  static String _getIngredientsPrompt(String ingredients) {
+    return """
+Generate a recipe in JSON format using the available ingredients provided.
+
+Recipe = {
+  "recipe_name": str,
+  "description": str,
+  "ingredients": [{"name": str, "quantity": str}],
+  "steps": [{"index": int, "step_name": str, "description": str, "time": str, "flame": str}],
+  "total_time": str,
+  "conclusion": str
+}
+
+Available Ingredients: "$ingredients"
+
+Return: A well-structured JSON response.
+""";
   }
 }

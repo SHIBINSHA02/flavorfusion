@@ -1,16 +1,42 @@
 [
-    {
-      "name": "Dish 1",
+  {
+      "name": "Pizza",
       "ingredients": [
-        {"name": "Ingredient 1", "checked": false, "quantity": 2},
-        {"name": "Ingredient 2", "checked": false, "quantity": 1}
+          {
+              "name": "Dough",
+              "quantity": 1,
+              "checked": false
+          },
+          {
+              "name": "Tomato Sauce",
+              "quantity": 1,
+              "checked": false
+          },
+          {
+              "name": "Cheese",
+              "quantity": 2,
+              "checked": false
+          }
       ]
-    },
-    {
-      "name": "Dish 2",
+  },
+  {
+      "name": "Burger",
       "ingredients": [
-        {"name": "Ingredient 3", "checked": false, "quantity": 3},
-        {"name": "Ingredient 4", "checked": false, "quantity": 1}
+          {
+              "name": "Bun",
+              "quantity": 1,
+              "checked": false
+          },
+          {
+              "name": "Patty",
+              "quantity": 1,
+              "checked": false
+          },
+          {
+              "name": "Lettuce",
+              "quantity": 1,
+              "checked": false
+          }
       ]
-    }
-  ]
+  }
+]

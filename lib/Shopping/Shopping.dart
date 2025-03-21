@@ -1,10 +1,9 @@
 // lib/Shopping/Shopping.dart
-import 'dart:convert'; // Add this import for JSON handling
-import 'package:flutter/services.dart'; // Add this import for loading JSON files
+import 'dart:convert';
+import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 
 class ShoppingPage extends StatefulWidget {
-  // Change to StatefulWidget
   const ShoppingPage({super.key});
 
   @override
@@ -12,12 +11,12 @@ class ShoppingPage extends StatefulWidget {
 }
 
 class _ShoppingPageState extends State<ShoppingPage> {
-  List<dynamic> dishes = []; // List to hold dish data
+  List<dynamic> dishes = [];
 
   @override
   void initState() {
     super.initState();
-    loadDishes(); // Load dishes from JSON
+    loadDishes();
   }
 
   Future<void> loadDishes() async {
@@ -25,7 +24,7 @@ class _ShoppingPageState extends State<ShoppingPage> {
       final String response =
           await rootBundle.loadString('lib/Shopping/dishes.json');
       final data = await json.decode(response);
-      print("Loaded JSON: $data"); // Print the loaded data
+      print("Loaded JSON: $data");
       setState(() {
         dishes = data;
       });
@@ -36,7 +35,16 @@ class _ShoppingPageState extends State<ShoppingPage> {
 
   void deleteDish(int index) {
     setState(() {
-      dishes.removeAt(index); // Remove dish from the list
+      dishes.removeAt(index);
+    });
+  }
+
+  void deleteIngredient(int dishIndex, int ingredientIndex) {
+    setState(() {
+      dishes[dishIndex]['ingredients'].removeAt(ingredientIndex);
+      if (dishes[dishIndex]['ingredients'].isEmpty) {
+        dishes.removeAt(dishIndex);
+      }
     });
   }
 
@@ -48,7 +56,7 @@ class _ShoppingPageState extends State<ShoppingPage> {
       ),
       body: ListView.builder(
         padding: const EdgeInsets.all(16.0),
-        itemCount: dishes.length, // Use the length of the dishes list
+        itemCount: dishes.length,
         itemBuilder: (context, index) {
           final dish = dishes[index];
           return Card(
@@ -62,15 +70,26 @@ class _ShoppingPageState extends State<ShoppingPage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    dish['name'], // Use dish name from JSON
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        dish['name'],
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      IconButton(
+                        icon: Icon(Icons.delete),
+                        color: Colors.red,
+                        onPressed: () {
+                          deleteDish(index);
+                        },
+                      ),
+                    ],
                   ),
-                  SizedBox(
-                      height: 8.0), // Space between dish name and ingredients
+                  SizedBox(height: 8.0),
                   Column(
                     children: List.generate(dish['ingredients'].length,
                         (ingredientIndex) {
@@ -83,27 +102,25 @@ class _ShoppingPageState extends State<ShoppingPage> {
                                 Checkbox(
                                   value: dish['ingredients'][ingredientIndex]
                                           ['checked'] ??
-                                      false, // Checkbox state
+                                      false,
                                   onChanged: (bool? value) {
                                     setState(() {
                                       dish['ingredients'][ingredientIndex]
-                                              ['checked'] =
-                                          value; // Update checked state
+                                          ['checked'] = value;
                                     });
                                   },
                                 ),
                                 Text(
-                                  '${dish['ingredients'][ingredientIndex]['name']} (x${dish['ingredients'][ingredientIndex]['quantity']})', // Display ingredient name and quantity
+                                  '${dish['ingredients'][ingredientIndex]['name']} (x${dish['ingredients'][ingredientIndex]['quantity']})',
                                   style: TextStyle(fontSize: 16),
                                 ),
                               ],
                             ),
                           ),
                           IconButton(
-                            icon: Icon(Icons.delete), // Delete icon
+                            icon: Icon(Icons.delete),
                             onPressed: () {
-                              deleteIngredient(index,
-                                  ingredientIndex); // Call delete function
+                              deleteIngredient(index, ingredientIndex);
                             },
                           ),
                         ],
@@ -117,12 +134,5 @@ class _ShoppingPageState extends State<ShoppingPage> {
         },
       ),
     );
-  }
-
-  void deleteIngredient(int dishIndex, int ingredientIndex) {
-    setState(() {
-      dishes[dishIndex]['ingredients']
-          .removeAt(ingredientIndex); // Remove ingredient from the list
-    });
   }
 }
