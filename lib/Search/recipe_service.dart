@@ -96,13 +96,12 @@ Return: A well-structured JSON response.
 """;
   }
 
-  static Future<Map<String, dynamic>> generateRecipeWithImages(
-      String query,
+  static Future<Map<String, dynamic>> generateRecipeWithImages(String query,
       {String searchType = 'dish recipe search'}) async {
     Map<String, dynamic> recipe;
-    if (searchType == 'dish recipe search') {
+    if (searchType == 'Search Recipe') {
       recipe = await generateRecipe(query);
-    } else if (searchType == 'create dish with available ingredients') {
+    } else if (searchType == 'Create from Ingredients') {
       // Modify the prompt to use available ingredients
       recipe = await generateRecipeFromIngredients(query);
     } else {
@@ -218,7 +217,7 @@ Recipe = {
   "conclusion": str
 }
 
-Available Ingredients: "$ingredients"
+Available Ingredients seperated by commas: "$ingredients"
 
 Return: A well-structured JSON response.
 """;

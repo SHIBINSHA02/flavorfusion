@@ -100,7 +100,7 @@ class _SearchPageState extends State<SearchPage> {
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(),
                             labelText: 'Search',
-                            hintText: 'Enter food name or ingredients',
+                            hintText: 'Create from Ingredients',
                           ),
                         ),
                       ),
