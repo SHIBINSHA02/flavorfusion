@@ -6,12 +6,38 @@ import 'firebase_options.dart';
 import 'Authentication/Login.dart';
 import 'Authentication/Signup.dart';
 import 'Home/navbar.dart';
+// import 'package:flavorfusion/Fetch/DB_shopping.dart';
+// import 'package:firebase_auth/firebase_auth.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
+
+
+
+  // final userId = FirebaseAuth.instance.currentUser?.uid;
+
+  // if (userId != null) {
+  //   // Call uploadDishes with the userId
+  //   retrieveDishes(userId).then((dishes) {
+  // if (dishes.isNotEmpty) {
+  //   print("Retrieved dishes:");
+  //   for (var dish in dishes) {
+  //     print(dish); // Print each dish (a map)
+  //   }
+  // } else {
+  //   print("No dishes found or an error occurred.");
+  // }
+  // });
+  // } else {
+  //   print("No user is currently signed in.");
+  // }
+
+
+
 
   runApp(MyApp());
 }
