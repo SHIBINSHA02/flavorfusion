@@ -8,6 +8,7 @@ class IngredientsCard extends StatelessWidget {
   final String imageUrl;
   final String quantity;
   final String recipeName;
+  final VoidCallback onContinue;
 
   const IngredientsCard({
     Key? key,
@@ -15,9 +16,10 @@ class IngredientsCard extends StatelessWidget {
     required this.imageUrl,
     required this.quantity,
     required this.recipeName,
+    required this.onContinue,
   }) : super(key: key);
 
-  Future<void> _addToCart(BuildContext context) async {
+  Future<void> _addToCartAndContinue(BuildContext context) async {
     final user = FirebaseAuth.instance.currentUser;
     if (user == null) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -37,14 +39,12 @@ class IngredientsCard extends StatelessWidget {
       final doc = await shoppingRef.get();
 
       if (doc.exists) {
-        // Recipe exists, update ingredients
         await shoppingRef.update({
           'ingredients': FieldValue.arrayUnion([
             {'name': name, 'quantity': quantity, 'checked': false}
           ]),
         });
       } else {
-        // Recipe doesn't exist, create new document
         await shoppingRef.set({
           'name': recipeName,
           'ingredients': [
@@ -56,6 +56,8 @@ class IngredientsCard extends StatelessWidget {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Ingredient added to cart.')),
       );
+      onContinue(); // Call the continue callback after adding to cart.
+
     } catch (e) {
       print('Error adding to cart: $e');
       ScaffoldMessenger.of(context).showSnackBar(
@@ -116,14 +118,14 @@ class IngredientsCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   ElevatedButton(
-                    onPressed: () => _addToCart(context),
-                    child: const Text('Add to Cart'),
+                    onPressed: () => _addToCartAndContinue(context), // Use the combined function
+                    child: const Text('Add & Continue'), //Changed text to Add and Continue
                   ),
                   ElevatedButton(
                     onPressed: () {
-                      Navigator.pop(context); // Continue button goes back
+                      Navigator.pop(context);
                     },
-                    child: const Text('Continue'),
+                    child: const Text('Cancel'),
                   ),
                 ],
               ),

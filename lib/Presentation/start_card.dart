@@ -128,7 +128,6 @@ class _StartCardState extends State<StartCard> {
                         child: ElevatedButton(
                           onPressed: widget.onStart,
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.orange,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(8.0),
                             ),

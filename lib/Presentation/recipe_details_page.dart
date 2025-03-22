@@ -34,11 +34,11 @@ class _RecipeDetailsPageState extends State<RecipeDetailsPage> {
         curve: Curves.ease,
       );
     } else {
-      // Navigate to steps page when all ingredients are shown
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => StepsPage(steps: widget.recipeData['steps'] ?? []),
+          builder: (context) =>
+              StepsPage(steps: widget.recipeData['steps'] ?? []),
         ),
       );
     }
@@ -80,6 +80,7 @@ class _RecipeDetailsPageState extends State<RecipeDetailsPage> {
                   imageUrl: ingredients[index]['image_url'] ??
                       'https://via.placeholder.com/150',
                   quantity: ingredients[index]['quantity'] ?? 'N/A',
+                  onContinue: _nextPage,
                 );
               },
             ),
