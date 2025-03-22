@@ -53,6 +53,8 @@ dependencies:
   dotenv:
   google_fonts: ^6.2.1
   just_audio: ^0.9.46
+  wave: ^0.2.2
+  flutter_custom_clippers: ^2.0.0 
 
 dev_dependencies:
   flutter_test:
@@ -87,6 +89,7 @@ flutter:
      - lib/Shopping/dishes.json
      - assets/Presentation/sound.wav
      - assets/animations/loading.json
+     - assets/animations/heart.json
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
