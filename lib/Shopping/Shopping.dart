@@ -1,7 +1,6 @@
-// lib/Shopping/Shopping.dart
-import 'dart:convert';
-import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ShoppingPage extends StatefulWidget {
   const ShoppingPage({super.key});
@@ -11,48 +10,136 @@ class ShoppingPage extends StatefulWidget {
 }
 
 class _ShoppingPageState extends State<ShoppingPage> {
-  List<dynamic> dishes = [];
+  List<Map<String, dynamic>> dishes = [];
+  bool _isLoading = true;
+  String? _userId;
 
   @override
   void initState() {
     super.initState();
-    loadDishes();
+    _getUserIdAndLoadDishes();
   }
 
-  Future<void> loadDishes() async {
-    try {
-      final String response =
-          await rootBundle.loadString('lib/Shopping/dishes.json');
-      final data = await json.decode(response);
-      print("Loaded JSON: $data");
+  Future<void> _getUserIdAndLoadDishes() async {
+    setState(() {
+      _isLoading = true;
+    });
+
+    final user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      _userId = user.uid;
+      try {
+        dishes = await retrieveDishes(_userId!);
+        setState(() {
+          _isLoading = false;
+        });
+      } catch (e) {
+        print('Error loading dishes: $e');
+        setState(() {
+          _isLoading = false;
+        });
+      }
+    } else {
+      print('User not signed in');
       setState(() {
-        dishes = data;
+        _isLoading = false;
       });
+    }
+  }
+
+  Future<List<Map<String, dynamic>>> retrieveDishes(String userId) async {
+    if (userId.isEmpty) {
+      print("No user is currently signed in.");
+      return [];
+    }
+
+    try {
+      final firestore = FirebaseFirestore.instance;
+      final collectionRef =
+          firestore.collection('users').doc(userId).collection('shopping');
+
+      final querySnapshot = await collectionRef.get();
+      List<Map<String, dynamic>> dishes = [];
+
+      for (var doc in querySnapshot.docs) {
+        dishes.add(doc.data());
+      }
+
+      return dishes;
     } catch (e) {
-      print("Error loading dishes: $e");
+      print("Error retrieving dishes: $e");
+      return [];
     }
   }
 
   void deleteDish(int index) {
     setState(() {
-      dishes.removeAt(index);
+      if (_userId != null) {
+        final dishName = dishes[index]['name'];
+        print("Deleting dish: users/$_userId/shopping/$dishName");
+        FirebaseFirestore.instance
+            .collection('users')
+            .doc(_userId)
+            .collection('shopping')
+            .doc(dishName)
+            .delete()
+            .then((_) {
+          dishes.removeAt(index);
+        }).catchError((error) {
+          print("Error deleting dish: $error");
+        });
+      } else {
+        print('User not signed in, cannot delete.');
+      }
     });
   }
 
   void deleteIngredient(int dishIndex, int ingredientIndex) {
     setState(() {
-      dishes[dishIndex]['ingredients'].removeAt(ingredientIndex);
-      if (dishes[dishIndex]['ingredients'].isEmpty) {
-        dishes.removeAt(dishIndex);
+      if (_userId != null) {
+        final dishName = dishes[dishIndex]['name'];
+        print("Updating Ingredients: users/$_userId/shopping/$dishName");
+        dishes[dishIndex]['ingredients'].removeAt(ingredientIndex);
+        if (dishes[dishIndex]['ingredients'].isEmpty) {
+          FirebaseFirestore.instance
+              .collection('users')
+              .doc(_userId)
+              .collection('shopping')
+              .doc(dishName)
+              .delete()
+              .then((_) {
+            dishes.removeAt(dishIndex);
+          }).catchError((error) {
+            print("Error deleting dish: $error");
+          });
+        } else {
+          FirebaseFirestore.instance
+              .collection('users')
+              .doc(_userId)
+              .collection('shopping')
+              .doc(dishName)
+              .update({'ingredients': dishes[dishIndex]['ingredients']})
+              .catchError((error) {
+            print("Error updating ingredients: $error");
+          });
+        }
+      } else {
+        print('User not signed in, cannot delete.');
       }
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    if (_isLoading) {
+      return const Scaffold(
+        body: Center(child: CircularProgressIndicator()),
+      );
+    }
+
     return Scaffold(
       appBar: AppBar(
-        title: Text('Shopping'),
+        title: const Text('Shopping'),
       ),
       body: ListView.builder(
         padding: const EdgeInsets.all(16.0),
@@ -75,13 +162,13 @@ class _ShoppingPageState extends State<ShoppingPage> {
                     children: [
                       Text(
                         dish['name'],
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                       IconButton(
-                        icon: Icon(Icons.delete),
+                        icon: const Icon(Icons.delete),
                         color: Colors.red,
                         onPressed: () {
                           deleteDish(index);
@@ -89,7 +176,7 @@ class _ShoppingPageState extends State<ShoppingPage> {
                       ),
                     ],
                   ),
-                  SizedBox(height: 8.0),
+                  const SizedBox(height: 8.0),
                   Column(
                     children: List.generate(dish['ingredients'].length,
                         (ingredientIndex) {
@@ -107,18 +194,31 @@ class _ShoppingPageState extends State<ShoppingPage> {
                                     setState(() {
                                       dish['ingredients'][ingredientIndex]
                                           ['checked'] = value;
+                                      if (_userId != null) {
+                                        FirebaseFirestore.instance
+                                            .collection('users')
+                                            .doc(_userId)
+                                            .collection('shopping')
+                                            .doc(dish['name'])
+                                            .update({
+                                          'ingredients': dishes[index]
+                                              ['ingredients']
+                                        }).catchError((error) {
+                                          print("Error updating checkbox: $error");
+                                        });
+                                      }
                                     });
                                   },
                                 ),
                                 Text(
                                   '${dish['ingredients'][ingredientIndex]['name']} (x${dish['ingredients'][ingredientIndex]['quantity']})',
-                                  style: TextStyle(fontSize: 16),
+                                  style: const TextStyle(fontSize: 16),
                                 ),
                               ],
                             ),
                           ),
                           IconButton(
-                            icon: Icon(Icons.delete),
+                            icon: const Icon(Icons.delete),
                             onPressed: () {
                               deleteIngredient(index, ingredientIndex);
                             },

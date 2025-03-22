@@ -45,12 +45,28 @@ class _SearchPageState extends State<SearchPage> {
       }
     } catch (e) {
       debugPrint('Error generating recipe: $e');
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Error: $e')),
-      );
       setState(() {
         isLoading = false; // Stop loading in case of an error
       });
+      if (context.mounted) {
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: const Text('Error'),
+              content: Text('An error occurred: $e'),
+              actions: <Widget>[
+                TextButton(
+                  child: const Text('OK'),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ],
+            );
+          },
+        );
+      }
     }
   }
 
@@ -70,10 +86,8 @@ class _SearchPageState extends State<SearchPage> {
                   // Dropdown for search type
                   DropdownButtonFormField<String>(
                     value: _searchType,
-                    items: <String>[
-                      'Search Recipe',
-                      'Create from Ingredients'
-                    ].map<DropdownMenuItem<String>>((String value) {
+                    items: <String>['Search Recipe', 'Create from Ingredients']
+                        .map<DropdownMenuItem<String>>((String value) {
                       return DropdownMenuItem<String>(
                         value: value,
                         child: Text(value),
@@ -100,7 +114,7 @@ class _SearchPageState extends State<SearchPage> {
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(),
                             labelText: 'Search',
-                            hintText: 'Create from Ingredients',
+                            hintText: 'Enter search term or ingredients',
                           ),
                         ),
                       ),

@@ -91,7 +91,7 @@ Recipe = {
 }
 
 Food Name: "$foodName"
-
+if the user does not pass a valid and existing foodname dont create json
 Return: A well-structured JSON response.
 """;
   }
@@ -218,7 +218,7 @@ Recipe = {
 }
 
 Available Ingredients seperated by commas: "$ingredients"
-
+if the user does not pass a valid and existing ingredients dont create json
 Return: A well-structured JSON response.
 """;
   }
