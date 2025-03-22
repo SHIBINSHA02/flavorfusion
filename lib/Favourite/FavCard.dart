@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class FavCard extends StatelessWidget {
+class FavCard extends StatefulWidget {
   final String dishName;
   final String imageUrl;
   final String description;
@@ -12,6 +12,13 @@ class FavCard extends StatelessWidget {
     required this.description,
     required this.rating,
   });
+
+  @override
+  _FavCardState createState() => _FavCardState();
+}
+
+class _FavCardState extends State<FavCard> {
+  bool _isFavorited = false; // Track if the card is favorited
 
   @override
   Widget build(BuildContext context) {
@@ -30,9 +37,9 @@ class FavCard extends StatelessWidget {
                 children: [
                   ClipOval(
                     child: Image.network(
-                      imageUrl,
-                      width: 80,
-                      height: 80,
+                      widget.imageUrl,
+                      width: 100,
+                      height: 100,
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -43,7 +50,7 @@ class FavCard extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          dishName,
+                          widget.dishName,
                           style: TextStyle(
                             fontSize: 22,
                             fontWeight: FontWeight.bold,
@@ -54,7 +61,9 @@ class FavCard extends StatelessWidget {
                           // Rating Stars
                           children: List.generate(5, (index) {
                             return Icon(
-                              index < rating ? Icons.star : Icons.star_border,
+                              index < widget.rating
+                                  ? Icons.star
+                                  : Icons.star_border,
                               color: Colors.amber,
                               size: 20,
                             );
@@ -63,6 +72,19 @@ class FavCard extends StatelessWidget {
                       ],
                     ),
                   ),
+                  // Heart Icon
+                  IconButton(
+                    icon: Icon(
+                      _isFavorited ? Icons.favorite : Icons.favorite_border,
+                      color: _isFavorited ? Colors.red : Colors.grey,
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        _isFavorited =
+                            !_isFavorited; // Toggle the favorite state
+                      });
+                    },
+                  ),
                 ],
               ),
               SizedBox(height: 8),
@@ -70,7 +92,7 @@ class FavCard extends StatelessWidget {
                 // Description
                 child: SingleChildScrollView(
                   child: Text(
-                    description,
+                    widget.description,
                     style: TextStyle(color: Colors.grey[600]),
                     textAlign: TextAlign.left,
                   ),

@@ -43,14 +43,14 @@ class _FavouritePageState extends State<FavouritePage>
         'dishName': 'Spaghetti Carbonara',
         'imageUrl':
             'https://th.bing.com/th/id/OIP.oYPGHQorMluB7LhtQUmzTgHaEK?rs=1&pid=ImgDetMain',
-        'description': 'A classic Italian pasta dish.',
+        'description': 'A classic chocolate shake, perfect for a quick and delicious treat. This recipe is easily customizable to your preference - add more chocolate for a richer flavor, or more milk for a thinner consistency.',
         'rating': 4,
       },
       {
         'dishName': 'Margherita Pizza',
         'imageUrl':
             'https://th.bing.com/th/id/OIP.oYPGHQorMluB7LhtQUmzTgHaEK?rs=1&pid=ImgDetMain',
-        'description': 'A simple yet delicious pizza.',
+        'description': 'A classic chocolate shake, perfect for a quick and delicious treat. This recipe is easily customizable to your preference - add more chocolate for a richer flavor, or more milk for a thinner consistency.',
         'rating': 3,
       },
       // Add more dishes as needed

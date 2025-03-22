@@ -56,10 +56,11 @@ class _RecipeDetailsPageState extends State<RecipeDetailsPage> {
   @override
   Widget build(BuildContext context) {
     List<dynamic> ingredients = widget.recipeData['ingredients'] ?? [];
+    String recipeName = widget.recipeData['recipe_name'] ?? 'Recipe';
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.recipeData['recipe_name'] ?? 'Recipe Details'),
+        title: Text(recipeName),
       ),
       body: Column(
         children: [
@@ -74,6 +75,7 @@ class _RecipeDetailsPageState extends State<RecipeDetailsPage> {
               },
               itemBuilder: (context, index) {
                 return IngredientsCard(
+                  recipeName: recipeName,
                   name: ingredients[index]['name'] ?? 'Ingredient',
                   imageUrl: ingredients[index]['image_url'] ??
                       'https://via.placeholder.com/150',

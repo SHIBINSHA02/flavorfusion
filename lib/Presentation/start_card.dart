@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_tts/flutter_tts.dart';
 
 class StartCard extends StatefulWidget {
   final String title;
@@ -21,6 +22,19 @@ class StartCard extends StatefulWidget {
 }
 
 class _StartCardState extends State<StartCard> {
+  final FlutterTts flutterTts = FlutterTts();
+
+  @override
+  void initState() {
+    super.initState();
+    _speakDishDetails();
+  }
+
+  void _speakDishDetails() async {
+    await flutterTts.speak(widget.title);
+    await flutterTts.speak(widget.description);
+  }
+
   @override
   Widget build(BuildContext context) {
     double cardWidth = MediaQuery.of(context).size.width * 0.9;

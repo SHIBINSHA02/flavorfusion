@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'recipe_service.dart';
 import 'dart:convert';
 import './../Loading/spoon.dart'; // Import the loading screen
+import 'package:lottie/lottie.dart'; // Import Lottie package
 
 class SearchPage extends StatefulWidget {
   const SearchPage({super.key});
@@ -128,6 +129,14 @@ class _SearchPageState extends State<SearchPage> {
                         child: const Icon(Icons.search),
                       ),
                     ],
+                  ),
+
+                  // Lottie Animation at the bottom center
+                  const SizedBox(
+                      height: 40), // Increased space before the animation
+                  Center(
+                    child: Lottie.asset('assets/animations/search.json',
+                        width: 400, height: 400), // Adjust size as needed
                   ),
                 ],
               ),
