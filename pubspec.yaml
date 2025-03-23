@@ -90,6 +90,16 @@ flutter:
      - lib/Shopping/dishes.json
      - assets/Presentation/sound.wav
      - assets/animations/loading.json
+     - assets/animations/loading1.json
+     - assets/animations/loading2.json
+     - assets/animations/loading3.json
+     - assets/animations/loading4.json
+     - assets/animations/loading5.json
+     - assets/animations/loading6.json
+     - assets/animations/loading7.json
+     - assets/animations/loading8.json
+     - assets/animations/loading9.json
+     - assets/animations/loading10.json
      - assets/animations/heart.json
      - assets/animations/search.json
   #   - images/a_dot_ham.jpeg

@@ -23,6 +23,7 @@ class StartCard extends StatefulWidget {
 
 class _StartCardState extends State<StartCard> {
   final FlutterTts flutterTts = FlutterTts();
+  bool _isButtonPressed = false;
 
   @override
   void initState() {
@@ -78,10 +79,8 @@ class _StartCardState extends State<StartCard> {
                 child: Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: Column(
-                    mainAxisAlignment:
-                        MainAxisAlignment.center, // Centers vertically
-                    crossAxisAlignment:
-                        CrossAxisAlignment.center, // Centers horizontally
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Text(
                         widget.title,
@@ -110,8 +109,7 @@ class _StartCardState extends State<StartCard> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const Icon(Icons.timer,
-                              size: 20, color: Colors.orange),
+                          const Icon(Icons.timer, size: 20, color: Colors.grey),
                           const SizedBox(width: 6),
                           Text(
                             'Total Time: ${widget.totalTime}',
@@ -125,21 +123,52 @@ class _StartCardState extends State<StartCard> {
                       ),
                       const SizedBox(height: 12),
                       Center(
-                        child: ElevatedButton(
-                          onPressed: widget.onStart,
-                          style: ElevatedButton.styleFrom(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8.0),
+                        child: AnimatedContainer(
+                          duration: const Duration(milliseconds: 200),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8.0),
+                            border: Border.all(
+                              color: _isButtonPressed
+                                  ? const Color.fromARGB(0, 255, 255, 255)
+                                  : Colors.orange,
                             ),
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 14, horizontal: 32),
+                            color: _isButtonPressed
+                                ? Colors.orange
+                                : const Color.fromARGB(0, 255, 255, 255),
                           ),
-                          child: const Text(
-                            'Start Cooking',
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
+                          child: ElevatedButton(
+                            onPressed: () {
+                              setState(() {
+                                _isButtonPressed = true;
+                              });
+                              Future.delayed(const Duration(milliseconds: 200),
+                                  () {
+                                widget.onStart();
+                                setState(() {
+                                  _isButtonPressed = false;
+                                });
+                              });
+                            },
+                            style: ElevatedButton.styleFrom(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8.0),
+                              ),
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 14, horizontal: 32),
+                              backgroundColor:
+                                  const Color.fromARGB(0, 255, 255, 255),
+                              shadowColor:
+                                  const Color.fromARGB(0, 255, 255, 255),
+                            ),
+                            child: Text(
+                              'Start Cooking',
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                color: _isButtonPressed
+                                    ? Colors.white
+                                    : const Color.fromARGB(255, 251, 159, 1),
+                              ),
                             ),
                           ),
                         ),
