@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:math';
 import 'recipe_day.dart';
 import 'horizontal_recipe_list.dart';
+import 'social_post_list.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -136,21 +137,29 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
       ),
-      body: Stack(
+      body: ListView(
         children: [
           // Orange background with curved bottom edges
-          Positioned(
-            top: 0,
-            left: 0,
-            right: 0,
+          Container(
             height: MediaQuery.of(context).size.height / 3,
-            child: Container(
-              decoration: BoxDecoration(
-                color: const Color.fromARGB(255, 255, 152, 0),
-                borderRadius: const BorderRadius.only(
-                  bottomLeft: Radius.circular(30),
-                  bottomRight: Radius.circular(30),
-                ),
+            decoration: BoxDecoration(
+              color: const Color.fromARGB(255, 255, 152, 0),
+              borderRadius: const BorderRadius.only(
+                bottomLeft: Radius.circular(30),
+                bottomRight: Radius.circular(30),
+              ),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(height: 20),
+                  RecipeDay(
+                    currentRecipe: _currentRecipe,
+                    selectedImage: _selectedImage,
+                  ),
+                ],
               ),
             ),
           ),
@@ -159,11 +168,6 @@ class _HomePageState extends State<HomePage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const SizedBox(height: 20),
-                RecipeDay(
-                  currentRecipe: _currentRecipe,
-                  selectedImage: _selectedImage,
-                ),
                 const SizedBox(height: 60),
                 // Popular Recipes Section
                 const Text(
@@ -177,6 +181,16 @@ class _HomePageState extends State<HomePage> {
                 HorizontalRecipeList(
                   recipes: _recipes,
                 ),
+                const SizedBox(height: 60), // Added spacing before social posts
+                const Text(
+                  'Social Posts',
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const SizedBox(height: 16),
+                SocialPostList(), // Integrated SocialPostList here
               ],
             ),
           ),

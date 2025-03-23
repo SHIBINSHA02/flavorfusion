@@ -109,7 +109,7 @@ Return: A well-structured JSON response.
     }
 
     final String serpApiKey =
-        "82892f0739587533874a8b4cbfdfbf3936107e2edf22ac11c6fd68c432c25ec9"; // Your SerpAPI key
+        "AIzaSyAPO_rtCykujCHU-TmnQ_3iIDSqNzUo9DU"; // Your SerpAPI key
 
     try {
       final recipeName = recipe['recipe_name'];

@@ -5,7 +5,7 @@ import 'dart:async';
 class ImageService {
   static Future<String?> getSingleImageUrl(String apiKey, String query) async {
     final String url =
-        "https://serpapi.com/search.json?engine=google_images&q=fresh+$query&hl=en&gl=us&tbs=ift:webp&api_key=$apiKey";
+        "https://www.googleapis.com/customsearch/v1?key=$apiKey&cx=e113eaf7402b44f7e&q=fresh+$query&searchType=image&fileType=jpg";
 
     int retryCount = 0;
     const maxRetries = 3;
@@ -18,20 +18,20 @@ class ImageService {
         if (response.statusCode == 200) {
           final data = json.decode(response.body);
 
-          if (data.containsKey('images_results') &&
-              data['images_results'] is List &&
-              data['images_results'].isNotEmpty) {
-            final List images = data['images_results'];
-            final Map<String, dynamic> firstImage = images[0];
+          if (data.containsKey('items') &&
+              data['items'] is List &&
+              data['items'].isNotEmpty) {
+            final List items = data['items'];
+            final Map<String, dynamic> firstItem = items[0];
 
-            if (firstImage.containsKey('original')) {
-              return firstImage['original'];
+            if (firstItem.containsKey('link')) {
+              return firstItem['link'];
             } else {
-              print("First image does not contain 'original' key.");
+              print("First item does not contain 'link' key.");
               return null;
             }
           } else {
-            print("images_results not found or empty.");
+            print("items not found or empty.");
             return null;
           }
         } else {
@@ -56,6 +56,6 @@ class ImageService {
       }
     }
 
-          return "https://th.bing.com/th/id/OIP.oYPGHQorMluB7LhtQUmzTgHaEK?rs=1&pid=ImgDetMain";
+    return "https://th.bing.com/th/id/OIP.oYPGHQorMluB7LhtQUmzTgHaEK?rs=1&pid=ImgDetMain";
   }
 }
