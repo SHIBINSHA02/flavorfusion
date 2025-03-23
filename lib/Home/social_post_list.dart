@@ -1,57 +1,61 @@
 import 'package:flutter/material.dart';
-import 'package:lottie/lottie.dart'; // Import the Lottie package
+import 'package:lottie/lottie.dart';
 
 class SocialPostList extends StatefulWidget {
+  SocialPostList({Key? key}) : super(key: key);
+
   final List<Map<String, dynamic>> posts = [
     {
       'username': 'FoodieLover',
-      'avatarUrl': 'https://media.licdn.com/dms/image/v2/D5622AQGcW8rGzMJHaw/feedshare-shrink_800/feedshare-shrink_800/0/1699469518272?e=2147483647&v=beta&t=dow9E9BTBrvviZlX7aHBfEaLK4IwLxKfDnyc6RcB3k0',
-      'imageUrl': 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTpBem-akHNnp05MZdk3wDbYmtDsM0aVQq-Dw&s',
+      'avatarUrl':
+          'https://media.licdn.com/dms/image/v2/D5622AQGcW8rGzMJHaw/feedshare-shrink_800/feedshare-shrink_800/0/1699469518272?e=2147483647&v=beta&t=dow9E9BTBrvviZlX7aHBfEaLK4IwLxKfDnyc6RcB3k0',
+      'imageUrl':
+          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTpBem-akHNnp05MZdk3wDbYmtDsM0aVQq-Dw&s',
       'description': 'Amazing homemade pasta!',
       'dishName': 'Homemade Pasta',
       'isLiked': false,
+      'showLikeAnimation': false, // Add animation flag to each post
     },
     {
       'username': 'CookingMaster',
-      'avatarUrl': 'https://media.gq.com/photos/55828d9f1177d66d68d5334a/master/w_1600%2Cc_limit/blogs-the-feed-chelsealaurengrime.jpg',
-      'imageUrl': 'https://saltedmint.com/wp-content/uploads/2024/01/Simple-Thai-yellow-chicken-curry-500x375.jpg',
+      'avatarUrl':
+          'https://media.gq.com/photos/55828d9f1177d66d68d5334a/master/w_1600%2Cc_limit/blogs-the-feed-chelsealaurengrime.jpg',
+      'imageUrl':
+          'https://saltedmint.com/wp-content/uploads/2024/01/Simple-Thai-yellow-chicken-curry-500x375.jpg',
       'description': 'Tried a new recipe today.',
       'dishName': 'Thai Curry',
       'isLiked': false,
+      'showLikeAnimation': false,
     },
     {
       'username': 'DeliciousDishes',
-      'avatarUrl': 'https://danielandsonfuneral.com/wp-content/uploads/2018/04/img002.jpg',
-      'imageUrl': 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSu6mEn2S-XQ9jxSWuQutBdKpEjNrXx-GhvUw&s',
+      'avatarUrl':
+          'https://danielandsonfuneral.com/wp-content/uploads/2018/04/img002.jpg',
+      'imageUrl':
+          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSu6mEn2S-XQ9jxSWuQutBdKpEjNrXx-GhvUw&s',
       'description': 'Yummy dessert time!',
       'dishName': 'Chocolate Lava Cake',
       'isLiked': false,
+      'showLikeAnimation': false,
     },
-    // Add more posts as needed
   ];
 
   @override
-  _SocialPostListState createState() => _SocialPostListState();
+  SocialPostListState createState() => SocialPostListState();
 }
 
-class _SocialPostListState extends State<SocialPostList> {
-  int? _likedIndex; // Track which post was liked
-  bool _showAnimation = false;
-
+class SocialPostListState extends State<SocialPostList> {
   void _toggleLike(int index) {
     setState(() {
-      widget.posts[index]['isLiked'] = !widget.posts[index]['isLiked'];
-      _likedIndex = index;
-      _showAnimation = true;
-
-      // Reset animation after a short delay
-      Future.delayed(const Duration(milliseconds: 800), () {
-        if (mounted) {
+      if (widget.posts[index]['isLiked'] == false) {
+        widget.posts[index]['showLikeAnimation'] = true;
+        Future.delayed(const Duration(milliseconds: 500), () {
           setState(() {
-            _showAnimation = false;
+            widget.posts[index]['showLikeAnimation'] = false;
           });
-        }
-      });
+        });
+      }
+      widget.posts[index]['isLiked'] = !widget.posts[index]['isLiked'];
     });
   }
 
@@ -61,81 +65,127 @@ class _SocialPostListState extends State<SocialPostList> {
       children: List.generate(widget.posts.length, (index) {
         final post = widget.posts[index];
         return Card(
-          margin: const EdgeInsets.symmetric(vertical: 8.0),
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
+          elevation: 8,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                padding: const EdgeInsets.all(12),
+                width: double.infinity,
+                decoration: const BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+                ),
+                child: Row(
                   children: [
-                    CircleAvatar(
-                      backgroundImage: NetworkImage(post['avatarUrl']),
+                    ClipOval(
+                      child: Image.network(
+                        post['avatarUrl'],
+                        fit: BoxFit.cover,
+                        height: 40,
+                        width: 40,
+                      ),
                     ),
-                    const SizedBox(width: 8.0),
+                    const SizedBox(width: 10),
                     Text(
                       post['username'],
-                      style: const TextStyle(fontWeight: FontWeight.bold),
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ],
                 ),
-                const SizedBox(height: 8.0),
-                Text(
-                  post['dishName'],
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16,
-                  ),
-                ),
-                const SizedBox(height: 8.0),
-                GestureDetector(
-                  onDoubleTap: () {
-                    _toggleLike(index);
-                  },
-                  child: Stack(
-                    alignment: Alignment.center,
-                    children: [
-                      LayoutBuilder(
-                        builder: (context, constraints) {
-                          return AspectRatio(
-                            aspectRatio: 1,
-                            child: Image.network(
-                              post['imageUrl'],
-                              width: constraints.maxWidth,
-                              fit: BoxFit.cover,
-                            ),
-                          );
-                        },
+              ),
+              GestureDetector(
+                onDoubleTap: () {
+                  _toggleLike(index);
+                },
+                child: Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    ClipRRect(
+                      child: Image.network(
+                        post['imageUrl'],
+                        height: 200,
+                        width: double.infinity,
+                        fit: BoxFit.cover,
                       ),
-                      if (_showAnimation && _likedIndex == index)
-                        Lottie.asset(
-                          'assets/animations/like.json', // Replace with your Lottie file path
-                          width: 150, // Adjust size as needed
-                          height: 150,
-                          repeat: false,
+                    ),
+                    Positioned(
+                      top: 10,
+                      left: 10,
+                      child: Container(
+                        padding: const EdgeInsets.all(6),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              post['dishName'],
+                              style: const TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                              ),
+                            ),
+                            Row(
+                              children: List.generate(
+                                  5,
+                                  (index) => const Icon(Icons.star,
+                                      size: 16, color: Colors.amber)),
+                            ),
+                          ],
                         ),
-                    ],
-                  ),
+                      ),
+                    ),
+                    if (post['showLikeAnimation'])
+                      Lottie.asset(
+                        'assets/animations/like.json', // Replace with your json path
+                        width: 150,
+                        height: 150,
+                        repeat: false,
+                        frameRate: FrameRate.max,
+                      ),
+                  ],
                 ),
-                const SizedBox(height: 8.0),
-                Text(post['description']),
-                const SizedBox(height: 8.0),
-                Row(
+              ),
+              Container(
+                padding: const EdgeInsets.all(12),
+                width: double.infinity,
+                decoration: const BoxDecoration(
+                  color: Colors.white,
+                  borderRadius:
+                      BorderRadius.vertical(bottom: Radius.circular(20)),
+                ),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     IconButton(
-                      icon: Icon(
-                        post['isLiked'] ? Icons.favorite : Icons.favorite_border,
-                        color: post['isLiked'] ? Colors.red : null,
-                      ),
                       onPressed: () {
                         _toggleLike(index);
                       },
+                      icon: Icon(
+                        post['isLiked']
+                            ? Icons.favorite
+                            : Icons.favorite_border,
+                        color: post['isLiked'] ? Colors.red : null,
+                      ),
                     ),
-                    // Add more icons as needed (comment, share, etc.)
+                    Expanded(
+                      child: Text(
+                        post['description'],
+                        style: const TextStyle(fontSize: 14),
+                        softWrap: true,
+                      ),
+                    ),
                   ],
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         );
       }),

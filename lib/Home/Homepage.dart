@@ -26,9 +26,9 @@ class _HomePageState extends State<HomePage> {
       'difficulty': 'Easy',
       'rating': 4,
       'images': [
-        '', // TODO: Add multiple image URLs for Creamy Garlic Pasta
-        '',
-        '',
+        'https://via.placeholder.com/150',
+        'https://via.placeholder.com/150',
+        'https://via.placeholder.com/150',
       ],
     },
     {
@@ -38,9 +38,9 @@ class _HomePageState extends State<HomePage> {
       'cookingTime': '35 min',
       'difficulty': 'Medium',
       'images': [
-        '', // TODO: Add multiple image URLs for Spicy Thai Curry
-        '',
-        '',
+        'https://via.placeholder.com/150',
+        'https://via.placeholder.com/150',
+        'https://via.placeholder.com/150',
       ],
     },
     {
@@ -50,9 +50,9 @@ class _HomePageState extends State<HomePage> {
       'cookingTime': '40 min',
       'difficulty': 'Medium',
       'images': [
-        '', // TODO: Add multiple image URLs for Margherita Pizza
-        '',
-        '',
+        'https://via.placeholder.com/150',
+        'https://via.placeholder.com/150',
+        'https://via.placeholder.com/150',
       ],
     },
     {
@@ -61,9 +61,9 @@ class _HomePageState extends State<HomePage> {
       'cookingTime': '20 min',
       'difficulty': 'Easy',
       'images': [
-        '', // TODO: Add multiple image URLs for Grilled Salmon
-        '',
-        '',
+        'https://via.placeholder.com/150',
+        'https://via.placeholder.com/150',
+        'https://via.placeholder.com/150',
       ],
     },
     {
@@ -72,9 +72,9 @@ class _HomePageState extends State<HomePage> {
       'cookingTime': '15 min',
       'difficulty': 'Medium',
       'images': [
-        '', // TODO: Add multiple image URLs for Chocolate Lava Cake
-        '',
-        '',
+        'https://via.placeholder.com/150',
+        'https://via.placeholder.com/150',
+        'https://via.placeholder.com/150',
       ],
     },
   ];
@@ -137,64 +137,65 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
       ),
-      body: ListView(
-        children: [
-          // Orange background with curved bottom edges
-          Container(
-            height: MediaQuery.of(context).size.height / 3,
-            decoration: BoxDecoration(
-              color: const Color.fromARGB(255, 255, 152, 0),
-              borderRadius: const BorderRadius.only(
-                bottomLeft: Radius.circular(30),
-                bottomRight: Radius.circular(30),
+      body: SingleChildScrollView( // Changed ListView to SingleChildScrollView
+        child: Column( // Changed ListView children to Column children.
+          children: [
+            // Orange background with curved bottom edges
+            Container(
+              decoration: BoxDecoration(
+                color: const Color.fromARGB(255, 255, 152, 0),
+                borderRadius: const BorderRadius.only(
+                  bottomLeft: Radius.circular(30),
+                  bottomRight: Radius.circular(30),
+                ),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const SizedBox(height: 20),
+                    RecipeDay(
+                      currentRecipe: _currentRecipe,
+                      selectedImage: _selectedImage,
+                    ),
+                  ],
+                ),
               ),
             ),
-            child: Padding(
+            Padding(
               padding: const EdgeInsets.all(16.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const SizedBox(height: 20),
-                  RecipeDay(
-                    currentRecipe: _currentRecipe,
-                    selectedImage: _selectedImage,
+                  const SizedBox(height: 60),
+                  // Popular Recipes Section
+                  const Text(
+                    'Popular Recipes',
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
+                  const SizedBox(height: 16),
+                  HorizontalRecipeList(
+                    recipes: _recipes,
+                  ),
+                  const SizedBox(height: 60), // Added spacing before social posts
+                  const Text(
+                    'Social Posts',
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  SocialPostList(), // Integrated SocialPostList here
                 ],
               ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(height: 60),
-                // Popular Recipes Section
-                const Text(
-                  'Popular Recipes',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                const SizedBox(height: 16),
-                HorizontalRecipeList(
-                  recipes: _recipes,
-                ),
-                const SizedBox(height: 60), // Added spacing before social posts
-                const Text(
-                  'Social Posts',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                const SizedBox(height: 16),
-                SocialPostList(), // Integrated SocialPostList here
-              ],
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
