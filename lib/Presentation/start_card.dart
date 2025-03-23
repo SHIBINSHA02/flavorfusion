@@ -36,6 +36,10 @@ class _StartCardState extends State<StartCard> {
     await flutterTts.speak(widget.description);
   }
 
+  void _stopSpeaking() async {
+    await flutterTts.stop();
+  }
+
   @override
   Widget build(BuildContext context) {
     double cardWidth = MediaQuery.of(context).size.width * 0.9;
@@ -141,6 +145,7 @@ class _StartCardState extends State<StartCard> {
                               setState(() {
                                 _isButtonPressed = true;
                               });
+                              _stopSpeaking(); // Stop speaking here
                               Future.delayed(const Duration(milliseconds: 200),
                                   () {
                                 widget.onStart();

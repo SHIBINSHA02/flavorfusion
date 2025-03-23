@@ -5,7 +5,7 @@ import 'dart:async';
 class ImageService {
   static Future<String?> getSingleImageUrl(String apiKey, String query) async {
     final String url =
-        "https://www.googleapis.com/customsearch/v1?key=$apiKey&cx=e113eaf7402b44f7e&q=fresh+$query&searchType=image&fileType=jpg";
+        "https://www.googleapis.com/customsearch/v1?key=$apiKey&cx=e113eaf7402b44f7e&q=fresh+$query+food&searchType=image&fileType=jpg";
 
     int retryCount = 0;
     const maxRetries = 3;

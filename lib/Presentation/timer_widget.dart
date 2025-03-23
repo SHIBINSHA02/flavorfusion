@@ -17,6 +17,7 @@ class _TimerWidgetState extends State<TimerWidget> {
   Duration _setDuration = Duration.zero;
   Duration _remainingTime = Duration.zero;
   late AudioPlayer _audioPlayer;
+  bool _alarmPlaying = false; // Add this line
 
   @override
   void initState() {
@@ -28,6 +29,7 @@ class _TimerWidgetState extends State<TimerWidget> {
   @override
   void dispose() {
     _stopwatch.stop();
+    _audioPlayer.dispose(); // Dispose the audio player
     super.dispose();
   }
 
@@ -56,7 +58,10 @@ class _TimerWidgetState extends State<TimerWidget> {
       _elapsedTime = Duration.zero;
       _remainingTime = _setDuration;
       _isRunning = false;
+      _alarmPlaying = false; //reset alarm state
     });
+
+    _audioPlayer.stop(); //stop the audio if playing
   }
 
   void _updateTimer() {
@@ -161,13 +166,8 @@ class _TimerWidgetState extends State<TimerWidget> {
   }
 
   void _showTimerEndedDialog() async {
-    try {
-      await _audioPlayer.setAudioSource(
-          AudioSource.uri(Uri.parse('asset:///Presentation/sound.wav')));
-      await _audioPlayer.play();
-    } catch (e) {
-      print("Error loading audio: $e");
-    }
+    _alarmPlaying = true; // Set alarm playing flag
+    _playAlarmRepeatedly();
 
     showDialog(
       context: context,
@@ -180,6 +180,7 @@ class _TimerWidgetState extends State<TimerWidget> {
             TextButton(
               child: Text('OK'),
               onPressed: () {
+                _alarmPlaying = false; // Stop alarm playing
                 _audioPlayer.stop();
                 Navigator.of(context).pop();
               },
@@ -188,6 +189,21 @@ class _TimerWidgetState extends State<TimerWidget> {
         );
       },
     );
+  }
+
+  Future<void> _playAlarmRepeatedly() async {
+    while (_alarmPlaying) {
+      try {
+        await _audioPlayer.setAudioSource(
+          AudioSource.asset('assets/Presentation/sound.mp3'),
+        );
+        await _audioPlayer.play();
+        await Future.delayed(Duration(seconds: 3)); // 3-second delay
+      } catch (e) {
+        print("Error playing alarm: $e");
+        _alarmPlaying = false; // Stop if error occurs
+      }
+    }
   }
 
   @override
