@@ -97,7 +97,7 @@ Return: A well-structured JSON response.
   }
 
   static Future<Map<String, dynamic>> generateRecipeWithImages(String query,
-      {String searchType = 'dish recipe search'}) async {
+      {String searchType = 'Search Recipe'}) async {
     Map<String, dynamic> recipe;
     if (searchType == 'Search Recipe') {
       recipe = await generateRecipe(query);
@@ -108,13 +108,13 @@ Return: A well-structured JSON response.
       throw Exception("Invalid search type: $searchType");
     }
 
-    final String serpApiKey =
-        "AIzaSyAPO_rtCykujCHU-TmnQ_3iIDSqNzUo9DU"; // Your SerpAPI key
+    final String ImageApiKey =
+        "AIzaSyAPO_rtCykujCHU-TmnQ_3iIDSqNzUo9DU"; 
 
     try {
       final recipeName = recipe['recipe_name'];
       final imageUrl =
-          await ImageService.getSingleImageUrl(serpApiKey, recipeName);
+          await ImageService.getSingleImageUrlDish(ImageApiKey, recipeName); // Use dish function
       recipe['image_url'] = imageUrl;
       debugPrint("Recipe Image URL: $imageUrl");
 
@@ -124,7 +124,7 @@ Return: A well-structured JSON response.
         await Future.delayed(Duration(seconds: 1)); // Avoid rate limits
         final ingredientName = ingredient['name'];
         final ingredientImageUrl =
-            await ImageService.getSingleImageUrl(serpApiKey, ingredientName);
+            await ImageService.getSingleImageUrlIngredient(ImageApiKey, ingredientName); // Use ingredient function
         ingredient['image_url'] = ingredientImageUrl;
         debugPrint(
             "Ingredient Image URL ($ingredientName): $ingredientImageUrl");

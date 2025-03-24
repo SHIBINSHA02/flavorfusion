@@ -91,6 +91,24 @@ class IngredientsCard extends StatelessWidget {
                   height: imageHeight,
                   width: double.infinity,
                   fit: BoxFit.cover,
+                  loadingBuilder: (BuildContext context, Widget child,
+                      ImageChunkEvent? loadingProgress) {
+                    if (loadingProgress == null) {
+                      return child;
+                    }
+                    return Center(
+                      child: CircularProgressIndicator(
+                        value: loadingProgress.expectedTotalBytes != null
+                            ? loadingProgress.cumulativeBytesLoaded /
+                                loadingProgress.expectedTotalBytes!
+                            : null,
+                      ),
+                    );
+                  },
+                  errorBuilder:
+                      (BuildContext context, Object exception, StackTrace? stackTrace) {
+                    return const Center(child: Text('Image could not be loaded'));
+                  },
                 ),
               ),
               const SizedBox(height: 10),
@@ -118,8 +136,8 @@ class IngredientsCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   ElevatedButton(
-                    onPressed: () => _addToCartAndContinue(context), // Use the combined function
-                    child: const Text('Add & Continue'), //Changed text to Add and Continue
+                    onPressed: () => _addToCartAndContinue(context),
+                    child: const Text('Add & Continue'),
                   ),
                   ElevatedButton(
                     onPressed: () {
