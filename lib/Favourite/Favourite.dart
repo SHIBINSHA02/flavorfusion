@@ -1,9 +1,10 @@
+import 'dart:ui'; // Required for BackdropFilter
 import 'package:flutter/material.dart';
 import 'FavCard.dart'; // Import the FavCard widget
 import 'package:lottie/lottie.dart'; // Import Lottie package
 
 class FavouritePage extends StatefulWidget {
-  const FavouritePage({Key? key}) : super(key: key); // Added key parameter
+  const FavouritePage({Key? key}) : super(key: key);
 
   @override
   _FavouritePageState createState() => _FavouritePageState();
@@ -11,25 +12,25 @@ class FavouritePage extends StatefulWidget {
 
 class _FavouritePageState extends State<FavouritePage>
     with SingleTickerProviderStateMixin {
-  late AnimationController _controller; // Declare AnimationController
-  bool _isAnimationComplete = false; // Track animation completion
+  late AnimationController _controller;
+  bool _isAnimationComplete = false;
 
   @override
   void initState() {
     super.initState();
     _controller = AnimationController(
       vsync: this,
-      duration: const Duration(seconds: 4), // Total duration of the animation
+      duration: const Duration(seconds: 2),
     )..forward().then((_) {
         setState(() {
-          _isAnimationComplete = true; // Mark animation as complete
+          _isAnimationComplete = true;
         });
       });
   }
 
   @override
   void dispose() {
-    _controller.dispose(); // Dispose of the controller
+    _controller.dispose();
     super.dispose();
   }
 
@@ -42,7 +43,7 @@ class _FavouritePageState extends State<FavouritePage>
         'imageUrl':
             'https://th.bing.com/th/id/OIP.oYPGHQorMluB7LhtQUmzTgHaEK?rs=1&pid=ImgDetMain',
         'description':
-            'A classic chocolate shake, perfect for a quick and delicious treat. This recipe is easily customizable to your preference - add more chocolate for a richer flavor, or more milk for a thinner consistency.',
+            'A classic Italian pasta dish with creamy egg sauce and pancetta.',
         'rating': 4,
       },
       {
@@ -50,17 +51,15 @@ class _FavouritePageState extends State<FavouritePage>
         'imageUrl':
             'https://th.bing.com/th/id/OIP.oYPGHQorMluB7LhtQUmzTgHaEK?rs=1&pid=ImgDetMain',
         'description':
-            'A classic chocolate shake, perfect for a quick and delicious treat. This recipe is easily customizable to your preference - add more chocolate for a richer flavor, or more milk for a thinner consistency.',
+            'A simple yet delicious pizza with fresh tomatoes and mozzarella.',
         'rating': 3,
       },
-      // Add more dishes as needed
     ];
 
     return Scaffold(
-      // Orange background
       body: Stack(
-        // Use Stack to overlay the animation
         children: [
+          // Main content
           Column(
             children: [
               ClipPath(
@@ -72,19 +71,18 @@ class _FavouritePageState extends State<FavouritePage>
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Icon(
+                        const Icon(
                           Icons.restaurant_menu,
                           color: Colors.white,
-                          size: 47, // Increased icon size
+                          size: 47,
                         ),
-                        SizedBox(width: 12), // Increased spacing
+                        const SizedBox(width: 12),
                         Text(
                           'FlavorFusion',
                           style: TextStyle(
                             color: Colors.white,
-                            fontSize: 29, // Increased font size
-                            fontWeight:
-                                FontWeight.bold, // Added bold font weight
+                            fontSize: 29,
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
                       ],
@@ -109,29 +107,38 @@ class _FavouritePageState extends State<FavouritePage>
                         ),
                       );
                     },
-                    itemExtent: 250.0, // Set fixed height for each FavCard
+                    itemExtent: 250.0,
                   ),
                 ),
               ),
             ],
           ),
-          // Overlay the Lottie animation
-          if (!_isAnimationComplete) // Show animation only if not complete
-            Positioned.fill(
-              child: Lottie.asset(
-                'assets/animations/heart.json',
-                fit: BoxFit.cover, // Make it cover the content
-                controller: _controller, // Use the AnimationController
-                onLoaded: (composition) {
-                  // Play only a portion of the animation
-                  _controller.forward(from: 0.0); // Start from the beginning
-                  Future.delayed(Duration(seconds: 2), () {
-                    _controller.stop(); // Stop the animation after 2 seconds
-                    setState(() {
-                      _isAnimationComplete = true; // Mark animation as complete
-                    });
-                  });
-                },
+          // Blur effect and centered Lottie animation
+          if (!_isAnimationComplete)
+            BackdropFilter(
+              filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0), // Blur intensity
+              child: Container(
+                color: Colors.black.withOpacity(0.2), // Optional overlay for contrast
+                child: Center(
+                  child: SizedBox(
+                    width: 200,
+                    height: 200,
+                    child: Lottie.asset(
+                      'assets/animations/heart.json',
+                      controller: _controller,
+                      fit: BoxFit.contain,
+                      onLoaded: (composition) {
+                        _controller.forward(from: 0.0);
+                        Future.delayed(const Duration(seconds: 2), () {
+                          _controller.stop();
+                          setState(() {
+                            _isAnimationComplete = true;
+                          });
+                        });
+                      },
+                    ),
+                  ),
+                ),
               ),
             ),
         ],

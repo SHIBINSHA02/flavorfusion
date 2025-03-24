@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_tts/flutter_tts.dart';
 
-
-class IngredientsCard extends StatelessWidget {
-  final String name;  // Reinstated ingredient name
+class IngredientsCard extends StatefulWidget {
+  final String name;
   final String imageUrl;
   final String quantity;
   final VoidCallback onContinue;
@@ -16,6 +16,28 @@ class IngredientsCard extends StatelessWidget {
     required this.quantity,
     required this.onContinue,
   }) : super(key: key);
+
+  @override
+  _IngredientsCardState createState() => _IngredientsCardState();
+}
+
+class _IngredientsCardState extends State<IngredientsCard> {
+  final FlutterTts flutterTts = FlutterTts();
+
+  @override
+  void initState() {
+    super.initState();
+    _speakIngredientDetails();
+  }
+
+  void _speakIngredientDetails() async {
+    await flutterTts.speak("Ingredient: ${widget.name}");
+    await flutterTts.speak("Quantity: ${widget.quantity}");
+  }
+
+  void _stopSpeaking() async {
+    await flutterTts.stop();
+  }
 
   Future<void> _addToCartAndContinue(BuildContext context) async {
     final user = FirebaseAuth.instance.currentUser;
@@ -32,20 +54,20 @@ class IngredientsCard extends StatelessWidget {
           .collection('users')
           .doc(user.uid)
           .collection('shopping')
-          .doc();  // No recipeName needed here, using auto-generated ID
+          .doc();
 
       final doc = await shoppingRef.get();
 
       if (doc.exists) {
         await shoppingRef.update({
           'ingredients': FieldValue.arrayUnion([
-            {'name': name, 'quantity': quantity, 'checked': false}
+            {'name': widget.name, 'quantity': widget.quantity, 'checked': false}
           ]),
         });
       } else {
         await shoppingRef.set({
           'ingredients': [
-            {'name': name, 'quantity': quantity, 'checked': false}
+            {'name': widget.name, 'quantity': widget.quantity, 'checked': false}
           ],
         });
       }
@@ -56,7 +78,8 @@ class IngredientsCard extends StatelessWidget {
           backgroundColor: Colors.black87,
         ),
       );
-      onContinue();
+      _stopSpeaking(); // Stop speaking before continuing
+      widget.onContinue();
     } catch (e) {
       print('Error adding to cart: $e');
       ScaffoldMessenger.of(context).showSnackBar(
@@ -91,7 +114,7 @@ class IngredientsCard extends StatelessWidget {
                 child: AspectRatio(
                   aspectRatio: 4 / 3,
                   child: Image.network(
-                    imageUrl,
+                    widget.imageUrl,
                     height: 250,
                     width: double.infinity,
                     fit: BoxFit.cover,
@@ -136,7 +159,7 @@ class IngredientsCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Text(
-                        name,  // Display ingredient name
+                        widget.name,
                         style: const TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
@@ -146,7 +169,7 @@ class IngredientsCard extends StatelessWidget {
                       ),
                       const SizedBox(height: 8),
                       Text(
-                        'Quantity: $quantity',
+                        'Quantity: ${widget.quantity}',
                         style: const TextStyle(
                           fontSize: 18,
                           color: Colors.orange,
@@ -172,7 +195,10 @@ class IngredientsCard extends StatelessWidget {
                     child: const Text('Add & Continue'),
                   ),
                   ElevatedButton(
-                    onPressed: () => Navigator.pop(context),
+                    onPressed: () {
+                      _stopSpeaking(); // Stop speaking when cancelling
+                      Navigator.pop(context);
+                    },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.white,
                       foregroundColor: Colors.black87,
@@ -190,5 +216,11 @@ class IngredientsCard extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _stopSpeaking(); // Clean up TTS when widget is disposed
+    super.dispose();
   }
 }

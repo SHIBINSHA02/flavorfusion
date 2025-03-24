@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_tts/flutter_tts.dart';
 import 'timer_widget.dart'; // Import the TimerWidget
 import 'conclusion_card.dart'; // Import the ConclusionCard
 
@@ -16,26 +17,46 @@ class StepsPage extends StatefulWidget {
 class _StepsPageState extends State<StepsPage> {
   int _currentIndex = 0;
   late PageController _pageController;
+  final FlutterTts flutterTts = FlutterTts();
 
   @override
   void initState() {
     super.initState();
     _pageController = PageController(initialPage: _currentIndex);
+    _speakStepDetails(_currentIndex); // Speak first step on init
   }
 
   @override
   void dispose() {
+    _stopSpeaking(); // Stop speaking when leaving page
     _pageController.dispose();
     super.dispose();
   }
 
+  void _speakStepDetails(int index) async {
+    if (widget.steps == null || index >= widget.steps!.length) return;
+
+    final step = widget.steps![index];
+    final stepName = step['step_name']?.toString() ?? 'Step ${index + 1}';
+    final description = step['description']?.toString() ?? 'No description';
+
+    await flutterTts.speak(stepName);
+    await flutterTts.speak(description);
+  }
+
+  void _stopSpeaking() async {
+    await flutterTts.stop();
+  }
+
   void _nextPage() {
     if (_currentIndex < (widget.steps?.length ?? 0) - 1) {
+      _stopSpeaking(); // Stop current speech before moving
       _pageController.nextPage(
         duration: Duration(milliseconds: 300),
         curve: Curves.ease,
       );
     } else {
+      _stopSpeaking();
       Navigator.push(
         context,
         MaterialPageRoute(
@@ -47,6 +68,7 @@ class _StepsPageState extends State<StepsPage> {
 
   void _previousPage() {
     if (_currentIndex > 0) {
+      _stopSpeaking(); // Stop current speech before moving
       _pageController.previousPage(
         duration: Duration(milliseconds: 300),
         curve: Curves.ease,
@@ -146,6 +168,7 @@ class _StepsPageState extends State<StepsPage> {
                 onPageChanged: (index) {
                   setState(() {
                     _currentIndex = index;
+                    _speakStepDetails(index); // Speak new step details
                   });
                 },
                 itemBuilder: (context, index) {
@@ -171,7 +194,6 @@ class _StepsPageState extends State<StepsPage> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              // Step Name at the top
                               Padding(
                                 padding: const EdgeInsets.only(top: 8.0),
                                 child: Text(
@@ -183,7 +205,6 @@ class _StepsPageState extends State<StepsPage> {
                                   textAlign: TextAlign.center,
                                 ),
                               ),
-                              // Description centered both horizontally and vertically
                               Expanded(
                                 child: Container(
                                   alignment: Alignment.center,
@@ -199,7 +220,6 @@ class _StepsPageState extends State<StepsPage> {
                                   ),
                                 ),
                               ),
-                              // Time, Flame, and Timer at the bottom
                               Padding(
                                 padding: const EdgeInsets.only(bottom: 8.0),
                                 child: Column(
