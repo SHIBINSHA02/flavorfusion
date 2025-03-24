@@ -42,8 +42,8 @@ class _StartCardState extends State<StartCard> {
 
   @override
   Widget build(BuildContext context) {
-    double cardWidth = MediaQuery.of(context).size.width * 0.9;
-    double cardHeight = MediaQuery.of(context).size.height * 0.7;
+    double cardWidth = MediaQuery.of(context).size.width * 0.95;
+    double cardHeight = MediaQuery.of(context).size.height * 0.75;
 
     return Center(
       child: SizedBox(
@@ -51,129 +51,146 @@ class _StartCardState extends State<StartCard> {
         height: cardHeight,
         child: Card(
           elevation: 8,
+          color: Colors.white,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(16.0),
+            side: const BorderSide(color: Colors.orange, width: 2),
           ),
-          margin: const EdgeInsets.all(16.0),
+          margin: const EdgeInsets.all(12.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
+              // Image Section
               ClipRRect(
-                borderRadius:
-                    const BorderRadius.vertical(top: Radius.circular(16.0)),
+                borderRadius: const BorderRadius.vertical(top: Radius.circular(14.0)),
                 child: SizedBox(
-                  height: cardHeight * 0.4,
+                  height: cardHeight * 0.45,
+                  width: double.infinity,
                   child: Image.network(
                     widget.imageUrl,
                     fit: BoxFit.cover,
-                    width: double.infinity,
-                    errorBuilder: (BuildContext context, Object exception,
-                        StackTrace? stackTrace) {
+                    errorBuilder: (context, error, stackTrace) {
                       return Container(
-                        color: Colors.grey[300],
+                        color: Colors.black12,
                         child: const Center(
-                            child: Icon(Icons.broken_image,
-                                size: 50, color: Colors.grey)),
+                          child: Icon(
+                            Icons.broken_image,
+                            size: 50,
+                            color: Colors.black54,
+                          ),
+                        ),
                       );
                     },
                   ),
                 ),
               ),
+              // Content Section
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Text(
-                        widget.title,
-                        style: TextStyle(
-                          fontSize: 22,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.grey[800],
+                      // Title
+                      ConstrainedBox(
+                        constraints: BoxConstraints(maxWidth: cardWidth * 0.85),
+                        child: Text(
+                          widget.title,
+                          style: const TextStyle(
+                            fontSize: 22,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
+                          ),
+                          textAlign: TextAlign.center,
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 2,
                         ),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
                       ),
-                      const SizedBox(height: 8),
+                      // Description
                       Flexible(
-                        child: Center(
-                          child: Text(
-                            widget.description,
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: Colors.grey[600],
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 8.0),
+                          child: ConstrainedBox(
+                            constraints: BoxConstraints(maxWidth: cardWidth * 0.85),
+                            child: Text(
+                              widget.description,
+                              style: const TextStyle(
+                                fontSize: 16,
+                                color: Colors.black54,
+                              ),
+                              textAlign: TextAlign.center,
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 3,
                             ),
-                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                      ),
+                      // Total Time with Flexible
+                      Flexible(
+                        child: ConstrainedBox(
+                          constraints: BoxConstraints(maxWidth: cardWidth * 0.85),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Icon(Icons.timer, size: 20, color: Colors.orange),
+                              const SizedBox(width: 6),
+                              Flexible(
+                                child: Text(
+                                  'Total Time: ${widget.totalTime}',
+                                  style: const TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w500,
+                                    color: Colors.black,
+                                  ),
+                                  textAlign: TextAlign.center,
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 2, // Allow wrapping to 2 lines if needed
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                       ),
                       const SizedBox(height: 12),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Icon(Icons.timer, size: 20, color: Colors.grey),
-                          const SizedBox(width: 6),
-                          Text(
-                            'Total Time: ${widget.totalTime}',
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500,
-                              color: Colors.grey[700],
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 12),
-                      Center(
-                        child: AnimatedContainer(
-                          duration: const Duration(milliseconds: 200),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(8.0),
-                            border: Border.all(
-                              color: _isButtonPressed
-                                  ? const Color.fromARGB(0, 255, 255, 255)
-                                  : Colors.orange,
-                            ),
-                            color: _isButtonPressed
-                                ? Colors.orange
-                                : const Color.fromARGB(0, 255, 255, 255),
-                          ),
-                          child: ElevatedButton(
-                            onPressed: () {
+                      // Start Button
+                      AnimatedContainer(
+                        duration: const Duration(milliseconds: 200),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8.0),
+                          border: Border.all(color: Colors.orange, width: 2),
+                          color: _isButtonPressed ? Colors.orange : Colors.white,
+                        ),
+                        child: ElevatedButton(
+                          onPressed: () {
+                            setState(() {
+                              _isButtonPressed = true;
+                            });
+                            _stopSpeaking();
+                            Future.delayed(const Duration(milliseconds: 200), () {
+                              widget.onStart();
                               setState(() {
-                                _isButtonPressed = true;
+                                _isButtonPressed = false;
                               });
-                              _stopSpeaking(); // Stop speaking here
-                              Future.delayed(const Duration(milliseconds: 200),
-                                  () {
-                                widget.onStart();
-                                setState(() {
-                                  _isButtonPressed = false;
-                                });
-                              });
-                            },
-                            style: ElevatedButton.styleFrom(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8.0),
-                              ),
-                              padding: const EdgeInsets.symmetric(
-                                  vertical: 14, horizontal: 32),
-                              backgroundColor:
-                                  const Color.fromARGB(0, 255, 255, 255),
-                              shadowColor:
-                                  const Color.fromARGB(0, 255, 255, 255),
+                            });
+                          },
+                          style: ElevatedButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(6.0),
                             ),
-                            child: Text(
-                              'Start Cooking',
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                                color: _isButtonPressed
-                                    ? Colors.white
-                                    : const Color.fromARGB(255, 251, 159, 1),
-                              ),
+                            padding: const EdgeInsets.symmetric(
+                              vertical: 12,
+                              horizontal: 28,
+                            ),
+                            backgroundColor: Colors.transparent,
+                            elevation: 0,
+                          ),
+                          child: Text(
+                            'Start Cooking',
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: _isButtonPressed ? Colors.white : Colors.orange,
                             ),
                           ),
                         ),

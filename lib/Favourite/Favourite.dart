@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:wave/config.dart';
-import 'package:wave/wave.dart';
 import 'FavCard.dart'; // Import the FavCard widget
 import 'package:lottie/lottie.dart'; // Import Lottie package
 
@@ -43,20 +41,23 @@ class _FavouritePageState extends State<FavouritePage>
         'dishName': 'Spaghetti Carbonara',
         'imageUrl':
             'https://th.bing.com/th/id/OIP.oYPGHQorMluB7LhtQUmzTgHaEK?rs=1&pid=ImgDetMain',
-        'description': 'A classic chocolate shake, perfect for a quick and delicious treat. This recipe is easily customizable to your preference - add more chocolate for a richer flavor, or more milk for a thinner consistency.',
+        'description':
+            'A classic chocolate shake, perfect for a quick and delicious treat. This recipe is easily customizable to your preference - add more chocolate for a richer flavor, or more milk for a thinner consistency.',
         'rating': 4,
       },
       {
         'dishName': 'Margherita Pizza',
         'imageUrl':
             'https://th.bing.com/th/id/OIP.oYPGHQorMluB7LhtQUmzTgHaEK?rs=1&pid=ImgDetMain',
-        'description': 'A classic chocolate shake, perfect for a quick and delicious treat. This recipe is easily customizable to your preference - add more chocolate for a richer flavor, or more milk for a thinner consistency.',
+        'description':
+            'A classic chocolate shake, perfect for a quick and delicious treat. This recipe is easily customizable to your preference - add more chocolate for a richer flavor, or more milk for a thinner consistency.',
         'rating': 3,
       },
       // Add more dishes as needed
     ];
 
-    return Scaffold( // Orange background
+    return Scaffold(
+      // Orange background
       body: Stack(
         // Use Stack to overlay the animation
         children: [
