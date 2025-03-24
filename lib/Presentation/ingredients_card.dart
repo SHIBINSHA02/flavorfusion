@@ -4,10 +4,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'dart:math' as math;
 
 class IngredientsCard extends StatelessWidget {
-  final String name;
+  final String name;  // Reinstated ingredient name
   final String imageUrl;
   final String quantity;
-  final String recipeName;
   final VoidCallback onContinue;
 
   const IngredientsCard({
@@ -15,7 +14,6 @@ class IngredientsCard extends StatelessWidget {
     required this.name,
     required this.imageUrl,
     required this.quantity,
-    required this.recipeName,
     required this.onContinue,
   }) : super(key: key);
 
@@ -34,7 +32,7 @@ class IngredientsCard extends StatelessWidget {
           .collection('users')
           .doc(user.uid)
           .collection('shopping')
-          .doc(recipeName);
+          .doc();  // No recipeName needed here, using auto-generated ID
 
       final doc = await shoppingRef.get();
 
@@ -46,7 +44,6 @@ class IngredientsCard extends StatelessWidget {
         });
       } else {
         await shoppingRef.set({
-          'name': recipeName,
           'ingredients': [
             {'name': name, 'quantity': quantity, 'checked': false}
           ],
@@ -54,95 +51,136 @@ class IngredientsCard extends StatelessWidget {
       }
 
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Ingredient added to cart.')),
+        const SnackBar(
+          content: Text('Ingredient added to cart.'),
+          backgroundColor: Colors.black87,
+        ),
       );
-      onContinue(); // Call the continue callback after adding to cart.
-
+      onContinue();
     } catch (e) {
       print('Error adding to cart: $e');
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Failed to add to cart: $e')),
+        SnackBar(
+          content: Text('Failed to add to cart: $e'),
+          backgroundColor: Colors.black87,
+        ),
       );
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    final screenSize = MediaQuery.of(context).size;
-    final imageHeight = math.min(screenSize.height * 3 / 5, 400.0);
-
     return Center(
       child: Card(
         elevation: 8,
+        color: Colors.white,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12.0),
+          side: const BorderSide(color: Colors.orange, width: 2),
         ),
-        margin: const EdgeInsets.all(16.0),
-        child: Padding(
+        child: Container(
+          width: 350,
+          height: 600,
           padding: const EdgeInsets.all(16.0),
           child: Column(
-            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               ClipRRect(
-                borderRadius:
-                    const BorderRadius.vertical(top: Radius.circular(12.0)),
-                child: Image.network(
-                  imageUrl,
-                  height: imageHeight,
-                  width: double.infinity,
-                  fit: BoxFit.cover,
-                  loadingBuilder: (BuildContext context, Widget child,
-                      ImageChunkEvent? loadingProgress) {
-                    if (loadingProgress == null) {
-                      return child;
-                    }
-                    return Center(
-                      child: CircularProgressIndicator(
-                        value: loadingProgress.expectedTotalBytes != null
-                            ? loadingProgress.cumulativeBytesLoaded /
-                                loadingProgress.expectedTotalBytes!
-                            : null,
-                      ),
-                    );
-                  },
-                  errorBuilder:
-                      (BuildContext context, Object exception, StackTrace? stackTrace) {
-                    return const Center(child: Text('Image could not be loaded'));
-                  },
+                borderRadius: BorderRadius.circular(12.0),
+                child: AspectRatio(
+                  aspectRatio: 4 / 3,
+                  child: Image.network(
+                    imageUrl,
+                    height: 250,
+                    width: double.infinity,
+                    fit: BoxFit.cover,
+                    loadingBuilder: (BuildContext context, Widget child,
+                        ImageChunkEvent? loadingProgress) {
+                      if (loadingProgress == null) {
+                        return child;
+                      }
+                      return SizedBox(
+                        height: 250,
+                        child: Center(
+                          child: CircularProgressIndicator(
+                            value: loadingProgress.expectedTotalBytes != null
+                                ? loadingProgress.cumulativeBytesLoaded /
+                                    loadingProgress.expectedTotalBytes!
+                                : null,
+                            color: Colors.orange,
+                          ),
+                        ),
+                      );
+                    },
+                    errorBuilder:
+                        (BuildContext context, Object exception, StackTrace? stackTrace) {
+                      return SizedBox(
+                        height: 250,
+                        child: Center(
+                          child: Text(
+                            'Image could not be loaded',
+                            style: TextStyle(color: Colors.black87),
+                          ),
+                        ),
+                      );
+                    },
+                  ),
                 ),
               ),
-              const SizedBox(height: 10),
-              Text(
-                name,
-                style:
-                    const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                textAlign: TextAlign.center,
+              Expanded(
+                child: Container(
+                  padding: const EdgeInsets.symmetric(vertical: 16.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(
+                        name,  // Display ingredient name
+                        style: const TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black87,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                      const SizedBox(height: 8),
+                      Text(
+                        'Quantity: $quantity',
+                        style: const TextStyle(
+                          fontSize: 18,
+                          color: Colors.orange,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
+                  ),
+                ),
               ),
-              const SizedBox(height: 5),
-              Text(
-                'Quantity: $quantity',
-                style: const TextStyle(fontSize: 18),
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(height: 5),
-              Text(
-                'Recipe: $recipeName',
-                style:
-                    const TextStyle(fontSize: 16, fontStyle: FontStyle.italic),
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(height: 10),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   ElevatedButton(
                     onPressed: () => _addToCartAndContinue(context),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.black87,
+                      foregroundColor: Colors.white,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8.0),
+                      ),
+                    ),
                     child: const Text('Add & Continue'),
                   ),
                   ElevatedButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
+                    onPressed: () => Navigator.pop(context),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.white,
+                      foregroundColor: Colors.black87,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8.0),
+                        side: const BorderSide(color: Colors.black87),
+                      ),
+                    ),
                     child: const Text('Cancel'),
                   ),
                 ],

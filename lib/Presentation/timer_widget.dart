@@ -235,19 +235,19 @@ class _TimerWidgetState extends State<TimerWidget> {
               _buildIconButton(
                 icon: _isRunning ? Icons.pause : Icons.play_arrow,
                 onPressed: _isRunning ? _pauseTimer : _startTimer,
-                color: Colors.orange,
+                color: const Color.fromARGB(255, 232, 152, 23),
               ),
               SizedBox(width: 16),
               _buildIconButton(
                 icon: Icons.replay,
                 onPressed: _resetTimer,
-                color: Colors.orange,
+                color: const Color.fromARGB(255, 232, 152, 23),
               ),
               SizedBox(width: 16),
               _buildIconButton(
                 icon: Icons.timer,
                 onPressed: () => _showSetTimerDialog(context),
-                color: Colors.orange,
+                color: const Color.fromARGB(255, 232, 152, 23),
               ),
             ],
           ),

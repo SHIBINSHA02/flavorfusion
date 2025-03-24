@@ -37,8 +37,9 @@ class _RecipeDetailsPageState extends State<RecipeDetailsPage> {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) =>
-              StepsPage(steps: widget.recipeData['steps'] ?? []),
+          builder: (context) => StepsPage(
+              steps: widget.recipeData['steps'] ?? [],
+              recipeData: widget.recipeData),
         ),
       );
     }
@@ -60,7 +61,7 @@ class _RecipeDetailsPageState extends State<RecipeDetailsPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(recipeName),
+        title: Text(recipeName),  // Recipe name stays in AppBar
       ),
       body: Column(
         children: [
@@ -75,8 +76,7 @@ class _RecipeDetailsPageState extends State<RecipeDetailsPage> {
               },
               itemBuilder: (context, index) {
                 return IngredientsCard(
-                  recipeName: recipeName,
-                  name: ingredients[index]['name'] ?? 'Ingredient',
+                  name: ingredients[index]['name'] ?? 'Ingredient',  // Added ingredient name
                   imageUrl: ingredients[index]['image_url'] ??
                       'https://via.placeholder.com/150',
                   quantity: ingredients[index]['quantity'] ?? 'N/A',

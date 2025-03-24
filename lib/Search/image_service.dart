@@ -3,18 +3,15 @@ import 'dart:convert';
 import 'dart:async';
 
 class ImageService {
-  static Future<String?> getSingleImageUrlDish(
-      String apiKey, String query) async {
+  static Future<String?> getSingleImageUrlDish(String apiKey, String query) async {
     return _getSingleImageUrl(apiKey, "$query dish");
   }
 
-  static Future<String?> getSingleImageUrlIngredient(
-      String apiKey, String query) async {
+  static Future<String?> getSingleImageUrlIngredient(String apiKey, String query) async {
     return _getSingleImageUrl(apiKey, "fresh $query ingredient");
   }
 
-  static Future<String?> _getSingleImageUrl(
-      String apiKey, String fullQuery) async {
+  static Future<String?> _getSingleImageUrl(String apiKey, String fullQuery) async {
     final String url =
         "https://www.googleapis.com/customsearch/v1?key=$apiKey&cx=e113eaf7402b44f7e&q=$fullQuery&searchType=image";
 
@@ -33,7 +30,8 @@ class ImageService {
               data['items'] is List &&
               data['items'].isNotEmpty) {
             final List items = data['items'];
-            final Map<String, dynamic> firstItem = items[7];
+            // Changed to first item to prevent out of bounds errors.
+            final Map<String, dynamic> firstItem = items[0];
 
             if (firstItem.containsKey('link')) {
               return firstItem['link'];

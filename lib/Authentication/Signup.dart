@@ -1,9 +1,8 @@
-// ignore_for_file: unused_local_variable
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flavorfusion/Authentication/Login.dart'; // Import the Login page
+import 'package:flavorfusion/Home/navbar.dart'; // Import the NavigationPage
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});
@@ -29,9 +28,11 @@ class _SignUpPageState extends State<SignUpPage> {
         email: _emailController.text,
         password: _passwordController.text,
       );
-      // Navigate to the HomePage after successful signup
-      Navigator.pushReplacementNamed(context,
-          '/home'); // Use pushReplacementNamed to replace the current page
+      // Navigate to the NavigationPage after successful signup
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => const NavigationPage()),
+      ); // Use pushReplacement to replace the current page
     } on FirebaseAuthException catch (e) {
       showErrorDialog('Error', e.message ?? 'An unexpected error occurred.');
     }
@@ -119,6 +120,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     focusedBorder: InputBorder.none,
                     enabledBorder: InputBorder.none,
                   ),
+                  obscureText: true, // Hide password input
                 ),
               ),
               const SizedBox(height: 10),
@@ -136,7 +138,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   ],
                 ),
                 child: TextField(
-                  controller:  _confirmPasswordController,
+                  controller: _confirmPasswordController,
                   decoration: InputDecoration(
                     labelText: 'Confirm Password',
                     labelStyle: TextStyle(color: Colors.black),
@@ -145,6 +147,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     focusedBorder: InputBorder.none,
                     enabledBorder: InputBorder.none,
                   ),
+                  obscureText: true, // Hide confirm password input
                 ),
               ),
               const SizedBox(height: 2),
@@ -161,10 +164,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     },
                     child: const Text(
                       'Have an Account? Login',
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.black87
-                      ),
+                      style: TextStyle(fontSize: 16, color: Colors.black87),
                     ),
                   ),
                 ],
@@ -172,7 +172,8 @@ class _SignUpPageState extends State<SignUpPage> {
               const SizedBox(height: 2), // Space between buttons
               // Sign Up button
               GestureDetector(
-                child:Container(
+                onTap: signup, // Call signup method on tap
+                child: Container(
                   height: 50,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(50),
@@ -186,7 +187,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     ],
                   ),
                   alignment: Alignment.center,
-                  child: Text(
+                  child: const Text(
                     'Sign Up',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
@@ -194,15 +195,12 @@ class _SignUpPageState extends State<SignUpPage> {
                     ),
                   ),
                 ),
-                onTap: signup,
               ),
-
-
               const SizedBox(height: 20),
               // Google Sign-Up button
               ElevatedButton(
                 onPressed: () async {
-                  // Google sign-up functionality removed
+                  // Google sign-up functionality (to be implemented if needed)
                 },
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,

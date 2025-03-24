@@ -1,11 +1,10 @@
-// conclusion_card.dart
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class ConclusionCard extends StatefulWidget {
   final Map<String, dynamic> recipeData;
 
-  ConclusionCard({required this.recipeData});
+  const ConclusionCard({required this.recipeData, Key? key}) : super(key: key);
 
   @override
   _ConclusionCardState createState() => _ConclusionCardState();
@@ -19,7 +18,15 @@ class _ConclusionCardState extends State<ConclusionCard> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Recipe Conclusion', style: GoogleFonts.quicksand()),
+        backgroundColor: Colors.orange[700], // Orange AppBar
+        title: Text(
+          'Recipe Conclusion',
+          style: GoogleFonts.quicksand(
+            color: Colors.white, // White text for contrast
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        iconTheme: const IconThemeData(color: Colors.white), // White icons
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -28,6 +35,7 @@ class _ConclusionCardState extends State<ConclusionCard> {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(16.0),
           ),
+          color: Colors.white, // White background for card
           child: Padding(
             padding: const EdgeInsets.all(24.0),
             child: Column(
@@ -36,42 +44,60 @@ class _ConclusionCardState extends State<ConclusionCard> {
               children: [
                 Text(
                   widget.recipeData['recipe_name'] ?? 'Recipe Conclusion',
-                  style: GoogleFonts.pacifico(fontSize: 28),
+                  style: GoogleFonts.pacifico(
+                    fontSize: 28,
+                    color: Colors.black, // Black for title
+                  ),
                   textAlign: TextAlign.center,
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 Text(
                   widget.recipeData['conclusion'] ?? 'No conclusion available.',
-                  style: GoogleFonts.quicksand(fontSize: 18),
+                  style: GoogleFonts.quicksand(
+                    fontSize: 18,
+                    color: Colors.black87, // Slightly softer black for body
+                  ),
                   textAlign: TextAlign.center,
                 ),
-                SizedBox(height: 20),
-                Row(
+                const SizedBox(height: 20),
+                Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text('Rate this recipe:', style: GoogleFonts.quicksand(fontSize: 16)),
-                    SizedBox(width: 10),
-                    DropdownButton<double>(
-                      value: _rating,
-                      items: [0.0, 1.0, 2.0, 3.0, 4.0, 5.0].map((double value) {
-                        return DropdownMenuItem<double>(
-                          value: value,
-                          child: Text(value.toString(), style: GoogleFonts.quicksand(fontSize: 16)),
+                    Text(
+                      'Rate this recipe:',
+                      style: GoogleFonts.quicksand(
+                        fontSize: 16,
+                        color: Colors.black, // Black for label
+                      ),
+                    ),
+                    const SizedBox(width: 10),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: List.generate(5, (index) {
+                        return IconButton(
+                          icon: Icon(
+                            index < _rating.floor()
+                                ? Icons.star
+                                : index < _rating
+                                    ? Icons.star_half
+                                    : Icons.star_border,
+                            color: Colors.orange[600], // Orange stars
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              _rating = (index + 1).toDouble();
+                            });
+                          },
                         );
-                      }).toList(),
-                      onChanged: (value) {
-                        setState(() {
-                          _rating = value!;
-                        });
-                      },
+                      }),
                     ),
                   ],
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 IconButton(
                   icon: Icon(
                     _isFavorite ? Icons.favorite : Icons.favorite_border,
-                    color: Colors.red,
+                    color: Colors.orange[700], // Orange for favorite icon
                   ),
                   onPressed: () {
                     setState(() {
@@ -79,7 +105,66 @@ class _ConclusionCardState extends State<ConclusionCard> {
                     });
                   },
                 ),
-                Text(_isFavorite ? 'Added to Favorites' : 'Add to Favorites', style: GoogleFonts.quicksand(fontSize: 14)),
+                Text(
+                  _isFavorite ? 'Added to Favorites' : 'Add to Favorites',
+                  style: GoogleFonts.quicksand(
+                    fontSize: 14,
+                    color: Colors.black54, // Softer black for subtle text
+                  ),
+                ),
+                const SizedBox(height: 20),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.orange[700], // Orange button
+                        foregroundColor: Colors.white, // White text/icon
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12.0),
+                        ),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 20,
+                          vertical: 12,
+                        ),
+                      ),
+                      onPressed: () {
+                        // Add your post functionality here
+                      },
+                      child: Text(
+                        'Post',
+                        style: GoogleFonts.quicksand(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 16),
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.black, // Black button
+                        foregroundColor: Colors.white, // White text/icon
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12.0),
+                        ),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 20,
+                          vertical: 12,
+                        ),
+                      ),
+                      onPressed: () {
+                        // Add your save functionality here
+                      },
+                      child: Text(
+                        'Save',
+                        style: GoogleFonts.quicksand(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ],
             ),
           ),
