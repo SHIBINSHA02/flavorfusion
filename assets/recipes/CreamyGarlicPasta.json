@@ -1,0 +1,92 @@
+{
+    "recipe_name": "Creamy Garlic Pasta",
+    "description": "A simple yet satisfying pasta dish featuring a rich and creamy garlic sauce. Perfect for a quick weeknight meal.",
+    "ingredients": [
+      {
+        "name": "Pasta (Spaghetti, Fettuccine, or Linguine)",
+        "quantity": "1 pound",
+        "image_url": "https://th.bing.com/th/id/OIP.WW0W1dhfFaBgCuOdstgAzwHaE8?rs=1&pid=ImgDetMain"
+      },
+      {
+        "name": "Garlic",
+        "quantity": "6 cloves, minced",
+        "image_url": "https://th.bing.com/th/id/OIP.xNVG0VROm7Tk55mf8AdP9gHaEo?rs=1&pid=ImgDetMain"
+      },
+      {
+        "name": "Heavy Cream",
+        "quantity": "1 1/2 cups",
+        "image_url": "https://www.simplyrecipes.com/thmb/PDBeTnlLoMoWPARrH_TGGer9Qdc=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/Simply-Recipes-Whipping-Heavy-Cream-LEAD-a67ec8ae7cc54197b2403f8991a20d66.jpg"
+      },
+      {
+        "name": "Parmesan Cheese",
+        "quantity": "1 cup, grated",
+        "image_url": "https://th.bing.com/th/id/R.cf3828894f6f31b88d41ebaf3b342ffb?rik=I7F3xHYAgpsojg&riu=http%3a%2f%2fmedia1.s-nbcnews.com%2fi%2fnewscms%2f2016_07%2f977756%2fgrated-parmesan-today-tease-160217_f9ef7604016457433d18c10f422ffcde.jpg&ehk=rQGDNrHlSlIBJsxOQWgatd5WdfBDldXPCGJUm36h7GU%3d&risl=&pid=ImgRaw&r=0"
+      },
+      {
+        "name": "Butter",
+        "quantity": "4 tablespoons",
+        "image_url": "https://img2.exportersindia.com/product_images/bc-full/dir_62/1837486/butter-561487.jpg"
+      },
+      {
+        "name": "Olive Oil",
+        "quantity": "2 tablespoons",
+        "image_url": "https://domf5oio6qrcr.cloudfront.net/medialibrary/11832/46d9dde1-3d7c-46d4-a05a-206f793afa66.jpg"
+      },
+      {
+        "name": "Salt",
+        "quantity": "To taste",
+        "image_url": "https://th.bing.com/th/id/OIP.bYHhMuV_djzPOD1Ux1OloAHaFI?rs=1&pid=ImgDetMain"
+      },
+      {
+        "name": "Black Pepper",
+        "quantity": "To taste",
+        "image_url": "https://www.netmeds.com/images/cms/wysiwyg/blog/Post/2018/11/black_pepper_898.jpg"
+      },
+      {
+        "name": "Fresh Parsley",
+        "quantity": "2 tablespoons, chopped (for garnish)",
+        "image_url": "https://th.bing.com/th/id/OIP.X4hopRnt6ZfBxnKVBbvLSgHaE8?rs=1&pid=ImgDetMain"
+      }
+    ],
+    "steps": [
+      {
+        "index": 1,
+        "step_name": "Cook the Pasta",
+        "description": "Bring a large pot of salted water to a boil. Add the pasta and cook according to package directions until al dente. Reserve about 1 cup of pasta water before draining.",
+        "time": "8-10 minutes",
+        "flame": "High"
+      },
+      {
+        "index": 2,
+        "step_name": "Sauté the Garlic",
+        "description": "While the pasta is cooking, melt the butter and olive oil in a large skillet over medium heat. Add the minced garlic and sauté until fragrant, being careful not to brown it. This should take about 1-2 minutes.",
+        "time": "1-2 minutes",
+        "flame": "Medium"
+      },
+      {
+        "index": 3,
+        "step_name": "Make the Cream Sauce",
+        "description": "Pour in the heavy cream and bring to a simmer. Reduce heat to low and let it gently simmer for 3-5 minutes, allowing the sauce to thicken slightly.",
+        "time": "3-5 minutes",
+        "flame": "Low"
+      },
+      {
+        "index": 4,
+        "step_name": "Combine Pasta and Sauce",
+        "description": "Add the cooked pasta to the skillet with the cream sauce. Toss to coat. Gradually add the grated Parmesan cheese, tossing continuously until the cheese is melted and the sauce is smooth and creamy. If the sauce is too thick, add a little reserved pasta water until you reach your desired consistency.",
+        "time": "2-3 minutes",
+        "flame": "Low"
+      },
+      {
+        "index": 5,
+        "step_name": "Season and Serve",
+        "description": "Season with salt and pepper to taste. Garnish with fresh parsley. Serve immediately.",
+        "time": "1 minute",
+        "flame": "Off"
+      }
+    ],
+    "total_time": "20-25 minutes",
+    "conclusion": "Enjoy your delicious and creamy garlic pasta! Serve with a side salad or garlic bread for a complete meal.",
+    "image_url": "https://th.bing.com/th/id/R.e79b0536b36507a654ed08eebaca4907?rik=b9dqy0lTL%2fG9eg&riu=http%3a%2f%2fnomadette.com%2fwp-content%2fuploads%2f2022%2f06%2fOne-pot-creamy-garlic-spinach-pasta.jpg&ehk=aOm%2b88yUEIHIo0FrGJV08f%2f51Qi9ylJEAw872kRgpdY%3d&risl=&pid=ImgRaw&r=0"
+  }
+  

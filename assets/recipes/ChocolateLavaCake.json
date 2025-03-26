@@ -1,0 +1,107 @@
+{
+    "recipe_name": "Chocolate Lava Cake",
+    "description": "Indulge in a decadent, warm chocolate lava cake with a molten chocolate center. This recipe is perfect for a special occasion or a cozy night in. Bake time is crucial for achieving the perfect lava center!",
+    "ingredients": [
+      {
+        "name": "Bittersweet Chocolate",
+        "quantity": "4 ounces, chopped",
+        "image_url": "https://th.bing.com/th/id/OIP.hN900eIyRfRUb8T58sOy9AHaEK?w=321&h=180&c=7&r=0&o=5&pid=1.7"
+      },
+      {
+        "name": "Unsalted Butter",
+        "quantity": "4 ounces, cut into cubes",
+        "image_url": "https://th.bing.com/th/id/OIP.VbG7GVlOoDq6-fS2iMgB4AHaEo?w=286&h=180&c=7&r=0&o=5&pid=1.7"
+      },
+      {
+        "name": "Large Eggs",
+        "quantity": "2",
+        "image_url": "https://th.bing.com/th/id/OIP.rHR7F1T_mJby5hb8HbrqwQHaFj?rs=1&pid=ImgDetMain"
+      },
+      {
+        "name": "Egg Yolks",
+        "quantity": "2",
+        "image_url": "https://th.bing.com/th/id/OIP.TbGN3-VZHK2b_lqKYtkjRwHaEK?rs=1&pid=ImgDetMain"
+      },
+      {
+        "name": "Granulated Sugar",
+        "quantity": "1/4 cup",
+        "image_url": "https://th.bing.com/th/id/OIP.1RJmXv-9Bpd8RgYgwhEC5gHaE8?rs=1&pid=ImgDetMain"
+      },
+      {
+        "name": "All-Purpose Flour",
+        "quantity": "2 tablespoons",
+        "image_url": "https://th.bing.com/th/id/OIP.QJAG3Xmyd4uFr6SFuTJTPgHaE8?rs=1&pid=ImgDetMain"
+      },
+      {
+        "name": "Pinch of Salt",
+        "quantity": "Pinch",
+        "image_url": "https://th.bing.com/th/id/OIP.QJLuEh3MBqefn-BBJp8bQQHaHa?w=185&h=185&c=7&r=0&o=5&pid=1.7"
+      },
+      {
+        "name": "Powdered Sugar",
+        "quantity": "For dusting (optional)",
+        "image_url": "https://cdn.loveandlemons.com/wp-content/uploads/2021/02/powdered-sugar.jpg"
+      }
+    ],
+    "steps": [
+      {
+        "index": 1,
+        "step_name": "Melt Chocolate and Butter",
+        "description": "In a heatproof bowl set over a simmering pot of water (or in the microwave in 30-second intervals), melt the chocolate and butter together, stirring until smooth. Be careful not to burn the chocolate.",
+        "time": "2-3 minutes",
+        "flame": "Low"
+      },
+      {
+        "index": 2,
+        "step_name": "Whisk Eggs and Sugar",
+        "description": "In a separate bowl, whisk together the eggs, egg yolks, and sugar until pale and slightly thickened. This will incorporate air and help the cake rise.",
+        "time": "2-3 minutes",
+        "flame": "None"
+      },
+      {
+        "index": 3,
+        "step_name": "Combine Wet and Dry Ingredients",
+        "description": "Gently fold the melted chocolate mixture into the egg mixture. Then, fold in the flour and salt until just combined. Be careful not to overmix.",
+        "time": "1-2 minutes",
+        "flame": "None"
+      },
+      {
+        "index": 4,
+        "step_name": "Prepare Ramekins",
+        "description": "Grease and flour two 6-ounce ramekins. This will prevent the cakes from sticking.",
+        "time": "2 minutes",
+        "flame": "None"
+      },
+      {
+        "index": 5,
+        "step_name": "Fill Ramekins",
+        "description": "Divide the batter evenly between the prepared ramekins.",
+        "time": "1 minute",
+        "flame": "None"
+      },
+      {
+        "index": 6,
+        "step_name": "Bake",
+        "description": "Bake in a preheated oven at 425°F (220°C) for 12-15 minutes, or until the edges are set and the center is still soft. The baking time may vary depending on your oven.",
+        "time": "12-15 minutes",
+        "flame": "Medium-High"
+      },
+      {
+        "index": 7,
+        "step_name": "Cool Slightly and Invert",
+        "description": "Let the cakes cool in the ramekins for a minute or two before inverting them onto plates.",
+        "time": "2 minutes",
+        "flame": "None"
+      },
+      {
+        "index": 8,
+        "step_name": "Serve Immediately",
+        "description": "Dust with powdered sugar, if desired, and serve immediately while the center is still molten.",
+        "time": "1 minute",
+        "flame": "None"
+      }
+    ],
+    "total_time": "30 minutes",
+    "conclusion": "Enjoy your warm and delicious chocolate lava cake! The key is to get the baking time just right to achieve that perfect molten center. Serve immediately for the best experience.",
+    "image_url": "https://th.bing.com/th/id/OIP.dzPyNjlQ8-xI5jW4Vxig5QHaLH?rs=1&pid=ImgDetMain"
+  }

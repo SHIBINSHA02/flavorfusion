@@ -1,0 +1,120 @@
+{
+    "recipe_name": "Spicy Thai Curry (Chicken)",
+    "description": "A flavorful and aromatic Thai curry made with chicken, coconut milk, vegetables, and a fiery blend of spices. Adjust the chili paste to your preferred spice level. This recipe is naturally gluten-free and can be easily adapted for vegetarians by substituting tofu or vegetables for the chicken.",
+    "ingredients": [
+      {
+        "name": "Chicken Thighs",
+        "quantity": "1.5 lbs, boneless, skinless, cut into 1-inch pieces",
+        "image_url": "https://bing.com/th?id=OSK.f20222f8d924e28e3e763c02f6a0afc4"
+      },
+      {
+        "name": "Coconut Milk",
+        "quantity": "1 can (13.5 oz), full-fat",
+        "image_url": "https://th.bing.com/th/id/OSK.HEROdXkR_jCSUY3nJyRdm_P3_-H_TlnovD6rdaeWcOJm0jg?rs=1&pid=ImgDetMain"
+      },
+      {
+        "name": "Red Curry Paste",
+        "quantity": "2-3 tablespoons (adjust to taste)",
+        "image_url": "https://th.bing.com/th/id/OIP.Iz9Kg1QaVsh1Ih6l2skUrgHaLH?rs=1&pid=ImgDetMain"
+      },
+      {
+        "name": "Vegetable Oil",
+        "quantity": "2 tablespoons",
+        "image_url": "https://th.bing.com/th/id/OIP.mhNpgOAxyCKvzAUJDlwF7wHaHa?rs=1&pid=ImgDetMain"
+      },
+      {
+        "name": "Onion",
+        "quantity": "1 medium, chopped",
+        "image_url": "https://th.bing.com/th/id/OIP.Mqrn6ojlsisr9euu_wvl2gHaFj?rs=1&pid=ImgDetMain"
+      },
+      {
+        "name": "Garlic",
+        "quantity": "4 cloves, minced",
+        "image_url": "https://positivelysharing.org/blog/wp-content/uploads/2021/07/garlic.jpg"
+      },
+      {
+        "name": "Ginger",
+        "quantity": "1 inch piece, grated",
+        "image_url": "https://th.bing.com/th/id/OIP.m1QbeknBtUjQDIwL4vewbgHaEK?rs=1&pid=ImgDetMain"
+      },
+      {
+        "name": "Red Bell Pepper",
+        "quantity": "1, sliced",
+        "image_url": "https://th.bing.com/th/id/OIP._c32cBWdxSLX_RZkVDrqlgHaHp?rs=1&pid=ImgDetMain"
+      },
+      {
+        "name": "Bamboo Shoots",
+        "quantity": "1 can (8 oz), drained",
+        "image_url": "https://th.bing.com/th/id/OIP._LFpvw_0WAduAHg8J1wNHQAAAA?rs=1&pid=ImgDetMains://cdni.iconscout.com/illustration/premium/thumb/page-not-found-5756378-4812410.png"
+      },
+      {
+        "name": "Baby Corn",
+        "quantity": "1 can (8 oz), drained",
+        "image_url": "https://image.makewebeasy.net/makeweb/0/3AtXD73Tj/Products/1.jpg"
+      },
+      {
+        "name": "Fish Sauce",
+        "quantity": "2 tablespoons (or soy sauce for vegetarian)",
+        "image_url": "https://th.bing.com/th/id/OIP.1mg0ezd9LTiXikJziaWgmQHaHa?rs=1&pid=ImgDetMain"
+      },
+      {
+        "name": "Brown Sugar",
+        "quantity": "1 tablespoon",
+        "image_url": "https://th.bing.com/th/id/OIP.LoYnAXlaMbZGQs411fg6MAHaEK?rs=1&pid=ImgDetMain"
+      },
+      {
+        "name": "Lime Juice",
+        "quantity": "2 tablespoons",
+        "image_url": "https://th.bing.com/th/id/OIP.ev9ZnLnlMlrvuYckD-1RNAHaIV?rs=1&pid=ImgDetMain"
+      },
+      {
+        "name": "Fresh Basil Leaves",
+        "quantity": "1/4 cup, chopped",
+        "image_url": "https://th.bing.com/th/id/OIP.eY09GzpvaEyEjLfO8CHrNAHaE8?rs=1&pid=ImgDetMain"
+      },
+      {
+        "name": "Cilantro",
+        "quantity": "1/4 cup, chopped, for garnish",
+        "image_url": "https://i0.wp.com/cdn-prod.medicalnewstoday.com/content/images/articles/277/277627/bunch-of-fresh-coriander-or-cilantro-on-a-wooden-table.jpg?w=1155&h=1444"
+      },
+      {
+        "name": "Jasmine Rice",
+        "quantity": "for serving",
+        "image_url": "https://silkroadrecipes.com/wp-content/uploads/2023/01/How-to-Cook-Jasmine-Rice-6-720x1008.jpg"
+      }
+    ],
+    "steps": [
+      {
+        "index": 1,
+        "step_name": "Sauté Aromatics",
+        "description": "Heat vegetable oil in a large pot or Dutch oven over medium heat. Add onion and cook until softened, about 5 minutes. Add garlic and ginger and cook for another minute until fragrant.",
+        "time": "6 minutes",
+        "flame": "medium"
+      },
+      {
+        "index": 2,
+        "step_name": "Cook Chicken",
+        "description": "Add chicken and red curry paste to the pot. Cook, stirring frequently, until chicken is lightly browned and curry paste is fragrant, about 5-7 minutes.",
+        "time": "7 minutes",
+        "flame": "medium"
+      },
+      {
+        "index": 3,
+        "step_name": "Simmer Curry",
+        "description": "Pour in coconut milk and bring to a simmer. Add red bell pepper, bamboo shoots, and baby corn. Reduce heat to low, cover, and simmer for 15-20 minutes, or until chicken is cooked through and vegetables are tender.",
+        "time": "20 minutes",
+        "flame": "low"
+      },
+      {
+        "index": 4,
+        "step_name": "Season and Finish",
+        "description": "Stir in fish sauce (or soy sauce), brown sugar, and lime juice. Taste and adjust seasonings as needed. Stir in fresh basil leaves just before serving.",
+        "time": "2 minutes",
+        "flame": "low"
+      }
+    ],
+    "total_time": "30-45 minutes",
+    "conclusion": "Serve the Spicy Thai Curry immediately. It pairs well with roasted vegetables, rice, or a fresh salad. Enjoy!",
+    "image_url": "https://inquiringchef.com/wp-content/uploads/2020/02/Thai-Red-Curry_5.jpg"
+  }
+  

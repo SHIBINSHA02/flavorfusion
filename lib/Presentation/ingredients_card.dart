@@ -22,21 +22,41 @@ class IngredientsCard extends StatefulWidget {
 }
 
 class _IngredientsCardState extends State<IngredientsCard> {
-  final FlutterTts flutterTts = FlutterTts();
+  late FlutterTts flutterTts;
+  bool _isSpeaking = false;
 
   @override
   void initState() {
     super.initState();
+    flutterTts = FlutterTts(); // Initialize a new instance for this card
+    _configureTts();
     _speakIngredientDetails();
   }
 
-  void _speakIngredientDetails() async {
-    await flutterTts.speak("Ingredient: ${widget.name}");
-    await flutterTts.speak("Quantity: ${widget.quantity}");
+  Future<void> _configureTts() async {
+    await flutterTts.setLanguage("en-US");
+    await flutterTts.setPitch(1.0);
+    await flutterTts.setSpeechRate(0.5);
+    // Ensure only one TTS instance speaks at a time by awaiting completion
+    flutterTts.setCompletionHandler(() {
+      _isSpeaking = false;
+    });
   }
 
-  void _stopSpeaking() async {
-    await flutterTts.stop();
+  Future<void> _speakIngredientDetails() async {
+    if (_isSpeaking) {
+      await flutterTts.stop(); // Stop any ongoing speech
+    }
+    _isSpeaking = true;
+    String textToSpeak = "${widget.name}, Quantity: ${widget.quantity}";
+    await flutterTts.speak(textToSpeak);
+  }
+
+  Future<void> _stopSpeaking() async {
+    if (_isSpeaking) {
+      await flutterTts.stop();
+      _isSpeaking = false;
+    }
   }
 
   Future<void> _addToCartAndContinue(BuildContext context) async {
@@ -78,7 +98,7 @@ class _IngredientsCardState extends State<IngredientsCard> {
           backgroundColor: Colors.black87,
         ),
       );
-      _stopSpeaking(); // Stop speaking before continuing
+      _stopSpeaking();
       widget.onContinue();
     } catch (e) {
       print('Error adding to cart: $e');
@@ -196,7 +216,7 @@ class _IngredientsCardState extends State<IngredientsCard> {
                   ),
                   ElevatedButton(
                     onPressed: () {
-                      _stopSpeaking(); // Stop speaking when cancelling
+                      _stopSpeaking();
                       Navigator.pop(context);
                     },
                     style: ElevatedButton.styleFrom(
@@ -220,7 +240,7 @@ class _IngredientsCardState extends State<IngredientsCard> {
 
   @override
   void dispose() {
-    _stopSpeaking(); // Clean up TTS when widget is disposed
+    _stopSpeaking();
     super.dispose();
   }
 }

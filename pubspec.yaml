@@ -56,6 +56,7 @@ dependencies:
   flutter_custom_clippers: ^2.0.0
   flutter_tts: ^4.2.2
   flutter_dotenv: ^5.2.1
+  cached_network_image: ^3.4.1
 
 dev_dependencies:
   flutter_test:
@@ -103,6 +104,7 @@ flutter:
      - assets/animations/heart.json
      - assets/animations/search.json
      - assets/animations/like.json
+     - assets/recipes/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

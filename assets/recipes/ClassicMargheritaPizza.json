@@ -1,0 +1,94 @@
+{
+    "recipe_name": "Classic Margherita Pizza",
+    "description": "A simple yet incredibly flavorful pizza featuring fresh mozzarella, ripe tomatoes, and fragrant basil on a crisp, thin crust.",
+    "ingredients": [
+      {
+        "name": "Pizza Dough",
+        "quantity": "1 pound",
+        "image_url": "https://th.bing.com/th/id/OIP.g9MLO2W46fXRl4MRme-ZzgHaLH?rs=1&pid=ImgDetMain"
+      },
+      {
+        "name": "San Marzano Tomatoes (canned)",
+        "quantity": "1 (28 ounce) can",
+        "image_url": "https://dailydish.co.uk/wp-content/uploads/2022/09/San-Marzano-tomato-sauce-authentic.jpg"
+      },
+      {
+        "name": "Fresh Mozzarella",
+        "quantity": "8 ounces, sliced",
+        "image_url": "https://i.pinimg.com/originals/f7/2b/9c/f72b9c876a40889324f457851200a138.jpg"
+      },
+      {
+        "name": "Fresh Basil Leaves",
+        "quantity": "1/4 cup, roughly chopped",
+        "image_url": "https://th.bing.com/th/id/OIP.xmd_Vs0Pblc7xJf1N41MjQHaFb?rs=1&pid=ImgDetMain"
+      },
+      {
+        "name": "Extra Virgin Olive Oil",
+        "quantity": "2 tablespoons",
+        "image_url": "https://th.bing.com/th/id/OIP.oRbRgYohCdoxZjDwLYQnegHaHa?rs=1&pid=ImgDetMain"
+      },
+      {
+        "name": "Garlic",
+        "quantity": "1 clove, minced",
+        "image_url": "https://th.bing.com/th/id/OIP.W-Gr2Z27WjiUIoaOfPMeugHaE7?rs=1&pid=ImgDetMain"
+      },
+      {
+        "name": "Salt",
+        "quantity": "To taste",
+        "image_url": "https://www.tastingtable.com/img/gallery/everything-you-need-to-know-about-salt/intro-1674742362.jpg"
+      },
+      {
+        "name": "Black Pepper",
+        "quantity": "To taste",
+        "image_url": "https://www.netmeds.com/images/cms/wysiwyg/blog/Post/2018/11/black_pepper_898.jpg"
+      }
+    ],
+    "steps": [
+      {
+        "index": 1,
+        "step_name": "Prepare the Tomato Sauce",
+        "description": "In a bowl, crush the San Marzano tomatoes by hand or with a potato masher. Add minced garlic, salt, and pepper. Mix well.",
+        "time": "5 minutes",
+        "flame": "Off"
+      },
+      {
+        "index": 2,
+        "step_name": "Preheat Oven and Pizza Stone (if using)",
+        "description": "Preheat your oven to the highest temperature setting (usually 500-550°F or 260-290°C). If using a pizza stone, place it in the oven while preheating.",
+        "time": "30 minutes",
+        "flame": "Oven"
+      },
+      {
+        "index": 3,
+        "step_name": "Shape the Dough",
+        "description": "On a lightly floured surface, stretch or roll the pizza dough into a 12-14 inch circle or desired shape.",
+        "time": "5 minutes",
+        "flame": "Off"
+      },
+      {
+        "index": 4,
+        "step_name": "Assemble the Pizza",
+        "description": "Carefully transfer the dough to a pizza peel dusted with cornmeal or flour. Spread a thin layer of tomato sauce over the dough, leaving a small border for the crust. Arrange mozzarella slices evenly over the sauce. Drizzle with olive oil.",
+        "time": "5 minutes",
+        "flame": "Off"
+      },
+      {
+        "index": 5,
+        "step_name": "Bake the Pizza",
+        "description": "Carefully slide the pizza onto the preheated pizza stone (or baking sheet). Bake for 8-12 minutes, or until the crust is golden brown and the cheese is melted and bubbly.",
+        "time": "8-12 minutes",
+        "flame": "Oven"
+      },
+      {
+        "index": 6,
+        "step_name": "Add Fresh Basil and Serve",
+        "description": "Remove the pizza from the oven and sprinkle with fresh basil leaves. Slice and serve immediately.",
+        "time": "2 minutes",
+        "flame": "Off"
+      }
+    ],
+    "total_time": "50 minutes",
+    "conclusion": "Enjoy your delicious homemade Margherita Pizza! This recipe highlights the beauty of simple, high-quality ingredients for a truly satisfying meal.",
+    "image_url": "https://th.bing.com/th/id/OIP._v8cID3yy99bIkkodRgg8QHaFj?rs=1&pid=ImgDetMain"
+  }
+  
