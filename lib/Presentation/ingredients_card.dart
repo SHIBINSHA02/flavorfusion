@@ -7,6 +7,7 @@ class IngredientsCard extends StatefulWidget {
   final String name;
   final String imageUrl;
   final String quantity;
+  final String recipeName;
   final VoidCallback onContinue;
 
   const IngredientsCard({
@@ -14,6 +15,7 @@ class IngredientsCard extends StatefulWidget {
     required this.name,
     required this.imageUrl,
     required this.quantity,
+    required this.recipeName,
     required this.onContinue,
   }) : super(key: key);
 
@@ -24,29 +26,43 @@ class IngredientsCard extends StatefulWidget {
 class _IngredientsCardState extends State<IngredientsCard> {
   late FlutterTts flutterTts;
   bool _isSpeaking = false;
+  bool _isTtsInitialized = false;
 
   @override
   void initState() {
     super.initState();
-    flutterTts = FlutterTts(); // Initialize a new instance for this card
-    _configureTts();
-    _speakIngredientDetails();
+    flutterTts = FlutterTts();
+    _configureTts().then((_) {
+      setState(() {
+        _isTtsInitialized = true;
+      });
+      _speakIngredientDetails(); // Speak once TTS is initialized
+    });
   }
 
   Future<void> _configureTts() async {
     await flutterTts.setLanguage("en-US");
     await flutterTts.setPitch(1.0);
     await flutterTts.setSpeechRate(0.5);
-    // Ensure only one TTS instance speaks at a time by awaiting completion
     flutterTts.setCompletionHandler(() {
-      _isSpeaking = false;
+      if (mounted) {
+        setState(() {
+          _isSpeaking = false;
+        });
+      }
+    });
+    flutterTts.setErrorHandler((msg) {
+      if (mounted) {
+        setState(() {
+          _isSpeaking = false;
+        });
+        print('TTS Error: $msg');
+      }
     });
   }
 
   Future<void> _speakIngredientDetails() async {
-    if (_isSpeaking) {
-      await flutterTts.stop(); // Stop any ongoing speech
-    }
+    if (!_isTtsInitialized || _isSpeaking) return;
     _isSpeaking = true;
     String textToSpeak = "${widget.name}, Quantity: ${widget.quantity}";
     await flutterTts.speak(textToSpeak);
@@ -74,7 +90,7 @@ class _IngredientsCardState extends State<IngredientsCard> {
           .collection('users')
           .doc(user.uid)
           .collection('shopping')
-          .doc();
+          .doc(widget.recipeName);
 
       final doc = await shoppingRef.get();
 
@@ -112,6 +128,16 @@ class _IngredientsCardState extends State<IngredientsCard> {
   }
 
   @override
+  void didUpdateWidget(IngredientsCard oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    // If the ingredient changes, re-speak the new details
+    if (oldWidget.name != widget.name ||
+        oldWidget.quantity != widget.quantity) {
+      _stopSpeaking().then((_) => _speakIngredientDetails());
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Center(
       child: Card(
@@ -138,11 +164,8 @@ class _IngredientsCardState extends State<IngredientsCard> {
                     height: 250,
                     width: double.infinity,
                     fit: BoxFit.cover,
-                    loadingBuilder: (BuildContext context, Widget child,
-                        ImageChunkEvent? loadingProgress) {
-                      if (loadingProgress == null) {
-                        return child;
-                      }
+                    loadingBuilder: (context, child, loadingProgress) {
+                      if (loadingProgress == null) return child;
                       return SizedBox(
                         height: 250,
                         child: Center(
@@ -156,8 +179,7 @@ class _IngredientsCardState extends State<IngredientsCard> {
                         ),
                       );
                     },
-                    errorBuilder:
-                        (BuildContext context, Object exception, StackTrace? stackTrace) {
+                    errorBuilder: (context, error, stackTrace) {
                       return SizedBox(
                         height: 250,
                         child: Center(
@@ -241,6 +263,7 @@ class _IngredientsCardState extends State<IngredientsCard> {
   @override
   void dispose() {
     _stopSpeaking();
+    flutterTts.stop(); // Ensure TTS is fully stopped
     super.dispose();
   }
 }

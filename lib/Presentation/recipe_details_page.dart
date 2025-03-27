@@ -61,7 +61,7 @@ class _RecipeDetailsPageState extends State<RecipeDetailsPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(recipeName), // Recipe name stays in AppBar
+        title: Text(recipeName),
       ),
       body: Column(
         children: [
@@ -76,11 +76,11 @@ class _RecipeDetailsPageState extends State<RecipeDetailsPage> {
               },
               itemBuilder: (context, index) {
                 return IngredientsCard(
-                  name: ingredients[index]['name'] ??
-                      'Ingredient', // Added ingredient name
+                  name: ingredients[index]['name'] ?? 'Ingredient',
                   imageUrl: ingredients[index]['image_url'] ??
                       'https://via.placeholder.com/150',
                   quantity: ingredients[index]['quantity'] ?? 'N/A',
+                  recipeName: recipeName, // Added recipeName parameter
                   onContinue: _nextPage,
                 );
               },

@@ -20,6 +20,11 @@ class _ShoppingPageState extends State<ShoppingPage> {
     _getUserIdAndLoadDishes();
   }
 
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
   Future<void> _getUserIdAndLoadDishes() async {
     setState(() {
       _isLoading = true;
@@ -29,21 +34,28 @@ class _ShoppingPageState extends State<ShoppingPage> {
     if (user != null) {
       _userId = user.uid;
       try {
-        dishes = await retrieveDishes(_userId!);
-        setState(() {
-          _isLoading = false;
-        });
+        final loadedDishes = await retrieveDishes(_userId!);
+        if (mounted) { // Check if widget is still mounted
+          setState(() {
+            dishes = loadedDishes;
+            _isLoading = false;
+          });
+        }
       } catch (e) {
         print('Error loading dishes: $e');
+        if (mounted) {
+          setState(() {
+            _isLoading = false;
+          });
+        }
+      }
+    } else {
+      print('User not signed in');
+      if (mounted) {
         setState(() {
           _isLoading = false;
         });
       }
-    } else {
-      print('User not signed in');
-      setState(() {
-        _isLoading = false;
-      });
     }
   }
 
@@ -59,74 +71,112 @@ class _ShoppingPageState extends State<ShoppingPage> {
           firestore.collection('users').doc(userId).collection('shopping');
 
       final querySnapshot = await collectionRef.get();
-      List<Map<String, dynamic>> dishes = [];
-
-      for (var doc in querySnapshot.docs) {
-        dishes.add(doc.data());
-      }
-
-      return dishes;
+      return querySnapshot.docs.map((doc) {
+        final data = doc.data();
+        data['name'] = doc.id; // Use document ID as dish name
+        return data;
+      }).toList();
     } catch (e) {
       print("Error retrieving dishes: $e");
       return [];
     }
   }
 
-  void deleteDish(int index) {
-    setState(() {
-      if (_userId != null) {
-        final dishName = dishes[index]['name'];
-        print("Deleting dish: users/$_userId/shopping/$dishName");
-        FirebaseFirestore.instance
+  Future<void> deleteDish(int index) async {
+    if (_userId == null) {
+      print('User not signed in, cannot delete.');
+      return;
+    }
+
+    final dishName = dishes[index]['name'];
+    print("Deleting dish: users/$_userId/shopping/$dishName");
+
+    try {
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(_userId)
+          .collection('shopping')
+          .doc(dishName)
+          .delete();
+
+      if (mounted) {
+        setState(() {
+          dishes.removeAt(index);
+        });
+      }
+    } catch (error) {
+      print("Error deleting dish: $error");
+    }
+  }
+
+  Future<void> deleteIngredient(int dishIndex, int ingredientIndex) async {
+    if (_userId == null) {
+      print('User not signed in, cannot delete.');
+      return;
+    }
+
+    final dishName = dishes[dishIndex]['name'];
+    print("Updating Ingredients: users/$_userId/shopping/$dishName");
+
+    try {
+      final updatedIngredients = List.from(dishes[dishIndex]['ingredients']);
+      updatedIngredients.removeAt(ingredientIndex);
+
+      if (updatedIngredients.isEmpty) {
+        await FirebaseFirestore.instance
             .collection('users')
             .doc(_userId)
             .collection('shopping')
             .doc(dishName)
-            .delete()
-            .then((_) {
-          dishes.removeAt(index);
-        }).catchError((error) {
-          print("Error deleting dish: $error");
-        });
-      } else {
-        print('User not signed in, cannot delete.');
-      }
-    });
-  }
-
-  void deleteIngredient(int dishIndex, int ingredientIndex) {
-    setState(() {
-      if (_userId != null) {
-        final dishName = dishes[dishIndex]['name'];
-        print("Updating Ingredients: users/$_userId/shopping/$dishName");
-        dishes[dishIndex]['ingredients'].removeAt(ingredientIndex);
-        if (dishes[dishIndex]['ingredients'].isEmpty) {
-          FirebaseFirestore.instance
-              .collection('users')
-              .doc(_userId)
-              .collection('shopping')
-              .doc(dishName)
-              .delete()
-              .then((_) {
+            .delete();
+        if (mounted) {
+          setState(() {
             dishes.removeAt(dishIndex);
-          }).catchError((error) {
-            print("Error deleting dish: $error");
-          });
-        } else {
-          FirebaseFirestore.instance
-              .collection('users')
-              .doc(_userId)
-              .collection('shopping')
-              .doc(dishName)
-              .update({'ingredients': dishes[dishIndex]['ingredients']})
-              .catchError((error) {
-            print("Error updating ingredients: $error");
           });
         }
       } else {
-        print('User not signed in, cannot delete.');
+        await FirebaseFirestore.instance
+            .collection('users')
+            .doc(_userId)
+            .collection('shopping')
+            .doc(dishName)
+            .update({'ingredients': updatedIngredients});
+        if (mounted) {
+          setState(() {
+            dishes[dishIndex]['ingredients'] = updatedIngredients;
+          });
+        }
       }
-    });
+    } catch (error) {
+      print("Error updating ingredients: $error");
+    }
+  }
+
+  Future<void> updateCheckbox(int dishIndex, int ingredientIndex, bool? value) async {
+    if (_userId == null) {
+      print('User not signed in, cannot update.');
+      return;
+    }
+
+    try {
+      final updatedIngredients = List.from(dishes[dishIndex]['ingredients']);
+      updatedIngredients[ingredientIndex]['checked'] = value;
+
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(_userId)
+          .collection('shopping')
+          .doc(dishes[dishIndex]['name'])
+          .update({'ingredients': updatedIngredients});
+
+      if (mounted) {
+        setState(() {
+          dishes[dishIndex]['ingredients'] = updatedIngredients;
+        });
+      }
+    } catch (error) {
+      print("Error updating checkbox: $error");
+    }
   }
 
   @override
@@ -160,68 +210,53 @@ class _ShoppingPageState extends State<ShoppingPage> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                        dish['name'],
-                        style: const TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
+                      Flexible(
+                        child: Text(
+                          dish['name'] ?? 'Unnamed Dish',
+                          style: const TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          overflow: TextOverflow.ellipsis,
                         ),
                       ),
                       IconButton(
                         icon: const Icon(Icons.delete),
                         color: Colors.red,
-                        onPressed: () {
-                          deleteDish(index);
-                        },
+                        onPressed: () => deleteDish(index),
                       ),
                     ],
                   ),
                   const SizedBox(height: 8.0),
                   Column(
-                    children: List.generate(dish['ingredients'].length,
+                    children: List.generate(dish['ingredients']?.length ?? 0,
                         (ingredientIndex) {
+                      final ingredient = dish['ingredients'][ingredientIndex];
                       return Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Expanded(
+                          Flexible(
                             child: Row(
                               children: [
                                 Checkbox(
-                                  value: dish['ingredients'][ingredientIndex]
-                                          ['checked'] ??
-                                      false,
+                                  value: ingredient['checked'] ?? false,
                                   onChanged: (bool? value) {
-                                    setState(() {
-                                      dish['ingredients'][ingredientIndex]
-                                          ['checked'] = value;
-                                      if (_userId != null) {
-                                        FirebaseFirestore.instance
-                                            .collection('users')
-                                            .doc(_userId)
-                                            .collection('shopping')
-                                            .doc(dish['name'])
-                                            .update({
-                                          'ingredients': dishes[index]
-                                              ['ingredients']
-                                        }).catchError((error) {
-                                          print("Error updating checkbox: $error");
-                                        });
-                                      }
-                                    });
+                                    updateCheckbox(index, ingredientIndex, value);
                                   },
                                 ),
-                                Text(
-                                  '${dish['ingredients'][ingredientIndex]['name']} (x${dish['ingredients'][ingredientIndex]['quantity']})',
-                                  style: const TextStyle(fontSize: 16),
+                                Flexible(
+                                  child: Text(
+                                    '${ingredient['name'] ?? 'Unknown'} (x${ingredient['quantity'] ?? 'N/A'})',
+                                    style: const TextStyle(fontSize: 16),
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
                                 ),
                               ],
                             ),
                           ),
                           IconButton(
                             icon: const Icon(Icons.delete),
-                            onPressed: () {
-                              deleteIngredient(index, ingredientIndex);
-                            },
+                            onPressed: () => deleteIngredient(index, ingredientIndex),
                           ),
                         ],
                       );
