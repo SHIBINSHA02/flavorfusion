@@ -91,7 +91,7 @@ Recipe = {
 }
 
 Food Name: "$foodName"
-if the user does not pass a valid and existing foodname dont create json.there might also contain information about allergy so generate content accordingly.if the allergy not mentioned never mind no conserns.
+if the user does not pass a valid and existing foodname dont create json
 Return: A well-structured JSON response.
 """;
   }
@@ -124,8 +124,7 @@ Return: A well-structured JSON response.
         await Future.delayed(Duration(seconds: 1)); // Avoid rate limits
         final ingredientName = ingredient['name'];
         final ingredientImageUrl =
-            await ImageService.getSingleImageUrlIngredient(
-                serpApiKey, ingredientName);
+            await ImageService.getSingleImageUrlIngredient(serpApiKey, ingredientName);
         ingredient['image_url'] = ingredientImageUrl;
         debugPrint(
             "Ingredient Image URL ($ingredientName): $ingredientImageUrl");
@@ -219,7 +218,7 @@ Recipe = {
 }
 
 Available Ingredients seperated by commas: "$ingredients"
-if the user does not pass a valid and existing ingredients dont create json.there might also contain information about allergy so generate content accordingly.if the allergy not mentioned never mind no conserns.
+if the user does not pass a valid and existing ingredients dont create json
 Return: A well-structured JSON response.
 """;
   }

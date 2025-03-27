@@ -24,55 +24,21 @@ class IngredientsCard extends StatefulWidget {
 }
 
 class _IngredientsCardState extends State<IngredientsCard> {
-  late FlutterTts flutterTts;
-  bool _isSpeaking = false;
-  bool _isTtsInitialized = false;
+  final FlutterTts flutterTts = FlutterTts();
 
   @override
   void initState() {
     super.initState();
-    flutterTts = FlutterTts();
-    _configureTts().then((_) {
-      setState(() {
-        _isTtsInitialized = true;
-      });
-      _speakIngredientDetails(); // Speak once TTS is initialized
-    });
+    _speakIngredientDetails();
   }
 
-  Future<void> _configureTts() async {
-    await flutterTts.setLanguage("en-US");
-    await flutterTts.setPitch(1.0);
-    await flutterTts.setSpeechRate(0.5);
-    flutterTts.setCompletionHandler(() {
-      if (mounted) {
-        setState(() {
-          _isSpeaking = false;
-        });
-      }
-    });
-    flutterTts.setErrorHandler((msg) {
-      if (mounted) {
-        setState(() {
-          _isSpeaking = false;
-        });
-        print('TTS Error: $msg');
-      }
-    });
+  void _speakIngredientDetails() async {
+    await flutterTts.speak("Ingredient: ${widget.name}");
+    await flutterTts.speak("Quantity: ${widget.quantity}");
   }
 
-  Future<void> _speakIngredientDetails() async {
-    if (!_isTtsInitialized || _isSpeaking) return;
-    _isSpeaking = true;
-    String textToSpeak = "${widget.name}, Quantity: ${widget.quantity}";
-    await flutterTts.speak(textToSpeak);
-  }
-
-  Future<void> _stopSpeaking() async {
-    if (_isSpeaking) {
-      await flutterTts.stop();
-      _isSpeaking = false;
-    }
+  void _stopSpeaking() async {
+    await flutterTts.stop();
   }
 
   Future<void> _addToCartAndContinue(BuildContext context) async {
@@ -114,7 +80,7 @@ class _IngredientsCardState extends State<IngredientsCard> {
           backgroundColor: Colors.black87,
         ),
       );
-      _stopSpeaking();
+      _stopSpeaking(); // Stop speaking before continuing
       widget.onContinue();
     } catch (e) {
       print('Error adding to cart: $e');
@@ -238,7 +204,7 @@ class _IngredientsCardState extends State<IngredientsCard> {
                   ),
                   ElevatedButton(
                     onPressed: () {
-                      _stopSpeaking();
+                      _stopSpeaking(); // Stop speaking when cancelling
                       Navigator.pop(context);
                     },
                     style: ElevatedButton.styleFrom(
@@ -262,8 +228,7 @@ class _IngredientsCardState extends State<IngredientsCard> {
 
   @override
   void dispose() {
-    _stopSpeaking();
-    flutterTts.stop(); // Ensure TTS is fully stopped
+    _stopSpeaking(); // Clean up TTS when widget is disposed
     super.dispose();
   }
 }

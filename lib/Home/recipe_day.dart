@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:cached_network_image/cached_network_image.dart';
+
 class RecipeDay extends StatelessWidget {
   final Map<String, dynamic>? currentRecipe;
   final String? selectedImage;
@@ -34,28 +34,16 @@ class RecipeDay extends StatelessWidget {
                 Container(
                   width: 80,
                   height: 80,
-                  child: selectedImage != null && selectedImage!.isNotEmpty
-                      ? ClipOval(
-                          child: CachedNetworkImage(
-                            imageUrl: selectedImage!,
-                            fit: BoxFit.cover,
-                            placeholder: (context, url) => const Center(
-                              child: CircularProgressIndicator(),
-                            ),
-                            errorWidget: (context, url, error) => const Icon(
-                              Icons.image_not_supported,
-                              size: 40,
-                              color: Colors.grey,
-                            ),
-                          ),
-                        )
-                      : const Center(
-                          child: Icon(
-                            Icons.image_not_supported,
-                            size: 40,
-                            color: Colors.grey,
-                          ),
-                        ),
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    image: DecorationImage(
+                      fit: BoxFit.cover,
+                      image: selectedImage?.isNotEmpty == true
+                          ? NetworkImage(selectedImage!)
+                          : const AssetImage('images/placeholder.jpg')
+                              as ImageProvider,
+                    ),
+                  ),
                 ),
                 const SizedBox(width: 16),
                 Expanded(
