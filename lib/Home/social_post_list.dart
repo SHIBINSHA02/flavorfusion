@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
 class SocialPostList extends StatefulWidget {
-  SocialPostList({Key? key}) : super(key: key);
+  SocialPostList({super.key});
 
   final List<Map<String, dynamic>> posts = [
     {

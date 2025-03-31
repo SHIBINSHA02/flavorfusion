@@ -1,0 +1,2 @@
+D:/Flavor Fusion/flavorfusion/android/app/.cxx/RelWithDebInfo/336m2347/arm64-v8a/CMakeFiles/edit_cache.dir
+D:/Flavor Fusion/flavorfusion/android/app/.cxx/RelWithDebInfo/336m2347/arm64-v8a/CMakeFiles/rebuild_cache.dir

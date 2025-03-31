@@ -9,13 +9,13 @@ class StartCard extends StatefulWidget {
   final VoidCallback onStart;
 
   const StartCard({
-    Key? key,
+    super.key,
     required this.title,
     required this.imageUrl,
     required this.description,
     required this.totalTime,
     required this.onStart,
-  }) : super(key: key);
+  });
 
   @override
   _StartCardState createState() => _StartCardState();

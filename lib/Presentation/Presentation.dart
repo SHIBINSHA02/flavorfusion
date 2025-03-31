@@ -5,7 +5,7 @@ import 'recipe_details_page.dart';
 class PresentationPage extends StatelessWidget {
   final Map<String, dynamic> recipeData;
 
-  PresentationPage({required this.recipeData});
+  const PresentationPage({super.key, required this.recipeData});
 
   @override
   Widget build(BuildContext context) {

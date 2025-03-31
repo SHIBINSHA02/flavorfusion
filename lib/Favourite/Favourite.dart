@@ -4,7 +4,7 @@ import 'FavCard.dart'; // Import the FavCard widget
 import 'package:lottie/lottie.dart'; // Import Lottie package
 
 class FavouritePage extends StatefulWidget {
-  const FavouritePage({Key? key}) : super(key: key);
+  const FavouritePage({super.key});
 
   @override
   _FavouritePageState createState() => _FavouritePageState();

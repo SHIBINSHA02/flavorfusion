@@ -11,13 +11,13 @@ class IngredientsCard extends StatefulWidget {
   final VoidCallback onContinue;
 
   const IngredientsCard({
-    Key? key,
+    super.key,
     required this.name,
     required this.imageUrl,
     required this.quantity,
     required this.recipeName,
     required this.onContinue,
-  }) : super(key: key);
+  });
 
   @override
   _IngredientsCardState createState() => _IngredientsCardState();
@@ -32,14 +32,16 @@ class _IngredientsCardState extends State<IngredientsCard> {
     _speakIngredientDetails();
   }
 
-  void _speakIngredientDetails() async {
-    await flutterTts.speak("Ingredient: ${widget.name}");
-    await flutterTts.speak("Quantity: ${widget.quantity}");
-  }
+Future<void> _speakIngredientDetails() async {
+  await flutterTts.speak("Ingredient: ${widget.name}");
+  await flutterTts.speak("Quantity: ${widget.quantity}");
+}
 
-  void _stopSpeaking() async {
-    await flutterTts.stop();
-  }
+
+  Future<void> _stopSpeaking() async {
+  await flutterTts.stop();
+}
+
 
   Future<void> _addToCartAndContinue(BuildContext context) async {
     final user = FirebaseAuth.instance.currentUser;
@@ -94,14 +96,18 @@ class _IngredientsCardState extends State<IngredientsCard> {
   }
 
   @override
-  void didUpdateWidget(IngredientsCard oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    // If the ingredient changes, re-speak the new details
-    if (oldWidget.name != widget.name ||
-        oldWidget.quantity != widget.quantity) {
-      _stopSpeaking().then((_) => _speakIngredientDetails());
-    }
+void didUpdateWidget(IngredientsCard oldWidget) {
+  super.didUpdateWidget(oldWidget);
+  if (oldWidget.name != widget.name || oldWidget.quantity != widget.quantity) {
+    _updateSpeech();
   }
+}
+
+Future<void> _updateSpeech() async {
+  await _stopSpeaking();
+  await _speakIngredientDetails();
+}
+
 
   @override
   Widget build(BuildContext context) {

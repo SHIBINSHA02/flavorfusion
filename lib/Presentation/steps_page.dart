@@ -8,7 +8,7 @@ class StepsPage extends StatefulWidget {
   final List<dynamic>? steps;
   final dynamic recipeData;
 
-  StepsPage({required this.steps, required this.recipeData});
+  const StepsPage({super.key, required this.steps, required this.recipeData});
 
   @override
   _StepsPageState createState() => _StepsPageState();
