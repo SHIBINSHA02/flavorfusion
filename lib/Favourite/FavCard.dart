@@ -6,7 +6,7 @@ class FavCard extends StatefulWidget {
   final String description;
   final int rating;
 
-  FavCard({
+  const FavCard({super.key, 
     required this.dishName,
     required this.imageUrl,
     required this.description,
@@ -24,7 +24,7 @@ class _FavCardState extends State<FavCard> {
   Widget build(BuildContext context) {
     return Card(
       elevation: 5,
-      child: Container(
+      child: SizedBox(
         width: MediaQuery.of(context).size.width * 0.9,
         child: Padding(
           padding: const EdgeInsets.all(16.0),

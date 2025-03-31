@@ -4,7 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 class ConclusionCard extends StatefulWidget {
   final Map<String, dynamic> recipeData;
 
-  const ConclusionCard({required this.recipeData, Key? key}) : super(key: key);
+  const ConclusionCard({required this.recipeData, super.key});
 
   @override
   _ConclusionCardState createState() => _ConclusionCardState();

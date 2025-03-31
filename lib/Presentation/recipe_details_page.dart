@@ -5,7 +5,7 @@ import 'steps_page.dart';
 class RecipeDetailsPage extends StatefulWidget {
   final Map<String, dynamic> recipeData;
 
-  RecipeDetailsPage({required this.recipeData});
+  const RecipeDetailsPage({super.key, required this.recipeData});
 
   @override
   _RecipeDetailsPageState createState() => _RecipeDetailsPageState();

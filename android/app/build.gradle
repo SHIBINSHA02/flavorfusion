@@ -7,7 +7,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:8.1.0' // Ensure this is the correct version
+        classpath 'com.android.tools.build:gradle:8.2.1' // Ensure this is the correct version
         // Other dependencies...
     }
 }
@@ -26,16 +26,17 @@ plugins {
 android {
     namespace = "com.example.flavorfusion"
     compileSdkVersion 35 // Ensure this is set to the correct version
-    ndkVersion = "25.1.8517264"
+    ndkVersion = "25.1.8937393"
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
 
     kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_1_8
+        jvmTarget = "17"
     }
+
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
