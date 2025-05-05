@@ -1,19 +1,19 @@
 # flavorfusion
 
 A new Flutter project focused on AI-powered recipe generation and more!
-![steps](images/signin.jpeg)
-![Home](images/home.png)
-![Social](images/social.png)
-![Shopping](images/shop.png)
-![search](images/search.png)
-![Dish](images/dish.png)
-![Tomato](images/tomato.png)
-![Ginger](images/ginger.png)
-![Termeric](images/termeric.png)
-![steps](images/concl.png)
-![steps](images/profile.png)
-
-
+<div style="overflow-x: auto;">
+  <img src="images/signin.jpeg" alt="Signin" style="max-width: 300px;">
+  <img src="images/home.png" alt="Home" style="max-width: 300px;">
+  <img src="images/social.png" alt="Social" style="max-width: 300px;">
+  <img src="images/shop.png" alt="Shopping" style="max-width: 300px;">
+  <img src="images/search.png" alt="Search" style="max-width: 300px;">
+  <img src="images/dish.png" alt="Dish" style="max-width: 300px;">
+  <img src="images/tomato.png" alt="Tomato" style="max-width: 300px;">
+  <img src="images/ginger.png" alt="Ginger" style="max-width: 300px;">
+  <img src="images/termeric.png" alt="Termeric" style="max-width: 300px;">
+  <img src="images/concl.png" alt="Conclusion" style="max-width: 300px;">
+  <img src="images/profile.png" alt="Profile" style="max-width: 300px;">
+</div>
 ## Features
 
 This application boasts a rich set of features designed to make cooking more intuitive and fun:
