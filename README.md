@@ -1,18 +1,7 @@
 # flavorfusion
 
 A new Flutter project focused on AI-powered recipe generation and more!
-<div style="overflow-x: auto;">
-  <img src="images/signin.jpeg" alt="Signin" width="150" style="margin-right: 10px;">
-  <img src="images/home.png" alt="Home" width="150" style="margin-right: 10px;">
-  <img src="images/social.png" alt="Social" width="150" style="margin-right: 10px;">
-  <img src="images/shop.png" alt="Shopping" width="150" style="margin-right: 10px;">
-  <img src="images/search.png" alt="Search" width="150" style="margin-right: 10px;">
-  <img src="images/dish.png" alt="Dish" width="150" style="margin-right: 10px;">
-  <img src="images/ginger.png" alt="Ginger" width="150" style="margin-right: 10px;">
-  <img src="images/termeric.png" alt="Termeric" width="150" style="margin-right: 10px;">
-  <img src="images/concl.png" alt="Conclusion" width="150" style="margin-right: 10px;">
-  <img src="images/profile.png" alt="Profile" width="150">
-</div>
+
 ## Features
 
 This application boasts a rich set of features designed to make cooking more intuitive and fun:
@@ -32,8 +21,18 @@ This project utilizes the following key technologies:
 * **Flutter TTS (Text-to-Speech):** Provides voice assistance for reading out recipe details.
 
 ## Image Upload
-
-*(You mentioned having images to upload. You'll typically handle image uploads through your backend or a cloud storage service. This section provides a general idea.)*
+<div style="overflow-x: auto;">
+  <img src="images/signin.jpeg" alt="Signin" width="150" style="margin-right: 10px;">
+  <img src="images/home.png" alt="Home" width="150" style="margin-right: 10px;">
+  <img src="images/social.png" alt="Social" width="150" style="margin-right: 10px;">
+  <img src="images/shop.png" alt="Shopping" width="150" style="margin-right: 10px;">
+  <img src="images/search.png" alt="Search" width="150" style="margin-right: 10px;">
+  <img src="images/dish.png" alt="Dish" width="150" style="margin-right: 10px;">
+  <img src="images/ginger.png" alt="Ginger" width="150" style="margin-right: 10px;">
+  <img src="images/termeric.png" alt="Termeric" width="150" style="margin-right: 10px;">
+  <img src="images/concl.png" alt="Conclusion" width="150" style="margin-right: 10px;">
+  <img src="images/profile.png" alt="Profile" width="150">
+</div>
 
 This application may include functionality for users to upload images related to their cooking experiences or ingredients. The specific implementation for image uploads would depend on the chosen backend infrastructure and cloud storage solutions.
 
