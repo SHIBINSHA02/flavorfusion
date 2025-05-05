@@ -1,6 +1,18 @@
 # flavorfusion
 
 A new Flutter project focused on AI-powered recipe generation and more!
+![steps](images/signin.jpeg)
+![Home](images/home.png)
+![Social](images/social.png)
+![Shopping](images/shop.png)
+![search](images/search.png)
+![Dish](images/dish.png)
+![Tomato](images/tomato.png)
+![Ginger](images/ginger.png)
+![Termeric](images/termeric.png)
+![steps](images/concl.png)
+![steps](images/profile.png)
+
 
 ## Features
 
