@@ -8,7 +8,6 @@ A new Flutter project focused on AI-powered recipe generation and more!
   <img src="images/shop.png" alt="Shopping" width="150" style="margin-right: 10px;">
   <img src="images/search.png" alt="Search" width="150" style="margin-right: 10px;">
   <img src="images/dish.png" alt="Dish" width="150" style="margin-right: 10px;">
-  <img src="images/tomato.png" alt="Tomato" width="150" style="margin-right: 10px;">
   <img src="images/ginger.png" alt="Ginger" width="150" style="margin-right: 10px;">
   <img src="images/termeric.png" alt="Termeric" width="150" style="margin-right: 10px;">
   <img src="images/concl.png" alt="Conclusion" width="150" style="margin-right: 10px;">
