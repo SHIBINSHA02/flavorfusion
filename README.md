@@ -2,17 +2,17 @@
 
 A new Flutter project focused on AI-powered recipe generation and more!
 <div style="overflow-x: auto;">
-  <img src="images/signin.jpeg" alt="Signin" style="max-width: 300px;">
-  <img src="images/home.png" alt="Home" style="max-width: 300px;">
-  <img src="images/social.png" alt="Social" style="max-width: 300px;">
-  <img src="images/shop.png" alt="Shopping" style="max-width: 300px;">
-  <img src="images/search.png" alt="Search" style="max-width: 300px;">
-  <img src="images/dish.png" alt="Dish" style="max-width: 300px;">
-  <img src="images/tomato.png" alt="Tomato" style="max-width: 300px;">
-  <img src="images/ginger.png" alt="Ginger" style="max-width: 300px;">
-  <img src="images/termeric.png" alt="Termeric" style="max-width: 300px;">
-  <img src="images/concl.png" alt="Conclusion" style="max-width: 300px;">
-  <img src="images/profile.png" alt="Profile" style="max-width: 300px;">
+  <img src="images/signin.jpeg" alt="Signin" width="150" style="margin-right: 10px;">
+  <img src="images/home.png" alt="Home" width="150" style="margin-right: 10px;">
+  <img src="images/social.png" alt="Social" width="150" style="margin-right: 10px;">
+  <img src="images/shop.png" alt="Shopping" width="150" style="margin-right: 10px;">
+  <img src="images/search.png" alt="Search" width="150" style="margin-right: 10px;">
+  <img src="images/dish.png" alt="Dish" width="150" style="margin-right: 10px;">
+  <img src="images/tomato.png" alt="Tomato" width="150" style="margin-right: 10px;">
+  <img src="images/ginger.png" alt="Ginger" width="150" style="margin-right: 10px;">
+  <img src="images/termeric.png" alt="Termeric" width="150" style="margin-right: 10px;">
+  <img src="images/concl.png" alt="Conclusion" width="150" style="margin-right: 10px;">
+  <img src="images/profile.png" alt="Profile" width="150">
 </div>
 ## Features
 
